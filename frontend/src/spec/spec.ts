@@ -5,24 +5,23 @@ export interface Spec {
     name: string;
     contact?: string;
   }[];
-  link?: string;
+  version: string,
+  type: string,
+  githubLink?: string;
+  supportingLinks?: string[];
   license?: string;
   input: string | string[];
   output: string | string[];
   architectureDescription?: string;
 
   intendedUse: {
-    primaryUsecase: string[];
-    subgoals?: string[];
-    antiGoals?: string[];
+    primaryUsecase: string | string[];
+    antiGoals?: string | string[];
   };
-
-
-  
 
   limitations?: {
     type: string;
-    description?: string;
+    description: string;
     remediations?: string[];
   }[];
   tradeoffs?: string[];

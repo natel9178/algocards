@@ -14,7 +14,17 @@ export default function ListOrParagraph({
 }) {
   const classes = useStyles();
   if (typeof content === "string") {
-    return <p className={classes.text}>{content}</p>;
+    const splitContent = content.split("\n");
+    return (
+      <>
+        {splitContent.map((c, idx) => (
+          <>
+            <p className={classes.text}>{c}</p>
+            {idx !== splitContent.length - 1 && <br />}
+          </>
+        ))}
+      </>
+    );
   } else {
     if (content.length === 1) {
       return <p className={classes.text}>{content[0]}</p>;

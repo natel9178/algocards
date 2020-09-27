@@ -9,6 +9,8 @@ import BuildIcon from "@material-ui/icons/Build";
 import ListOrParagraph from "./ListOrParagraph";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import GitHubIcon from "@material-ui/icons/GitHub";
+import WarningIcon from "@material-ui/icons/Warning";
+import LinkIcon from "@material-ui/icons/Link";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -96,22 +98,24 @@ function getRandomInt(min: number, max: number) {
 
 const SAMPLE_SPEC = {
   title: "Yolov4 Faces", // done
-  link: "http://google.com",
+  githubLink: "http://google.com",
+  supportingLinks: [
+    "https://arxiv.org/abs/2005.14165",
+    "https://github.com/openai/gpt-3/blob/master/175b_samples.jsonl",
+  ],
   description: lorem.generateSentences(1), // done
   authors: Array.apply(null, Array(3)).map(() => ({
     name: "Nate Lee",
     contact: "natelee@stanford.edu",
   })),
   license: "MIT", // done
+  version: "175 billion parameter model",
+  type: "Language Model",
 
   intendedUse: {
     // done
-    primaryUsecase: Array.apply(null, Array(getRandomInt(1, 3))).map((x) =>
-      lorem.generateSentences(1)
-    ), // done
-    subgoals: Array.apply(null, Array(getRandomInt(1, 3))).map((x) =>
-      lorem.generateSentences(1)
-    ), // done
+    primaryUsecase:
+      "The intended direct users of GPT-3 are developers who access its capabilities via the OpenAI API. Through the OpenAI API, the model can be used by those who may not have AI development experience to build and explore language modeling systems across a wide range of functions. We also anticipate that the model will continue to be used by researchers to better understand the behaviors, capabilities, biases, and constraints of large-scale language models. \n Given GPT-3’s limitations (described below), and the breadth and open-ended nature of GPT-3’s capabilities, we currently only support controlled access to and use of the model via the OpenAI API. Access and use are subject to OpenAI’s access approval process, API Usage Guidelines, and API Terms of Use, which are designed to prohibit the use of the API in a way that causes societal harm.\nWe review all use cases prior to onboarding to the API, review them again before customers move into production, and have systems in place to revoke access if necessary after moving to production. Additionally, we provide guidance to users on some of the potential safety risks they should attend to and related mitigations.", // done
     antiGoals: Array.apply(null, Array(getRandomInt(1, 3))).map((x) =>
       lorem.generateSentences(1)
     ), // done
@@ -161,7 +165,7 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
             <Typography style={{ fontWeight: "bold" }} variant={"h3"}>
               <a
                 style={{ color: "black", textDecoration: "none" }}
-                href={spec.link}
+                href={spec.githubLink}
               >
                 {spec.title}
               </a>
@@ -181,7 +185,7 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
         </div>
       </div>
       <div style={{ width: "100%" }}>
-        <Grid container spacing={3}>
+        <Grid container spacing={10}>
           <Grid item xs={8}>
             <Grid container spacing={3}>
               <Grid item xs={12} className={classes.subBox}>
@@ -193,7 +197,10 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
                   >
                     Intended Use
                   </Typography>
-                  <Typography variant={"h6"} style={{ marginTop: 10 }}>
+                  <Typography
+                    variant={"h6"}
+                    style={{ marginTop: 10, whiteSpace: "pre-wrap" }}
+                  >
                     Primary Usecases
                   </Typography>
                   <Typography variant={"body2"}>
@@ -201,19 +208,7 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
                       content={spec.intendedUse.primaryUsecase}
                     />
                   </Typography>
-                  {spec.intendedUse.subgoals &&
-                    !!spec.intendedUse.subgoals.length && (
-                      <>
-                        <Typography variant={"h6"} style={{ marginTop: 10 }}>
-                          Goals
-                        </Typography>
-                        <Typography variant={"body2"}>
-                          <ListOrParagraph
-                            content={spec.intendedUse.subgoals}
-                          />
-                        </Typography>
-                      </>
-                    )}
+
                   {spec.intendedUse.antiGoals && (
                     <>
                       <Typography variant={"h6"} style={{ marginTop: 10 }}>
@@ -224,6 +219,28 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
                       </Typography>
                     </>
                   )}
+                </div>
+              </Grid>
+              <Grid item xs={12} className={classes.subBox}>
+                <WarningIcon fontSize={"large"} />
+                <div className={classes.subContainer}>
+                  <Typography
+                    style={{ fontWeight: "bold", lineHeight: 1 }}
+                    variant={"h4"}
+                  >
+                    Limitations
+                  </Typography>
+                  {spec.limitations &&
+                    spec.limitations.map(({ type, description }) => (
+                      <>
+                        <Typography variant={"h6"} style={{ marginTop: 10 }}>
+                          {type}
+                        </Typography>
+                        <Typography variant={"body2"}>
+                          <ListOrParagraph content={description} />
+                        </Typography>
+                      </>
+                    ))}
                 </div>
               </Grid>
             </Grid>
@@ -295,7 +312,60 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
                 </>
               )}
 
-              {spec.link && (
+              <Divider />
+              <Grid container>
+                <Grid item xs={6} className={classes.metaBarRow}>
+                  <Typography
+                    variant={"h6"}
+                    className={classes.metaBarTypography}
+                  >
+                    Model Type
+                  </Typography>
+                  <Typography
+                    variant={"body2"}
+                    className={classes.metaBarTypographyBody}
+                  >
+                    {spec.type}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6} className={classes.metaBarRow}>
+                  <Typography
+                    variant={"h6"}
+                    className={classes.metaBarTypography}
+                  >
+                    Version
+                  </Typography>
+                  <Typography
+                    variant={"body2"}
+                    className={classes.metaBarTypographyBody}
+                  >
+                    {spec.version}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Box m={1} />
+
+              <Divider />
+              <Grid container>
+                <Grid item xs={6} className={classes.metaBarRow}>
+                  <Typography
+                    variant={"h6"}
+                    className={classes.metaBarTypography}
+                  >
+                    License
+                  </Typography>
+                  <Typography
+                    variant={"body2"}
+                    className={classes.metaBarTypographyBody}
+                  >
+                    {spec.license}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Box m={1} />
+
+              {spec.githubLink && (
                 <>
                   <Divider />
                   <Grid item xs={12} className={classes.metaBarRow}>
@@ -308,14 +378,51 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
                     <Box m={0.5} />
                     <div style={{ flexDirection: "row", alignItems: "center" }}>
                       <GitHubIcon />
-                      <Box mx={1} />
+                      <Box mx={0.5} />
                       <Typography
                         variant={"body2"}
                         className={classes.metaBarTypographyBody}
                       >
-                        <ListOrParagraph content={spec.link} />
+                        <ListOrParagraph content={spec.githubLink} />
                       </Typography>
                     </div>
+                  </Grid>
+                  <Box m={1} />
+                </>
+              )}
+              {spec.supportingLinks && !!spec.supportingLinks.length && (
+                <>
+                  <Divider />
+                  <Grid item xs={12} className={classes.metaBarRow}>
+                    <Typography
+                      variant={"h6"}
+                      className={classes.metaBarTypography}
+                    >
+                      Supporting Resources
+                    </Typography>
+                    <Box m={0.5} />
+                    {spec.supportingLinks.map((link) => (
+                      <div
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "flex-starts",
+                        }}
+                      >
+                        <LinkIcon />
+                        <Box mx={0.5} />
+                        <Typography
+                          variant={"body2"}
+                          className={classes.metaBarTypographyBody}
+                          style={{
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          <ListOrParagraph content={link} />
+                        </Typography>
+                      </div>
+                    ))}
                   </Grid>
                   <Box m={1} />
                 </>
