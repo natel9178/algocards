@@ -10,6 +10,9 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
     html: {
       background: "#FAFAFA",
     },
+    div: {
+      display: "flex",
+    },
   },
   title: {
     marginLeft: 40,
@@ -18,6 +21,7 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
     display: "flex",
     flexDirection: "column",
     backgroundColor: "#FAFAFA",
+    width: "100%",
   },
   toolbar: {
     minHeight: 64,
