@@ -11,6 +11,7 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import WarningIcon from "@material-ui/icons/Warning";
 import LinkIcon from "@material-ui/icons/Link";
+import { AnimatePresence, motion } from "framer-motion";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -26,13 +27,11 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
   leftTitle: {
-    flexGrow: 1,
     flexDirection: "column",
     justifyContent: "flex-start",
   },
   rightTitle: {
     flexDirection: "row",
-    marginLeft: 30,
     alignItems: "center",
   },
   header: {
@@ -135,10 +134,12 @@ const SAMPLE_SPEC = {
     {
       type: "Repetition",
       description: lorem.generateSentences(2),
+      workarounds: ["Input a correctly oriented image when using this model"],
     },
     {
       type: "Lack of world grounding",
-      description: lorem.generateSentences(2),
+      description:
+        "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
     },
     {
       type: "Predominantly English",
@@ -158,10 +159,15 @@ const SAMPLE_SPEC = {
 export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <div style={{ width: "100%" }}>
-        <div className={classes.header} style={{ marginBottom: 20 }}>
-          <div className={classes.leftTitle}>
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className={classes.root}
+      >
+        <Grid container spacing={10}>
+          <Grid item xs={8} className={classes.leftTitle}>
             <Typography style={{ fontWeight: "bold" }} variant={"h3"}>
               <a
                 style={{ color: "black", textDecoration: "none" }}
@@ -171,8 +177,8 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
               </a>
             </Typography>
             <Typography variant={"body1"}>{spec.description}</Typography>
-          </div>
-          <div className={classes.rightTitle}>
+          </Grid>
+          <Grid item xs={4} className={classes.rightTitle}>
             <Icon
               icon={
                 <Typography variant={"h5"} style={{ fontWeight: "bolder" }}>
@@ -181,256 +187,281 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
               }
               label={"License"}
             />
-          </div>
-        </div>
-      </div>
-      <div style={{ width: "100%" }}>
-        <Grid container spacing={10}>
-          <Grid item xs={8}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} className={classes.subBox}>
-                <BuildIcon fontSize={"large"} />
-                <div className={classes.subContainer}>
-                  <Typography
-                    style={{ fontWeight: "bold", lineHeight: 1 }}
-                    variant={"h4"}
-                  >
-                    Intended Use
-                  </Typography>
-                  <Typography
-                    variant={"h6"}
-                    style={{ marginTop: 10, whiteSpace: "pre-wrap" }}
-                  >
-                    Primary Usecases
-                  </Typography>
-                  <Typography variant={"body2"}>
-                    <ListOrParagraph
-                      content={spec.intendedUse.primaryUsecase}
-                    />
-                  </Typography>
+          </Grid>
+        </Grid>
+        <Box m={2} />
+        <div style={{ width: "100%" }}>
+          <Grid container spacing={10}>
+            <Grid item xs={8}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} className={classes.subBox}>
+                  <BuildIcon fontSize={"large"} />
+                  <div className={classes.subContainer}>
+                    <Typography
+                      style={{ fontWeight: "bold", lineHeight: 1 }}
+                      variant={"h4"}
+                    >
+                      Intended Use
+                    </Typography>
+                    <Typography
+                      variant={"h6"}
+                      style={{ marginTop: 10, whiteSpace: "pre-wrap" }}
+                    >
+                      Primary Usecases
+                    </Typography>
+                    <Typography variant={"body2"}>
+                      <ListOrParagraph
+                        content={spec.intendedUse.primaryUsecase}
+                      />
+                    </Typography>
 
-                  {spec.intendedUse.antiGoals && (
-                    <>
-                      <Typography variant={"h6"} style={{ marginTop: 10 }}>
-                        Anti-Goals
-                      </Typography>
-                      <Typography variant={"body2"}>
-                        <ListOrParagraph content={spec.intendedUse.antiGoals} />
-                      </Typography>
-                    </>
-                  )}
-                </div>
-              </Grid>
-              <Grid item xs={12} className={classes.subBox}>
-                <WarningIcon fontSize={"large"} />
-                <div className={classes.subContainer}>
-                  <Typography
-                    style={{ fontWeight: "bold", lineHeight: 1 }}
-                    variant={"h4"}
-                  >
-                    Limitations
-                  </Typography>
-                  {spec.limitations &&
-                    spec.limitations.map(({ type, description }) => (
+                    {spec.intendedUse.antiGoals && (
                       <>
                         <Typography variant={"h6"} style={{ marginTop: 10 }}>
-                          {type}
+                          Anti-Goals
                         </Typography>
                         <Typography variant={"body2"}>
-                          <ListOrParagraph content={description} />
+                          <ListOrParagraph
+                            content={spec.intendedUse.antiGoals}
+                          />
                         </Typography>
                       </>
-                    ))}
-                </div>
+                    )}
+                  </div>
+                </Grid>
+                <Grid item xs={12} className={classes.subBox}>
+                  <WarningIcon fontSize={"large"} />
+                  <div className={classes.subContainer}>
+                    <Typography
+                      style={{ fontWeight: "bold", lineHeight: 1 }}
+                      variant={"h4"}
+                    >
+                      Limitations
+                    </Typography>
+                    <Grid container spacing={3}>
+                      {spec.limitations &&
+                        spec.limitations.map(
+                          ({ type, description, workarounds }) => (
+                            <Grid item xs={6}>
+                              <div style={{ flexDirection: "column" }}>
+                                <Typography
+                                  variant={"h6"}
+                                  style={{ marginTop: 10 }}
+                                >
+                                  {type}
+                                </Typography>
+                                <Typography variant={"body2"}>
+                                  <ListOrParagraph content={description} />
+                                </Typography>
+                                {workarounds && (
+                                  <Typography
+                                    variant={"body2"}
+                                    style={{ marginTop: 10 }}
+                                  >
+                                    <strong>Workaround: </strong>
+                                    <ListOrParagraph content={workarounds} />
+                                  </Typography>
+                                )}
+                              </div>
+                            </Grid>
+                          )
+                        )}
+                    </Grid>
+                  </div>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={4} className={classes.metaBarRow}>
-            <div style={{ flexDirection: "column" }}>
-              <Grid container>
-                <Grid item xs={5} className={classes.metaBarRow}>
-                  <Typography
-                    variant={"h6"}
-                    className={classes.metaBarTypography}
-                  >
-                    Inputs
-                  </Typography>
-                  <Typography
-                    variant={"body2"}
-                    className={classes.metaBarTypographyBody}
-                  >
-                    {typeof spec.input !== "string"
-                      ? spec.input.join("\n")
-                      : spec.input}
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  xs={2}
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
-                  <ArrowForwardIosIcon style={{ opacity: 0.5 }} />
-                </Grid>
-
-                <Grid item xs={5} className={classes.metaBarRow}>
-                  <Typography
-                    variant={"h6"}
-                    className={classes.metaBarTypography}
-                  >
-                    Outputs
-                  </Typography>
-                  <Typography
-                    variant={"body2"}
-                    className={classes.metaBarTypographyBody}
-                  >
-                    {typeof spec.output !== "string"
-                      ? spec.output.join("\n")
-                      : spec.output}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Box m={1} />
-
-              {spec.architectureDescription && (
-                <>
-                  <Divider />
-                  <Grid item xs={12} className={classes.metaBarRow}>
+            <Grid item xs={4} className={classes.metaBarRow}>
+              <div style={{ flexDirection: "column" }}>
+                <Grid container>
+                  <Grid item xs={5} className={classes.metaBarRow}>
                     <Typography
                       variant={"h6"}
                       className={classes.metaBarTypography}
                     >
-                      Architecture
+                      Inputs
                     </Typography>
                     <Typography
                       variant={"body2"}
                       className={classes.metaBarTypographyBody}
                     >
-                      <ListOrParagraph content={spec.architectureDescription} />
+                      {typeof spec.input !== "string"
+                        ? spec.input.join("\n")
+                        : spec.input}
                     </Typography>
                   </Grid>
-                  <Box m={1} />
-                </>
-              )}
+                  <Grid
+                    item
+                    xs={2}
+                    style={{ alignItems: "center", justifyContent: "center" }}
+                  >
+                    <ArrowForwardIosIcon style={{ opacity: 0.5 }} />
+                  </Grid>
 
-              <Divider />
-              <Grid container>
-                <Grid item xs={6} className={classes.metaBarRow}>
-                  <Typography
-                    variant={"h6"}
-                    className={classes.metaBarTypography}
-                  >
-                    Model Type
-                  </Typography>
-                  <Typography
-                    variant={"body2"}
-                    className={classes.metaBarTypographyBody}
-                  >
-                    {spec.type}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={6} className={classes.metaBarRow}>
-                  <Typography
-                    variant={"h6"}
-                    className={classes.metaBarTypography}
-                  >
-                    Version
-                  </Typography>
-                  <Typography
-                    variant={"body2"}
-                    className={classes.metaBarTypographyBody}
-                  >
-                    {spec.version}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Box m={1} />
-
-              <Divider />
-              <Grid container>
-                <Grid item xs={6} className={classes.metaBarRow}>
-                  <Typography
-                    variant={"h6"}
-                    className={classes.metaBarTypography}
-                  >
-                    License
-                  </Typography>
-                  <Typography
-                    variant={"body2"}
-                    className={classes.metaBarTypographyBody}
-                  >
-                    {spec.license}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Box m={1} />
-
-              {spec.githubLink && (
-                <>
-                  <Divider />
-                  <Grid item xs={12} className={classes.metaBarRow}>
+                  <Grid item xs={5} className={classes.metaBarRow}>
                     <Typography
                       variant={"h6"}
                       className={classes.metaBarTypography}
                     >
-                      Github
+                      Outputs
                     </Typography>
-                    <Box m={0.5} />
-                    <div style={{ flexDirection: "row", alignItems: "center" }}>
-                      <GitHubIcon />
-                      <Box mx={0.5} />
+                    <Typography
+                      variant={"body2"}
+                      className={classes.metaBarTypographyBody}
+                    >
+                      {typeof spec.output !== "string"
+                        ? spec.output.join("\n")
+                        : spec.output}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Box m={1} />
+
+                {spec.architectureDescription && (
+                  <>
+                    <Divider />
+                    <Grid item xs={12} className={classes.metaBarRow}>
+                      <Typography
+                        variant={"h6"}
+                        className={classes.metaBarTypography}
+                      >
+                        Architecture
+                      </Typography>
                       <Typography
                         variant={"body2"}
                         className={classes.metaBarTypographyBody}
                       >
-                        <ListOrParagraph content={spec.githubLink} />
+                        <ListOrParagraph
+                          content={spec.architectureDescription}
+                        />
                       </Typography>
-                    </div>
-                  </Grid>
-                  <Box m={1} />
-                </>
-              )}
-              {spec.supportingLinks && !!spec.supportingLinks.length && (
-                <>
-                  <Divider />
-                  <Grid item xs={12} className={classes.metaBarRow}>
+                    </Grid>
+                    <Box m={1} />
+                  </>
+                )}
+
+                <Divider />
+                <Grid container>
+                  <Grid item xs={6} className={classes.metaBarRow}>
                     <Typography
                       variant={"h6"}
                       className={classes.metaBarTypography}
                     >
-                      Supporting Resources
+                      Model Type
                     </Typography>
-                    <Box m={0.5} />
-                    {spec.supportingLinks.map((link) => (
-                      <div
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "flex-starts",
-                        }}
+                    <Typography
+                      variant={"body2"}
+                      className={classes.metaBarTypographyBody}
+                    >
+                      {spec.type}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={6} className={classes.metaBarRow}>
+                    <Typography
+                      variant={"h6"}
+                      className={classes.metaBarTypography}
+                    >
+                      Version
+                    </Typography>
+                    <Typography
+                      variant={"body2"}
+                      className={classes.metaBarTypographyBody}
+                    >
+                      {spec.version}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Box m={1} />
+
+                <Divider />
+                <Grid container>
+                  <Grid item xs={6} className={classes.metaBarRow}>
+                    <Typography
+                      variant={"h6"}
+                      className={classes.metaBarTypography}
+                    >
+                      License
+                    </Typography>
+                    <Typography
+                      variant={"body2"}
+                      className={classes.metaBarTypographyBody}
+                    >
+                      {spec.license}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Box m={1} />
+
+                {spec.githubLink && (
+                  <>
+                    <Divider />
+                    <Grid item xs={12} className={classes.metaBarRow}>
+                      <Typography
+                        variant={"h6"}
+                        className={classes.metaBarTypography}
                       >
-                        <LinkIcon />
+                        Github
+                      </Typography>
+                      <Box m={0.5} />
+                      <div
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <GitHubIcon />
                         <Box mx={0.5} />
                         <Typography
                           variant={"body2"}
                           className={classes.metaBarTypographyBody}
-                          style={{
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
                         >
-                          <ListOrParagraph content={link} />
+                          <ListOrParagraph content={spec.githubLink} />
                         </Typography>
                       </div>
-                    ))}
-                  </Grid>
-                  <Box m={1} />
-                </>
-              )}
-            </div>
+                    </Grid>
+                    <Box m={1} />
+                  </>
+                )}
+                {spec.supportingLinks && !!spec.supportingLinks.length && (
+                  <>
+                    <Divider />
+                    <Grid item xs={12} className={classes.metaBarRow}>
+                      <Typography
+                        variant={"h6"}
+                        className={classes.metaBarTypography}
+                      >
+                        Supporting Resources
+                      </Typography>
+                      <Box m={0.5} />
+                      {spec.supportingLinks.map((link) => (
+                        <div
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "flex-starts",
+                          }}
+                        >
+                          <LinkIcon />
+                          <Box mx={0.5} />
+                          <Typography
+                            variant={"body2"}
+                            className={classes.metaBarTypographyBody}
+                            style={{
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <ListOrParagraph content={link} />
+                          </Typography>
+                        </div>
+                      ))}
+                    </Grid>
+                    <Box m={1} />
+                  </>
+                )}
+              </div>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
-    </div>
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }

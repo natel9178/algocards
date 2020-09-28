@@ -27,7 +27,7 @@ export const theme = responsiveFontSizes(
       },
     },
     typography: {
-      fontFamily: "'Lato', sans-serif",
+      fontFamily: "'Roboto', sans-serif",
       h1: {
         fontFamily: "'Roboto Mono', sans-serif",
       },
@@ -49,6 +49,10 @@ export const theme = responsiveFontSizes(
       body1: {
         fontSize: 20,
         fontWeight: "normal",
+      },
+      body2: {
+        fontSize: 15,
+        lineHeight: 1.6,
       },
       button: {
         textTransform: "none",

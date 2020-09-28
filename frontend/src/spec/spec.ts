@@ -22,7 +22,7 @@ export interface Spec {
   limitations?: {
     type: string;
     description: string;
-    remediations?: string[];
+    workarounds?: string[];
   }[];
   tradeoffs?: string[];
   ethicalConsiderations?: string[];
@@ -44,6 +44,4 @@ export interface Spec {
     caption?: string;
     assetLinks?: string[];
   }[];
-
-  additionalComments?: string;
 }

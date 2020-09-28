@@ -3,7 +3,6 @@ import { AppBar, Box, Hidden, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useLocation } from "react-router-dom";
 import { Location } from "history";
-import { Menu } from "./Menu";
 
 const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
   "@global": {
@@ -24,19 +23,18 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
     width: "100%",
   },
   toolbar: {
-    minHeight: 64,
+    minHeight: 30,
     padding: 0,
   },
   appBar: {
     background: "transparent",
     color: theme.palette.text.primary,
     zIndex: theme.zIndex.drawer + 1,
-    position: "relative",
     transition: theme.transitions.create(["width", "margin"], {
       duration: theme.transitions.duration.leavingScreen,
     }),
     boxShadow: "inherit",
-    padding: 40,
+    padding: "30px 40px",
   },
   content: {
     flexGrow: 1,
@@ -53,12 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <AppBar position="relative" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <Link to="/">
-            <img
-              src={"/logo.svg"}
-              alt="Nice"
-              width="40"
-              style={{ marginLeft: 10 }}
-            />
+            <img src={"/logo.svg"} alt="Nice" width="40" />
           </Link>
           <Typography className={classes.title} variant={"h4"}>
             Algo-Card
@@ -68,6 +61,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <main className={classes.content}>
         <Box className={classes.container}>{children}</Box>
       </main>
+      <footer
+        style={{
+          height: 200,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Typography
+          className={classes.title}
+          variant={"h6"}
+          style={{ fontSize: 15 }}
+        >
+          Made by the Algo-Cards Team. Send us feedback{" "}
+          <a href={"mailto:natelee@stanford.edu"}>here</a>.
+        </Typography>
+      </footer>
     </div>
   );
 }
