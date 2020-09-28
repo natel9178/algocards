@@ -125,12 +125,13 @@ const SAMPLE_SPEC = {
   output: Array.apply(null, Array(getRandomInt(1, 3))).map((x) =>
     lorem.generateWords(2)
   ), // done
-  architectureDescription: lorem.generateSentences(1),
+  architectureDescription: lorem.generateSentences(1), // done
 
   ethicalConsiderations: Array.apply(null, Array(getRandomInt(1, 3))).map((x) =>
     lorem.generateSentences(1)
   ),
   limitations: [
+    // done
     {
       type: "Repetition",
       description: lorem.generateSentences(2),
@@ -152,6 +153,45 @@ const SAMPLE_SPEC = {
     {
       type: "Biases",
       description: lorem.generateSentences(4),
+    },
+  ],
+  datasetPerformance: [
+    {
+      datasetName: "Open Images subset",
+      description:
+        "Annotations for demographic variables were made by humans and used purely for testing; the model cannot detect them.",
+      link: "http://google.com",
+
+      performanceMetrics: [
+        {
+          name: "PR-AUC",
+          value: 0.84,
+        },
+      ],
+    },
+    {
+      datasetName: "Face Detection Dataset and Benchmark",
+      description: lorem.generateSentences(2),
+      link: "http://google.com",
+
+      performanceMetrics: [
+        {
+          name: "PR-AUC",
+          value: 0.92,
+        },
+      ],
+    },
+    {
+      datasetName: "Labeled Faces in the Wild",
+      description: lorem.generateSentences(2),
+      link: "http://google.com",
+
+      performanceMetrics: [
+        {
+          name: "PR-AUC",
+          value: 0.94,
+        },
+      ],
     },
   ],
 };
@@ -236,7 +276,7 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
                       style={{ fontWeight: "bold", lineHeight: 1 }}
                       variant={"h4"}
                     >
-                      Limitations
+                      Limitations & Tradeoffs
                     </Typography>
                     <Grid container spacing={3}>
                       {spec.limitations &&

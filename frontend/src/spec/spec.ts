@@ -5,8 +5,8 @@ export interface Spec {
     name: string;
     contact?: string;
   }[];
-  version: string,
-  type: string,
+  version: string;
+  type: string;
   githubLink?: string;
   supportingLinks?: string[];
   license?: string;
@@ -24,24 +24,24 @@ export interface Spec {
     description: string;
     workarounds?: string[];
   }[];
-  tradeoffs?: string[];
+
   ethicalConsiderations?: string[];
 
   datasetPerformance?: {
     datasetName: string;
     description?: string;
     link?: string;
+    exampleImageLinks?: string[];
 
     performanceMetrics?: {
       name: string;
       value: string | number;
       description?: string;
     }[];
-  }[];
 
-  evaluationGraphs?: {
-    title?: string;
-    caption?: string;
-    assetLinks?: string[];
+    performanceGraphs?: {
+      name: string;
+      resourceLink: string;
+    }[];
   }[];
 }
