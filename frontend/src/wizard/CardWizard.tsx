@@ -1,12 +1,16 @@
 import {
+  Box,
+  CircularProgress,
   Drawer,
   Grid,
   IconButton,
+  LinearProgress,
   List,
   ListItem,
   ListItemText,
   makeStyles,
   Paper,
+  Typography,
   useTheme,
 } from "@material-ui/core";
 import { motion } from "framer-motion";
@@ -26,6 +30,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import "./animation.css";
 import TextEntry from "./TextEntry";
+import { LinearProgressWithLabel } from "../utils/LinearProgressWithLabel";
 
 const WizardSpec = [
   {
@@ -187,7 +192,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
-    margin: "0px 5px"
+    margin: "0px 5px",
   },
 }));
 
@@ -207,7 +212,7 @@ export default function CardWizard() {
               render={({ history }) => (
                 <Wizard
                   history={history}
-                  render={({ step, next, previous }) => (
+                  render={({ step, next, previous, steps }) => (
                     <div
                       style={{
                         // position: "relative",
@@ -215,6 +220,7 @@ export default function CardWizard() {
                         height: "100%",
                         display: "flex",
                         flexDirection: "row",
+                        justifyContent: "center",
                       }}
                     >
                       <div className={classes.nextbar}>
@@ -250,6 +256,24 @@ export default function CardWizard() {
                             </div>
                           </CSSTransition>
                         </TransitionGroup>
+                        <Box display="flex" alignItems="center">
+                          <Box mr={2}>
+                            <CircularProgress
+                              variant="static"
+                              value={
+                                ((steps.indexOf(step) + 1) / steps.length) * 100
+                              }
+                            />
+                          </Box>
+                          <Box minWidth={35} mb={1}>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                            >{`${Math.round(
+                              ((steps.indexOf(step) + 1) / steps.length) * 100
+                            )}%`}</Typography>
+                          </Box>
+                        </Box>
                       </div>
                       <div className={classes.nextbar}>
                         <IconButton onClick={next}>

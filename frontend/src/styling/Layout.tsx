@@ -3,6 +3,7 @@ import { AppBar, Box, Hidden, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useLocation } from "react-router-dom";
 import { Location } from "history";
+import { motion, useTransform, useViewportScroll } from "framer-motion";
 
 const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
   "@global": {
@@ -12,6 +13,7 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
   },
   title: {
     marginLeft: 40,
+    marginBottom: 6,
   },
   root: {
     display: "flex",
@@ -22,6 +24,8 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
   toolbar: {
     minHeight: 30,
     padding: 0,
+    position: "fixed",
+    ...theme.mixins.toolbar,
   },
   appBar: {
     background: "transparent",
@@ -35,6 +39,7 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
   },
   content: {
     flexGrow: 1,
+    paddingTop: theme.spacing(8),
   },
   container: {},
 }));
@@ -42,6 +47,8 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const classes = useStyles({ location });
+  const { scrollY } = useViewportScroll();
+  const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
 
   return (
     <div className={classes.root}>
@@ -50,9 +57,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Link to="/">
             <img src={"/logo.svg"} alt="Nice" width="40" />
           </Link>
-          <Typography className={classes.title} variant={"h4"}>
-            Algo-Card
-          </Typography>
+          <motion.div style={{ opacity: opacityAnim }}>
+            <Typography className={classes.title} variant={"h4"}>
+              Algo-Card
+            </Typography>
+          </motion.div>
         </Toolbar>
       </AppBar>
       <main className={classes.content}>

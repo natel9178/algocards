@@ -3111,7 +3111,7 @@ clone-deep@^4.0.1:
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
 
-clsx@^1.0.4:
+clsx@^1.0.4, clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
@@ -4866,6 +4866,11 @@ framer-motion@^2.7.5:
     tslib "^1.10.0"
   optionalDependencies:
     "@emotion/is-prop-valid" "^0.8.2"
+
+framer@^1.2.7:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/framer/-/framer-1.2.7.tgz#735be3b5c37025cf956faad201032059ba2e62f4"
+  integrity sha512-CdUSDohcKeSXgveAmpCYoBR+q2ozzsEEqo0ncsvEYMnyaOSVCuruYs5bladhNj4tpKjjp03NGvZ4PXIqwe9akA==
 
 framesync@^4.1.0:
   version "4.1.0"
