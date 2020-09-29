@@ -9,9 +9,6 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
     html: {
       background: "#FAFAFA",
     },
-    div: {
-      display: "flex",
-    },
   },
   title: {
     marginLeft: 40,

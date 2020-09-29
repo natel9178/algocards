@@ -4,6 +4,8 @@ import Card from "./Card";
 import BuildIcon from "@material-ui/icons/Build";
 import InfoIcon from "@material-ui/icons/Info";
 import { CircleIndicator } from "./ViewportScroller";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import BarChartIcon from "@material-ui/icons/BarChart";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,8 +21,13 @@ const useStyles = makeStyles((theme) => ({
   },
   sidebar: {
     height: "100%",
+  },
+  iconContainer: {
     flexDirection: "column",
     alignItems: "center",
+    display: "flex",
+    position: "sticky",
+    alignSelf: "flex-start",
   },
 }));
 
@@ -30,10 +37,16 @@ export default function Presenter() {
     <>
       <Grid container wrap="nowrap" className={classes.root}>
         <Grid item xs={1} className={classes.sidebar}>
-          <Box my={2} />
-          <InfoIcon />
-          <Box my={2} />
-          <BuildIcon />
+          <div className={classes.iconContainer}>
+            <Box my={2} />
+            <InfoIcon />
+            <Box my={2} />
+            <BuildIcon />
+            <Box my={2} />
+            <BarChartIcon />
+            <Box my={2} />
+            <AccountCircleIcon />
+          </div>
         </Grid>
         <Grid item xs={10}>
           <Paper className={classes.paper}>

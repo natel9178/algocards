@@ -42,6 +42,7 @@ export interface Spec {
     performanceGraphs?: {
       name: string;
       resourceLink: string;
+      description?: string
     }[];
   }[];
 }

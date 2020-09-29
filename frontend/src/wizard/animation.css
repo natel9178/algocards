@@ -1,0 +1,25 @@
+.wizard-steps {
+  position: absolute;
+}
+
+.wizard-buttons {
+  padding-top: 75px;
+}
+
+.wizard-enter {
+  opacity: 0.01;
+}
+
+.wizard-enter.wizard-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.wizard-exit {
+  opacity: 1;
+}
+
+.wizard-exit.wizard-exit-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
