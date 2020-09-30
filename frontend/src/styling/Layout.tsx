@@ -1,9 +1,17 @@
 import React from "react";
-import { AppBar, Box, Hidden, Toolbar, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  Box,
+  Fab,
+  Hidden,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useLocation } from "react-router-dom";
 import { Location } from "history";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
   "@global": {
@@ -25,6 +33,9 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
     minHeight: 30,
     padding: 0,
     position: "fixed",
+    display: "flex",
+    flexDirection: "row",
+    width: "92%",
     ...theme.mixins.toolbar,
   },
   appBar: {
@@ -42,6 +53,9 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
     paddingTop: theme.spacing(8),
   },
   container: {},
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -57,10 +71,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Link to="/">
             <img src={"/logo.svg"} alt="Nice" width="40" />
           </Link>
-          <motion.div style={{ opacity: opacityAnim }}>
+          <motion.div
+            style={{
+              opacity: opacityAnim,
+              display: "flex",
+              flexGrow: 1,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <Typography className={classes.title} variant={"h4"}>
               Algo-Card
             </Typography>
+            <Fab style={{ backgroundColor: "rgba(250,250,250,0.3)" }} variant="extended">
+              <AddIcon className={classes.extendedIcon} />
+              Add Card
+            </Fab>
           </motion.div>
         </Toolbar>
       </AppBar>

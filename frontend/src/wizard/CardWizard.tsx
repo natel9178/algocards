@@ -10,6 +10,7 @@ import {
   ListItemText,
   makeStyles,
   Paper,
+  Tooltip,
   Typography,
   useTheme,
 } from "@material-ui/core";
@@ -31,98 +32,173 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./animation.css";
 import TextEntry from "./TextEntry";
 import { LinearProgressWithLabel } from "../utils/LinearProgressWithLabel";
+import LicenseList from "spdx-license-list/simple";
 
 const WizardSpec = [
   {
     path: "title",
-    title: "Name?",
-    description: "This will eventually be the title of your card.",
-    inputPlaceholder: "Yolov4 Faces",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"title"}
+        title={"Name?"}
+        description={"This will eventually be the title of your card."}
+        isMultiline={true}
+        placeholder={"Yolov4 Faces"}
+      />
+    ),
   },
   {
     path: "description",
-    title: "Description?",
-    description: "Write something fast to understand and read.",
-    inputPlaceholder:
-      "State of the art facial detection with the Yolo architecture.",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"description"}
+        title={"Description?"}
+        description={"Write something fast to understand and read."}
+        isMultiline={true}
+        placeholder={
+          "State of the art facial detection with the Yolo architecture."
+        }
+      />
+    ),
   },
   {
     path: "type",
-    title: "Model Type?",
-    description: "What area of ML would this model be a part of?",
-    inputPlaceholder: "Computer Vision",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"type"}
+        title={"Model Type?"}
+        description={"What area of ML would this model be a part of?"}
+        isMultiline={true}
+        placeholder={"Computer Vision"}
+        autocompleteOptions={[
+          "Computer Vision",
+          "Natural Language Processing",
+          "XGBoost",
+          "Reinforcement Learning",
+        ]}
+      />
+    ),
   },
   {
     path: "authors",
-    title: "Authors?",
-    description: "List anyone who could be points of contact.",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"authors"}
+        title={"Authors?"}
+        description={"List anyone who could be points of contact."}
+        isMultiline={true}
+      />
+    ),
   },
   {
     path: "version",
-    title: "Model Version?",
-    description:
-      "Your model's limitations and performance will change from version to version.",
-    inputPlaceholder: "v4",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"version"}
+        title={"Model Version?"}
+        description={
+          "Your model's limitations and performance will change from version to version."
+        }
+        isMultiline={true}
+        placeholder={"v4"}
+      />
+    ),
   },
   {
     path: "links",
-    title: "Any Github and Supporting Links?",
-    description:
-      "Examples include your paper on ArXiv, a public github link, Co-Lab notebook, or Bigquery Dataset link.",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"supportingLinks"}
+        title={"Any Github and Supporting Links?"}
+        description={
+          "Examples include your paper on ArXiv, a public github link, Co-Lab notebook, or Bigquery Dataset link."
+        }
+        isMultiline={true}
+        placeholder={"google.com"}
+      />
+    ),
   },
   {
     path: "license",
-    title: "What are you licensing this model under?",
-    description: "How should others be able to use your model?",
-    inputPlaceholder: "MIT",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"license"}
+        title={"What are you licensing this model under?"}
+        description={"How should others be able to use your model?"}
+        isMultiline={true}
+        placeholder={"MIT"}
+        autocompleteOptions={Array.from(LicenseList.values())}
+      />
+    ),
   },
   {
     path: "I/O",
-    title: "I/O",
-    component: motion.div,
+    component: <TextEntry field={"input"} title={"I/O"} isMultiline={true} />,
   },
   {
     path: "architecture",
-    title: "What is the underlying model architecture?",
-    description:
-      "Describe what powers the model underneath, including backbones and other technologies.",
-    inputPlaceholder:
-      "A Darknet50 backbone with three Yolov3 heads, trained on CIoU loss.",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"architectureDescription"}
+        title={"What is the underlying model architecture?"}
+        description={
+          "Describe what powers the model underneath, including backbones and other technologies."
+        }
+        isMultiline={true}
+        placeholder={
+          "A Darknet50 backbone with three Yolov3 heads, trained on CIoU loss."
+        }
+      />
+    ),
   },
   {
     path: "primaryUsecase",
-    title: "What is the primary usecase of your model?",
-    description:
-      "Include relevant stakeholders, and how people should be using the model. ",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"intendedUse.primaryUsecase"}
+        title={"What is the primary usecase of your model?"}
+        description={
+          "Include relevant stakeholders, and how people should be using the model."
+        }
+        isMultiline={true}
+      />
+    ),
   },
   {
     path: "antiGoals",
-    title: "What should this model not be used for?",
-    description: "What usecases was this model not designed for?",
-    inputPlaceholder: "Resolving individual identities for people in crowds.",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"intendedUse.antiGoals"}
+        title={"What should this model not be used for?"}
+        description={"What usecases was this model not designed for?"}
+        isMultiline={true}
+        placeholder={"Resolving individual identities for people in crowds."}
+      />
+    ),
   },
   {
     path: "limitations",
-    title: "Limitations",
-    description: "What are the core limitations of the model?",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={"limitations"}
+        title={"Limitations"}
+        description={"What are the core limitations of the model?"}
+        isMultiline={true}
+      />
+    ),
   },
   {
     path: "ethicalConsiderations",
-    title: "Ethical Considerations",
-    description:
-      "Because of the limitations and usecases, are there ethical considerstions that model users should be aware of?",
-    component: motion.div,
+    component: (
+      <TextEntry
+        field={""}
+        title={"Ethical Considerations"}
+        description={
+          "Because of the limitations and usecases, are there ethical considerstions that model users should be aware of?"
+        }
+        isMultiline={true}
+      />
+    ),
   },
 ];
 
@@ -212,76 +288,102 @@ export default function CardWizard() {
               render={({ history }) => (
                 <Wizard
                   history={history}
-                  render={({ step, next, previous, steps }) => (
-                    <div
-                      style={{
-                        // position: "relative",
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <div className={classes.nextbar}>
-                        <IconButton onClick={previous}>
-                          <ChevronLeftIcon />
-                        </IconButton>
-                      </div>
-                      <div style={{ flexGrow: 1, position: "relative" }}>
-                        <TransitionGroup>
-                          <CSSTransition
-                            key={step.id}
-                            classNames="wizard"
-                            timeout={{ enter: 200, exit: 200 }}
+                  render={({ step, next, previous, steps }) => {
+                    const stepIndex = steps.indexOf(step);
+                    return (
+                      <div
+                        style={{
+                          // position: "relative",
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <div className={classes.nextbar}>
+                          <Tooltip
+                            title={
+                              stepIndex > 0
+                                ? `Back to ${WizardSpec[stepIndex - 1].path}`
+                                : ""
+                            }
                           >
-                            <div
+                            <IconButton
+                              onClick={previous}
                               style={{
-                                position: "absolute",
-                                width: "100%",
-                                height: "100%",
+                                display: stepIndex === 0 ? "none" : undefined,
                               }}
                             >
-                              <Steps key={step.id} step={step}>
-                                {WizardSpec.map((wizardStep) => (
-                                  <Step id={`wizard/${wizardStep.path}`}>
-                                    <TextEntry
-                                      title={wizardStep.title}
-                                      description={wizardStep.description}
-                                      isMultiline={true}
-                                    />
-                                  </Step>
-                                ))}
-                              </Steps>
-                            </div>
-                          </CSSTransition>
-                        </TransitionGroup>
-                        <Box display="flex" alignItems="center">
-                          <Box mr={2}>
-                            <CircularProgress
-                              variant="static"
-                              value={
-                                ((steps.indexOf(step) + 1) / steps.length) * 100
-                              }
-                            />
+                              <ChevronLeftIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </div>
+                        <div style={{ flexGrow: 1, position: "relative" }}>
+                          <TransitionGroup>
+                            <CSSTransition
+                              key={step.id}
+                              classNames="wizard"
+                              timeout={{ enter: 200, exit: 200 }}
+                            >
+                              <div
+                                style={{
+                                  position: "absolute",
+                                  width: "100%",
+                                  height: "100%",
+                                }}
+                              >
+                                <Steps key={step.id} step={step}>
+                                  {WizardSpec.map((wizardStep) => (
+                                    <Step id={`wizard/${wizardStep.path}`}>
+                                      {wizardStep.component}
+                                    </Step>
+                                  ))}
+                                </Steps>
+                              </div>
+                            </CSSTransition>
+                          </TransitionGroup>
+                          <Box display="flex" alignItems="center">
+                            <Box mr={2} width={"100%"}>
+                              <LinearProgress
+                                variant="determinate"
+                                value={((stepIndex + 1) / steps.length) * 100}
+                              />
+                            </Box>
+                            <Box minWidth={35}>
+                              <Typography
+                                variant="body2"
+                                color="textSecondary"
+                              >{`${Math.round(
+                                ((stepIndex + 1) / steps.length) * 100
+                              )}%`}</Typography>
+                            </Box>
                           </Box>
-                          <Box minWidth={35} mb={1}>
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                            >{`${Math.round(
-                              ((steps.indexOf(step) + 1) / steps.length) * 100
-                            )}%`}</Typography>
-                          </Box>
-                        </Box>
+                        </div>
+                        <div className={classes.nextbar}>
+                          <Tooltip
+                            title={
+                              stepIndex < steps.length - 1
+                                ? `Go to ${WizardSpec[stepIndex + 1].path}`
+                                : ""
+                            }
+                          >
+                            <IconButton
+                              onClick={next}
+                              style={{
+                                display:
+                                  stepIndex === steps.length - 1
+                                    ? "none"
+                                    : undefined,
+                              }}
+                            >
+                              <ChevronRightIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </div>
                       </div>
-                      <div className={classes.nextbar}>
-                        <IconButton onClick={next}>
-                          <ChevronRightIcon />
-                        </IconButton>
-                      </div>
-                    </div>
-                  )}
+                    );
+                  }}
                 />
               )}
             />

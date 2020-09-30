@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   type: {
     fontSize: 14,
     lineHeight: 1,
+    marginTop: theme.spacing(0.5),
   },
 }));
 

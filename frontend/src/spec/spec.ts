@@ -7,7 +7,7 @@ export interface Spec {
   }[];
   version: string;
   type: string;
-  githubLink?: string;
+  githubLink?: string; //remove
   supportingLinks?: string[];
   license?: string;
   input: string | string[];

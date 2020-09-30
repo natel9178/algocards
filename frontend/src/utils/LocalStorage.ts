@@ -1,9 +1,6 @@
 import { Dispatch, useState } from "react";
 
-export function useLocalStorage<T = any>(
-  key: string,
-  initialValue?: T
-): [T, Dispatch<T>] {
+export function useLocalStorage<T = any>(key: string, initialValue?: T) {
   const [item, setValue] = useState<T>(() => {
     const value =
       localStorage.getItem(key) || JSON.stringify(initialValue || null);
