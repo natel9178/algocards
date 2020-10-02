@@ -29,10 +29,10 @@ import Divider from "@material-ui/core/Divider";
 import { Wizard, Steps, Step, WithWizard } from "react-albus";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import "./animation.css";
 import TextEntry from "./TextEntry";
 import { LinearProgressWithLabel } from "../utils/LinearProgressWithLabel";
 import LicenseList from "spdx-license-list/simple";
+import ListEntry from "./ListEntry";
 
 const WizardSpec = [
   {
@@ -44,6 +44,7 @@ const WizardSpec = [
         description={"This will eventually be the title of your card."}
         isMultiline={true}
         placeholder={"Yolov4 Faces"}
+        textLimit={50}
       />
     ),
   },
@@ -82,7 +83,7 @@ const WizardSpec = [
   {
     path: "authors",
     component: (
-      <TextEntry
+      <ListEntry
         field={"authors"}
         title={"Authors?"}
         description={"List anyone who could be points of contact."}
@@ -300,6 +301,17 @@ export default function CardWizard() {
                           flexDirection: "row",
                           justifyContent: "center",
                         }}
+                        onKeyDown={(event) => {
+                          if (event.key === "ArrowLeft" && stepIndex > 0) {
+                            previous();
+                          } else if (
+                            event.key === "ArrowRight" &&
+                            stepIndex < steps.length - 1
+                          ) {
+                            next();
+                          }
+                        }}
+                        tabIndex={0}
                       >
                         <div className={classes.nextbar}>
                           <Tooltip
@@ -376,6 +388,7 @@ export default function CardWizard() {
                                     ? "none"
                                     : undefined,
                               }}
+                              size={"medium"}
                             >
                               <ChevronRightIcon />
                             </IconButton>

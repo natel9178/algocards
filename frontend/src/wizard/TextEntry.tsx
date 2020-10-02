@@ -40,6 +40,7 @@ export default function TextEntry({
   field,
   center = false,
   autocompleteOptions,
+  textLimit,
 }: {
   title: string;
   description?: string;
@@ -48,10 +49,11 @@ export default function TextEntry({
   field: string;
   center?: boolean;
   autocompleteOptions?: string[];
+  textLimit?: number;
 }) {
   const classes = useStyles();
   const [storedValue, setStoredValue] = useLocalStorage(field);
-  const [value, setValue] = useState(storedValue);
+  const [value, setValue] = useState(storedValue || "");
   const debouncedValue = useDebounce(value, 500);
 
   useEffect(() => {
@@ -96,10 +98,25 @@ export default function TextEntry({
           }}
           multiline={isMultiline}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => {
+            if (textLimit) {
+              console.log(!textLimit, e.target.value.length > textLimit);
+            }
+            if (!textLimit || e.target.value.length <= textLimit) {
+              setValue(e.target.value);
+            }
+          }}
           rows={3}
           placeholder={placeholder}
         />
+      )}
+      {textLimit && (
+        <Typography
+          variant={"h5"}
+          style={{ alignSelf: "flex-end", opacity: 0.5 }}
+        >
+          {textLimit - value.length}
+        </Typography>
       )}
     </div>
   );

@@ -13,7 +13,7 @@ import { Location } from "history";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import AddIcon from "@material-ui/icons/Add";
 
-const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
+const useStyles = makeStyles<Theme, { showHeader: boolean }>((theme) => ({
   "@global": {
     html: {
       background: "#FAFAFA",
@@ -47,10 +47,12 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
     }),
     boxShadow: "inherit",
     padding: "30px 40px",
+    display: ({ showHeader }) => (showHeader ? "inherit" : "none"),
+    marginBottom: ({ showHeader }) =>
+      showHeader ? theme.spacing(8) : theme.spacing(0),
   },
   content: {
     flexGrow: 1,
-    paddingTop: theme.spacing(8),
   },
   container: {},
   extendedIcon: {
@@ -60,10 +62,11 @@ const useStyles = makeStyles<Theme, { location: Location<any> }>((theme) => ({
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const classes = useStyles({ location });
+  const classes = useStyles({ showHeader: location.pathname !== "/presenter" });
   const { scrollY } = useViewportScroll();
   const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
 
+  console.log(location);
   return (
     <div className={classes.root}>
       <AppBar position="relative" className={classes.appBar}>
@@ -84,10 +87,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Typography className={classes.title} variant={"h4"}>
               Algo-Card
             </Typography>
-            <Fab style={{ backgroundColor: "rgba(250,250,250,0.3)" }} variant="extended">
-              <AddIcon className={classes.extendedIcon} />
-              Add Card
-            </Fab>
           </motion.div>
         </Toolbar>
       </AppBar>

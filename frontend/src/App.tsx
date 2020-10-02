@@ -6,6 +6,7 @@ import { CssBaseline } from "@material-ui/core";
 import { Layout } from "./styling/Layout";
 import Presenter from "./presenter/Presenter";
 import CardWizard from "./wizard/CardWizard";
+import "./animation.css";
 
 function App() {
   return (
