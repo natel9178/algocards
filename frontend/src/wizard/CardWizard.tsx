@@ -84,10 +84,13 @@ const WizardSpec = [
     path: "authors",
     component: (
       <ListEntry
-        field={"authors"}
+        textPlaceholder="Limitation"
+        subtextPlaceholder="Nice Stuff"
+        mainField="limitations"
+        textField="title"
+        subtextField="description"
         title={"Authors?"}
         description={"List anyone who could be points of contact."}
-        isMultiline={true}
       />
     ),
   },
@@ -355,7 +358,11 @@ export default function CardWizard() {
                               </div>
                             </CSSTransition>
                           </TransitionGroup>
-                          <Box display="flex" alignItems="center">
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            marginTop={-4} // TODO: Extremely Janky margin, Hate this.
+                          >
                             <Box mr={2} width={"100%"}>
                               <LinearProgress
                                 variant="determinate"

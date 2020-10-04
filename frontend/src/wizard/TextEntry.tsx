@@ -99,9 +99,6 @@ export default function TextEntry({
           multiline={isMultiline}
           value={value}
           onChange={(e) => {
-            if (textLimit) {
-              console.log(!textLimit, e.target.value.length > textLimit);
-            }
             if (!textLimit || e.target.value.length <= textLimit) {
               setValue(e.target.value);
             }
