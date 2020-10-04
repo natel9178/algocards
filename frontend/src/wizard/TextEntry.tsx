@@ -1,17 +1,10 @@
-import {
-  Box,
-  Grid,
-  makeStyles,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Box, makeStyles, TextField, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { Spec } from "../spec/spec";
 import { useLocalStorage } from "../utils/LocalStorage";
 import { useDebounce } from "../utils/useDebounce";
 import { Autocomplete } from "@material-ui/lab";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: "100%",
     height: "100%",
@@ -58,7 +51,7 @@ export default function TextEntry({
 
   useEffect(() => {
     setStoredValue(debouncedValue);
-  }, [debouncedValue]);
+  }, [debouncedValue, setStoredValue]);
 
   return (
     <div className={classes.root}>

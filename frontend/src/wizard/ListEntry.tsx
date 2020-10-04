@@ -1,6 +1,5 @@
 import {
   Box,
-  Grid,
   makeStyles,
   Paper,
   TextField,
@@ -8,23 +7,22 @@ import {
   useTheme,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { Spec } from "../spec/spec";
 import { useLocalStorage } from "../utils/LocalStorage";
 import { useDebounce } from "../utils/useDebounce";
-import { Autocomplete } from "@material-ui/lab";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface ListEntryProps {
-  textPlaceholder: string;
+  textPlaceholder?: string;
   subtextPlaceholder: string;
   mainField: string;
-  textField: string;
+  textField?: string;
   subtextField: string;
+  short?: boolean;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: "100%",
     height: "100%",
@@ -54,6 +52,7 @@ const useItemStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "stretch",
     margin: theme.spacing(2),
+    width: "100%",
   },
   textField: {},
   subtextField: { flexGrow: 1 },
@@ -88,7 +87,7 @@ const SortableItem = SortableElement(
     return (
       <motion.div
         style={{
-          flex: "0 0 30%",
+          flex: !props.short ? "0 0 35ch" : undefined,
           display: "flex",
           alignItems: "stretch",
           justifyContent: "stretch",
@@ -96,25 +95,36 @@ const SortableItem = SortableElement(
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        layout
       >
-        <Paper className={classes.paper}>
-          <TextField
-            autoFocus
-            className={classes.textField}
-            InputProps={{
-              classes: {
-                input: classes.textInput,
-              },
-              disableUnderline: true,
-            }}
-            multiline={false}
-            value={props.item[props.textField] || ""}
-            onChange={(e) =>
-              props.editFunc(props.itemIndex, props.textField, e.target.value)
-            }
-            rows={1}
-            placeholder={props.textPlaceholder}
-          />
+        <Paper
+          className={classes.paper}
+          style={{ minWidth: props.short ? "40ch" : "inherit" }}
+        >
+          {props.textPlaceholder && props.textField && (
+            <TextField
+              autoFocus
+              className={classes.textField}
+              InputProps={{
+                classes: {
+                  input: classes.textInput,
+                },
+                disableUnderline: true,
+              }}
+              multiline={false}
+              value={props.item[props.textField] || ""}
+              onChange={(e) =>
+                props.editFunc(
+                  props.itemIndex,
+                  props.textField || "",
+                  e.target.value
+                )
+              }
+              rows={1}
+              placeholder={props.textPlaceholder}
+            />
+          )}
           <TextField
             autoFocus
             className={classes.subtextField}
@@ -124,7 +134,7 @@ const SortableItem = SortableElement(
               },
               disableUnderline: true,
             }}
-            multiline={true}
+            multiline={!props.short}
             value={props.item[props.subtextField] || ""}
             onChange={(e) =>
               props.editFunc(
@@ -154,8 +164,10 @@ const SortableList = SortableContainer(
         style={{
           flex: "1 1 100%",
           display: "flex",
+          flexDirection: props.short ? "column" : "row",
+          flexWrap: props.short ? "wrap" : "nowrap",
           justifyContent: "flex-start",
-          alignItems: "stretch",
+          alignItems: props.short ? "center" : "stretch",
           position: "relative",
           padding: theme.spacing(2),
           overflow: "auto",
@@ -233,7 +245,7 @@ export default function ListEntry(
 
   useEffect(() => {
     setStoredValue(debouncedValue);
-  }, [debouncedValue]);
+  }, [debouncedValue, setStoredValue]);
 
   return (
     <div className={classes.root}>

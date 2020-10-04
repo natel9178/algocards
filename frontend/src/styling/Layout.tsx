@@ -2,16 +2,12 @@ import React from "react";
 import {
   AppBar,
   Box,
-  Fab,
-  Hidden,
   Toolbar,
   Typography,
 } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useLocation } from "react-router-dom";
-import { Location } from "history";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
-import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles<Theme, { showHeader: boolean }>((theme) => ({
   "@global": {
@@ -66,7 +62,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { scrollY } = useViewportScroll();
   const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
 
-  console.log(location);
   return (
     <div className={classes.root}>
       <AppBar position="relative" className={classes.appBar}>

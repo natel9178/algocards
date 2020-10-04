@@ -1,34 +1,16 @@
-import {
-  Box,
-  Grid,
-  makeStyles,
-  Paper,
-  Drawer,
-  useTheme,
-  AppBar,
-  Fab,
-} from "@material-ui/core";
+import { Box, makeStyles, Paper, Drawer, AppBar, Fab } from "@material-ui/core";
 import React from "react";
 import Card from "./Card";
 import BuildIcon from "@material-ui/icons/Build";
 import InfoIcon from "@material-ui/icons/Info";
-import { CircleIndicator } from "./ViewportScroller";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
@@ -126,7 +108,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Presenter() {
   const classes = useStyles();
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const { scrollY } = useViewportScroll();
   const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);

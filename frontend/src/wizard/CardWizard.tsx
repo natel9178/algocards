@@ -1,36 +1,21 @@
 import {
   Box,
-  CircularProgress,
-  Drawer,
   Grid,
   IconButton,
   LinearProgress,
-  List,
-  ListItem,
-  ListItemText,
   makeStyles,
   Paper,
   Tooltip,
   Typography,
-  useTheme,
 } from "@material-ui/core";
-import { motion } from "framer-motion";
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import { Spec } from "../spec/spec";
-import { useLocalStorage } from "../utils/LocalStorage";
-import MenuIcon from "@material-ui/icons/Menu";
+import { Route } from "react-router-dom";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-import Divider from "@material-ui/core/Divider";
-import { Wizard, Steps, Step, WithWizard } from "react-albus";
+import { Wizard, Steps, Step } from "react-albus";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import TextEntry from "./TextEntry";
-import { LinearProgressWithLabel } from "../utils/LinearProgressWithLabel";
 import LicenseList from "spdx-license-list/simple";
 import ListEntry from "./ListEntry";
 
@@ -84,11 +69,12 @@ const WizardSpec = [
     path: "authors",
     component: (
       <ListEntry
-        textPlaceholder="Limitation"
-        subtextPlaceholder="Nice Stuff"
-        mainField="limitations"
-        textField="title"
-        subtextField="description"
+        textPlaceholder="Name"
+        subtextPlaceholder="Contact (e-mail)"
+        mainField="authors"
+        textField="name"
+        short
+        subtextField="contact"
         title={"Authors?"}
         description={"List anyone who could be points of contact."}
       />
@@ -111,14 +97,15 @@ const WizardSpec = [
   {
     path: "links",
     component: (
-      <TextEntry
-        field={"supportingLinks"}
+      <ListEntry
+        short
+        subtextPlaceholder="https://arxiv.org"
+        mainField="supportingLinks"
+        subtextField="link"
         title={"Any Github and Supporting Links?"}
         description={
           "Examples include your paper on ArXiv, a public github link, Co-Lab notebook, or Bigquery Dataset link."
         }
-        isMultiline={true}
-        placeholder={"google.com"}
       />
     ),
   },
@@ -136,8 +123,32 @@ const WizardSpec = [
     ),
   },
   {
-    path: "I/O",
-    component: <TextEntry field={"input"} title={"I/O"} isMultiline={true} />,
+    path: "inputs",
+    component: (
+      <ListEntry
+        short
+        subtextPlaceholder="Photo(s) / Video(s)"
+        mainField="inputs"
+        subtextField="name"
+        title={"Inputs?"}
+        description={"Add relevant inputs to this model."}
+      />
+    ),
+  },
+  {
+    path: "outputs",
+    component: (
+      <ListEntry
+        short
+        subtextPlaceholder="Bounding Boxes"
+        mainField="outputs"
+        subtextField="name"
+        title={"Outputs?"}
+        description={
+          "Add any features or detections outputted from this model."
+        }
+      />
+    ),
   },
   {
     path: "architecture",
@@ -171,36 +182,40 @@ const WizardSpec = [
   {
     path: "antiGoals",
     component: (
-      <TextEntry
-        field={"intendedUse.antiGoals"}
-        title={"What should this model not be used for?"}
+      <ListEntry
+        subtextPlaceholder="Resolving distinct identities for people in crowds (i.e. facial recognition)."
+        mainField="antiGoals"
+        subtextField="description"
+        title={"Anti-Goals?"}
         description={"What usecases was this model not designed for?"}
-        isMultiline={true}
-        placeholder={"Resolving individual identities for people in crowds."}
       />
     ),
   },
   {
     path: "limitations",
     component: (
-      <TextEntry
-        field={"limitations"}
-        title={"Limitations"}
+      <ListEntry
+        textPlaceholder="Occlusion"
+        subtextPlaceholder="While faces or objects are occluded, this model may not be able to resolve these objects accurately."
+        mainField="limitations"
+        textField="type"
+        subtextField="description"
+        title={"Limitations?"}
         description={"What are the core limitations of the model?"}
-        isMultiline={true}
       />
     ),
   },
   {
     path: "ethicalConsiderations",
     component: (
-      <TextEntry
-        field={""}
-        title={"Ethical Considerations"}
+      <ListEntry
+        subtextPlaceholder="Using this model for tracking people may lead to innaccurate results and harmful consequences in mission-critical contexts."
+        mainField="ethicalConsiderations"
+        subtextField="consideration"
+        title={"Ethical Considerations?"}
         description={
           "Because of the limitations and usecases, are there ethical considerstions that model users should be aware of?"
         }
-        isMultiline={true}
       />
     ),
   },
@@ -304,17 +319,17 @@ export default function CardWizard() {
                           flexDirection: "row",
                           justifyContent: "center",
                         }}
-                        onKeyDown={(event) => {
-                          if (event.key === "ArrowLeft" && stepIndex > 0) {
-                            previous();
-                          } else if (
-                            event.key === "ArrowRight" &&
-                            stepIndex < steps.length - 1
-                          ) {
-                            next();
-                          }
-                        }}
-                        tabIndex={0}
+                        // onKeyDown={(event) => {
+                        //   if (event.key === "ArrowLeft" && stepIndex > 0) {
+                        //     previous();
+                        //   } else if (
+                        //     event.key === "ArrowRight" &&
+                        //     stepIndex < steps.length - 1
+                        //   ) {
+                        //     next();
+                        //   }
+                        // }}
+                        // tabIndex={0}
                       >
                         <div className={classes.nextbar}>
                           <Tooltip
@@ -339,7 +354,7 @@ export default function CardWizard() {
                             <CSSTransition
                               key={step.id}
                               classNames="wizard"
-                              timeout={{ enter: 200, exit: 200 }}
+                              timeout={{ enter: 200, exit: 300 }}
                             >
                               <div
                                 style={{
@@ -350,7 +365,10 @@ export default function CardWizard() {
                               >
                                 <Steps key={step.id} step={step}>
                                   {WizardSpec.map((wizardStep) => (
-                                    <Step id={`wizard/${wizardStep.path}`}>
+                                    <Step
+                                      key={`wizard/${wizardStep.path}`}
+                                      id={`wizard/${wizardStep.path}`}
+                                    >
                                       {wizardStep.component}
                                     </Step>
                                   ))}

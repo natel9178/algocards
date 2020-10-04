@@ -3,7 +3,6 @@ import {
   Divider,
   Grid,
   makeStyles,
-  Paper,
   Typography,
   Card as MuiCard,
   useTheme,
@@ -11,9 +10,7 @@ import {
 import React from "react";
 import { Spec } from "../spec/spec";
 import { LoremIpsum } from "lorem-ipsum";
-import ImageIcon from "@material-ui/icons/Image";
 import Icon from "./Icon";
-import AspectRatioIcon from "@material-ui/icons/AspectRatio";
 import BuildIcon from "@material-ui/icons/Build";
 import ListOrParagraph from "./ListOrParagraph";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
@@ -142,19 +139,19 @@ const SAMPLE_SPEC = {
     // done
     primaryUsecase:
       "The intended direct users of GPT-3 are developers who access its capabilities via the OpenAI API. Through the OpenAI API, the model can be used by those who may not have AI development experience to build and explore language modeling systems across a wide range of functions. We also anticipate that the model will continue to be used by researchers to better understand the behaviors, capabilities, biases, and constraints of large-scale language models. \n Given GPT-3’s limitations (described below), and the breadth and open-ended nature of GPT-3’s capabilities, we currently only support controlled access to and use of the model via the OpenAI API. Access and use are subject to OpenAI’s access approval process, API Usage Guidelines, and API Terms of Use, which are designed to prohibit the use of the API in a way that causes societal harm.\nWe review all use cases prior to onboarding to the API, review them again before customers move into production, and have systems in place to revoke access if necessary after moving to production. Additionally, we provide guidance to users on some of the potential safety risks they should attend to and related mitigations.", // done
-    antiGoals: Array.apply(null, Array(getRandomInt(1, 3))).map((x) =>
+    antiGoals: Array.apply(null, Array(getRandomInt(1, 3))).map(() =>
       lorem.generateSentences(1)
     ), // done
   },
-  input: Array.apply(null, Array(getRandomInt(1, 3))).map((x) =>
+  input: Array.apply(null, Array(getRandomInt(1, 3))).map(() =>
     lorem.generateWords(2)
   ), // done
-  output: Array.apply(null, Array(getRandomInt(1, 3))).map((x) =>
+  output: Array.apply(null, Array(getRandomInt(1, 3))).map(() =>
     lorem.generateWords(2)
   ), // done
   architectureDescription: lorem.generateSentences(1), // done
 
-  ethicalConsiderations: Array.apply(null, Array(getRandomInt(1, 3))).map((x) =>
+  ethicalConsiderations: Array.apply(null, Array(getRandomInt(1, 3))).map(() =>
     lorem.generateSentences(1)
   ),
   limitations: [
@@ -599,6 +596,7 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
                 </Typography>
                 <img
                   style={{ width: "100%", borderRadius: 10, marginTop: 5 }}
+                  alt={"input example"}
                   src={
                     "https://modelcards.withgoogle.com/assets/images/object-detection/obj-detection-model-description.png"
                   }
