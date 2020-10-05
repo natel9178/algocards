@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
+import { useDebounce } from "./useDebounce";
 
-export function useLocalStorage<T = any>(key: string, initialValue?: T) {
+export const useLocalStorage = <T = any>(
+  key: string,
+  initialValue?: T
+): [T, Dispatch<T>] => {
   const [item, setValue] = useState<T>(() => {
     const value =
       localStorage.getItem(key) || JSON.stringify(initialValue || null);
     localStorage.setItem(key, value);
     return JSON.parse(value);
   });
+  const debouncedItem = useDebounce(item, 1000);
 
-  function setItem(newValue: T) {
-    setValue(newValue);
-    localStorage.setItem(key, JSON.stringify(newValue));
-  }
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(debouncedItem));
+  }, [debouncedItem]);
 
-  return [item, setItem];
-}
+  return [item, setValue];
+};

@@ -45,13 +45,7 @@ export default function TextEntry({
   textLimit?: number;
 }) {
   const classes = useStyles();
-  const [storedValue, setStoredValue] = useLocalStorage(field);
-  const [value, setValue] = useState(storedValue || "");
-  const debouncedValue = useDebounce(value, 500);
-
-  useEffect(() => {
-    setStoredValue(debouncedValue);
-  }, [debouncedValue, setStoredValue]);
+  const [value, setValue] = useLocalStorage(field, "");
 
   return (
     <div className={classes.root}>

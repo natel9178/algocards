@@ -104,7 +104,6 @@ const SortableItem = SortableElement(
         >
           {props.textPlaceholder && props.textField && (
             <TextField
-              autoFocus
               className={classes.textField}
               InputProps={{
                 classes: {
@@ -126,7 +125,6 @@ const SortableItem = SortableElement(
             />
           )}
           <TextField
-            autoFocus
             className={classes.subtextField}
             InputProps={{
               classes: {
@@ -177,6 +175,7 @@ const SortableList = SortableContainer(
           {props.items.map((item, index) => {
             return (
               <SortableItem
+                disabled={props.short}
                 key={index}
                 index={index}
                 itemIndex={index}
@@ -186,6 +185,8 @@ const SortableList = SortableContainer(
             );
           })}
           <SortableItem
+            disabled={props.short}
+            key={props.items.length}
             index={props.items.length}
             itemIndex={props.items.length}
             item={{}}
@@ -204,11 +205,10 @@ export default function ListEntry(
   }
 ) {
   const classes = useStyles();
-  const [storedValue, setStoredValue] = useLocalStorage(props.mainField);
-  const [values, setValues] = useState<Record<string, string>[]>(
-    storedValue || []
+  const [values, setValues] = useLocalStorage<Record<string, string>[]>(
+    props.mainField,
+    []
   );
-  const debouncedValue = useDebounce(values, 500);
 
   const editField = (index: number, field: string, newValue: string) => {
     if (index >= values.length) {
@@ -216,7 +216,6 @@ export default function ListEntry(
     } else {
       if (newValue === "") {
         let foundNonemptyKey = false;
-        console.log(values[index]);
         for (let key in values[index]) {
           if (key === field) continue;
           if (values[index][key] !== "") {
@@ -242,10 +241,6 @@ export default function ListEntry(
       );
     }
   };
-
-  useEffect(() => {
-    setStoredValue(debouncedValue);
-  }, [debouncedValue, setStoredValue]);
 
   return (
     <div className={classes.root}>
