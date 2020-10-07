@@ -3,6 +3,7 @@ import {
   makeStyles,
   Paper,
   TextField,
+  Theme,
   Typography,
   useTheme,
 } from "@material-ui/core";
@@ -19,6 +20,9 @@ interface ListEntryProps {
   textField?: string;
   subtextField: string;
   short?: boolean;
+  minWidth?: string | number;
+  maxWidth?: string | number;
+  center?: boolean;
 }
 
 const useStyles = makeStyles(() => ({
@@ -42,7 +46,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const useItemStyles = makeStyles((theme) => ({
+const useItemStyles = makeStyles<Theme, { center?: boolean }>((theme) => ({
   paper: {
     borderRadius: 18,
     boxShadow: "3px 3px 30px rgba(0, 0, 0, 0.1)",
@@ -60,6 +64,7 @@ const useItemStyles = makeStyles((theme) => ({
     lineHeight: 1.3,
     fontFamily: "Roboto Mono",
     fontWeight: "bold",
+    textAlign: ({ center }) => (center ? "center" : "left"),
     "&::placeholder": {
       opacity: 0.15,
     },
@@ -68,6 +73,7 @@ const useItemStyles = makeStyles((theme) => ({
     fontSize: 18,
     lineHeight: 1.3,
     fontFamily: "Roboto",
+    textAlign: ({ center }) => (center ? "center" : "left"),
     "&::placeholder": {
       opacity: 0.15,
     },
@@ -82,7 +88,7 @@ const SortableItem = SortableElement(
       editFunc: (index: number, field: string, newValue: string) => void;
     }
   ) => {
-    const classes = useItemStyles();
+    const classes = useItemStyles({ center: props.center });
     return (
       <motion.div
         style={{
@@ -90,6 +96,8 @@ const SortableItem = SortableElement(
           display: "flex",
           alignItems: "stretch",
           justifyContent: "stretch",
+          minWidth: props.minWidth,
+          maxWidth: props.maxWidth,
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -99,7 +107,13 @@ const SortableItem = SortableElement(
       >
         <Paper
           className={classes.paper}
-          style={{ minWidth: props.short ? "40ch" : "inherit" }}
+          style={{
+            minWidth: props.maxWidth
+              ? props.maxWidth
+              : props.short
+              ? "40ch"
+              : "inherit",
+          }}
         >
           {props.textPlaceholder && props.textField && (
             <TextField

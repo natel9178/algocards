@@ -18,6 +18,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import TextEntry from "./TextEntry";
 import LicenseList from "spdx-license-list/simple";
 import ListEntry from "./ListEntry";
+import { useLocalStorage } from "../utils/LocalStorage";
 
 const WizardSpec = [
   {
@@ -219,6 +220,59 @@ const WizardSpec = [
       />
     ),
   },
+  {
+    path: "datasets",
+    component: (
+      <ListEntry
+        minWidth={"50ch"}
+        textPlaceholder="COCO (People)"
+        subtextPlaceholder="A subset of the COCO dataset, meaning “Common Objects In Context”, is a set of challenging, high quality datasets for computer vision, mostly state-of-the-art neural networks. We only selected face labels on this dataset. "
+        mainField="datasets"
+        textField="name"
+        subtextField="description"
+        title={"Datasets?"}
+        description={
+          "What datasets did your model use for training and evaluation?"
+        }
+      />
+    ),
+  },
+  {
+    path: "performanceOverview",
+    component: (
+      <TextEntry
+        smallText
+        field={"performanceOverview"}
+        title={"Performance Summary?"}
+        description={
+          "Describe how the model was trained and any qualatative insights from your performance evaluation."
+        }
+        isMultiline={true}
+        placeholder={
+          "We trained this model with standard Yolov4 training procedures. We noticed that on our evaluation dataset, our recall metrics dropped significantly when there was occlusion, or when there were multiple objects grouped in the frame. "
+        }
+      />
+    ),
+  },
+  {
+    path: "performanceMetrics",
+    component: (
+      <ListEntry
+        short
+        center
+        maxWidth={"20ch"}
+        textPlaceholder="PR-AUC"
+        subtextPlaceholder="0.43"
+        mainField="performanceMetrics"
+        textField="name"
+        subtextField="value"
+        title={"Metrics?"}
+        description={
+          "Give all quantative metrics necessary to give people the big picture."
+        }
+      />
+    ),
+  },
 ];
 
 const drawerWidth = 240;
@@ -296,6 +350,9 @@ export default function CardWizard() {
   //   const [specBuilder, setSpecBuilder] = useLocalStorage<Partial<Spec>>(
   //     "specBuilder"
   //   );
+  const [ethicalConsiderations, setEthicalConsiderations] = useLocalStorage(
+    "ethicalConsiderations"
+  );
 
   return (
     <div className={classes.root}>
@@ -372,6 +429,27 @@ export default function CardWizard() {
                                       {wizardStep.component}
                                     </Step>
                                   ))}
+                                  {ethicalConsiderations.map(
+                                    (_: string, idx: number) => {
+                                      return (
+                                        <Step
+                                          key={`wizard/example${idx}`}
+                                          id={`wizard/example${idx}`}
+                                        >
+                                          <TextEntry
+                                            field={`title${idx}`}
+                                            title={"Name?"}
+                                            description={
+                                              "This will eventually be the title of your card."
+                                            }
+                                            isMultiline={true}
+                                            placeholder={"Yolov4 Faces"}
+                                            textLimit={50}
+                                          />
+                                        </Step>
+                                      );
+                                    }
+                                  )}
                                 </Steps>
                               </div>
                             </CSSTransition>
@@ -401,7 +479,9 @@ export default function CardWizard() {
                           <Tooltip
                             title={
                               stepIndex < steps.length - 1
-                                ? `Go to ${WizardSpec[stepIndex + 1].path}`
+                                ? `Go to ${
+                                    WizardSpec[stepIndex + 1].path || ""
+                                  }`
                                 : ""
                             }
                           >

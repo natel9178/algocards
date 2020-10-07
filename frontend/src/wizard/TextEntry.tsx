@@ -1,9 +1,15 @@
-import { Box, makeStyles, TextField, Typography } from "@material-ui/core";
-import React, {  } from "react";
+import {
+  Box,
+  makeStyles,
+  TextField,
+  Theme,
+  Typography,
+} from "@material-ui/core";
+import React from "react";
 import { useLocalStorage } from "../utils/LocalStorage";
 import { Autocomplete } from "@material-ui/lab";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles<Theme, { smallText?: boolean }>(() => ({
   root: {
     width: "100%",
     height: "100%",
@@ -15,7 +21,7 @@ const useStyles = makeStyles(() => ({
     width: "100%",
   },
   input: {
-    fontSize: 50,
+    fontSize: (props) => (props.smallText ? 30 : 50),
     lineHeight: 1.3,
     fontFamily: "Roboto",
     "&::placeholder": {
@@ -31,6 +37,7 @@ export default function TextEntry({
   isMultiline,
   field,
   center = false,
+  smallText = false,
   autocompleteOptions,
   textLimit,
 }: {
@@ -42,8 +49,9 @@ export default function TextEntry({
   center?: boolean;
   autocompleteOptions?: string[];
   textLimit?: number;
+  smallText?: boolean;
 }) {
-  const classes = useStyles();
+  const classes = useStyles({ smallText });
   const [value, setValue] = useLocalStorage(field, "");
 
   return (
@@ -89,7 +97,7 @@ export default function TextEntry({
               setValue(e.target.value);
             }
           }}
-          rows={3}
+          rows={smallText ? 7 : 3}
           placeholder={placeholder}
         />
       )}
