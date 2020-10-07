@@ -15,7 +15,7 @@ export const useLocalStorage = <T = any>(
 
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(debouncedItem));
-  }, [debouncedItem]);
+  }, [debouncedItem, key]);
 
   return [item, setValue];
 };

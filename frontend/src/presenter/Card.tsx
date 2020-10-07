@@ -1,37 +1,14 @@
-import {
-  Box,
-  Divider,
-  Grid,
-  makeStyles,
-  Typography,
-  Card as MuiCard,
-  useTheme,
-} from "@material-ui/core";
+import { Box, Grid, makeStyles } from "@material-ui/core";
 import React from "react";
 import { Spec } from "../spec/spec";
 import { LoremIpsum } from "lorem-ipsum";
-import Icon from "./Icon";
-import BuildIcon from "@material-ui/icons/Build";
-import ListOrParagraph from "./ListOrParagraph";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import GitHubIcon from "@material-ui/icons/GitHub";
-import WarningIcon from "@material-ui/icons/Warning";
-import LinkIcon from "@material-ui/icons/Link";
 import { AnimatePresence, motion } from "framer-motion";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import BookIcon from "@material-ui/icons/Book";
-import TranslateIcon from "@material-ui/icons/Translate";
+import InfoBar from "./cardmodules/InfoBar";
+import Authors from "./cardmodules/Authors";
+import Header from "./cardmodules/Header";
+import IntendedUse from "./cardmodules/IntendedUse";
+import Limitations from "./cardmodules/Limitations";
+import Performance from "./cardmodules/Performance";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -80,26 +57,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     marginTop: theme.spacing(2),
   },
-  metaBarContainer: {
-    flexDirection: "column",
-  },
-  metaBarTypography: {
-    marginTop: 10,
-    opacity: 0.5,
-    fontSize: 12,
-    fontWeight: 600,
-  },
-  metaBarTypographyBody: {
-    whiteSpace: "pre-wrap",
-    fontSize: 15,
-    // fontFamily: "Lato",
-    fontFamily: "Roboto Mono",
-    fontWeight: "bold",
-  },
-
-  metaBarRow: {
-    flexDirection: "column",
-  },
 }));
 
 const lorem = new LoremIpsum({
@@ -121,7 +78,6 @@ function getRandomInt(min: number, max: number) {
 
 const SAMPLE_SPEC = {
   title: "AI Object Detection", // done
-  githubLink: "http://google.com",
   supportingLinks: [
     "https://arxiv.org/abs/2005.14165",
     "https://github.com/openai/gpt-3/blob/master/175b_samples.jsonl",
@@ -242,7 +198,6 @@ const SAMPLE_SPEC = {
 
 export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
   const classes = useStyles();
-  const theme = useTheme();
   return (
     <AnimatePresence>
       <motion.div
@@ -251,500 +206,41 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
         exit={{ opacity: 0 }}
         className={classes.root}
       >
-        <Grid container spacing={10}>
-          <Grid item xs={8} className={classes.leftTitle}>
-            <Typography style={{ fontWeight: "bold" }} variant={"h3"}>
-              <a
-                style={{ color: "black", textDecoration: "none" }}
-                href={spec.githubLink}
-              >
-                {spec.title}
-              </a>
-            </Typography>
-            <Typography variant={"body1"}>{spec.description}</Typography>
-          </Grid>
-          <Grid item xs={4} className={classes.rightTitle}>
-            <Icon
-              icon={<TranslateIcon fontSize={"large"} />}
-              title={spec.type}
-              label={""}
-            />
-            <Divider
-              variant={"middle"}
-              orientation={"vertical"}
-              light
-              flexItem
-            />
-            <Icon
-              icon={<BookIcon fontSize={"large"} />}
-              title={spec.version}
-              label={""}
-            />
-            <Divider
-              variant={"middle"}
-              orientation={"vertical"}
-              light
-              flexItem
-            />
-            <Icon
-              icon={
-                <Typography variant={"h5"} style={{ fontWeight: "bolder" }}>
-                  {spec.license}
-                </Typography>
-              }
-              title={"License"}
-              label={""}
-            />
-          </Grid>
-        </Grid>
+        <Header {...spec} />
         <Box m={2} />
         <div style={{ width: "100%" }}>
           <Grid container spacing={10}>
             <Grid item xs={8}>
               <Grid container spacing={3}>
                 <Grid item xs={12} className={classes.subBox}>
-                  <BuildIcon fontSize={"large"} />
-                  <div className={classes.subContainer}>
-                    <Typography
-                      style={{ fontWeight: "bold", lineHeight: 1 }}
-                      variant={"h4"}
-                    >
-                      Intended Use
-                    </Typography>
-                    <Typography
-                      variant={"h6"}
-                      style={{ marginTop: 10, whiteSpace: "pre-wrap" }}
-                    >
-                      Primary Usecases
-                    </Typography>
-                    <Typography variant={"body2"}>
-                      <ListOrParagraph
-                        content={spec.intendedUse.primaryUsecase}
-                      />
-                    </Typography>
-
-                    {spec.intendedUse.antiGoals && (
-                      <>
-                        <Typography variant={"h6"} style={{ marginTop: 10 }}>
-                          Anti-Goals
-                        </Typography>
-                        <Typography variant={"body2"}>
-                          <ListOrParagraph
-                            content={spec.intendedUse.antiGoals}
-                          />
-                        </Typography>
-                      </>
-                    )}
-                  </div>
+                  <IntendedUse
+                    primaryUsecase={spec.intendedUse?.primaryUsecase}
+                    antiGoals={spec.intendedUse?.antiGoals}
+                  />
                 </Grid>
                 <Grid item xs={12} className={classes.subBox}>
-                  <WarningIcon fontSize={"large"} />
-                  <div className={classes.subContainer}>
-                    <Typography
-                      style={{ fontWeight: "bold", lineHeight: 1 }}
-                      variant={"h4"}
-                    >
-                      Limitations & Tradeoffs
-                    </Typography>
-                    <Grid container spacing={3}>
-                      {spec.limitations &&
-                        spec.limitations.map(
-                          ({ type, description, workarounds }) => (
-                            <Grid item xs={6}>
-                              <div style={{ flexDirection: "column" }}>
-                                <Typography
-                                  variant={"h6"}
-                                  style={{ marginTop: 10 }}
-                                >
-                                  {type}
-                                </Typography>
-                                <Typography variant={"body2"}>
-                                  <ListOrParagraph content={description} />
-                                </Typography>
-                                {workarounds && (
-                                  <Typography
-                                    variant={"body2"}
-                                    style={{ marginTop: 10 }}
-                                  >
-                                    <strong>Workaround: </strong>
-                                    <ListOrParagraph content={workarounds} />
-                                  </Typography>
-                                )}
-                              </div>
-                            </Grid>
-                          )
-                        )}
-                    </Grid>
-                  </div>
+                  <Limitations {...spec} />
                 </Grid>
-                <Grid item xs={12} className={classes.subBox}>
-                  <BarChartIcon fontSize={"large"} />
-                  <div className={classes.subContainer}>
-                    <Typography
-                      style={{ fontWeight: "bold", lineHeight: 1 }}
-                      variant={"h4"}
-                    >
-                      Dataset Performance
-                    </Typography>
-                    <Grid container spacing={3}>
-                      {spec.datasetPerformance &&
-                        spec.datasetPerformance.map((dataset) => (
-                          <Grid item xs={12}>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                width: "100%",
-                                alignItems: "stretch",
-                              }}
-                            >
-                              <Typography
-                                variant={"h6"}
-                                style={{ marginTop: 10 }}
-                              >
-                                {dataset.link ? (
-                                  <a
-                                    style={{
-                                      color: "black",
-                                      textDecoration: "none",
-                                    }}
-                                    href={dataset.link}
-                                  >
-                                    {dataset.datasetName}{" "}
-                                    <LinkIcon fontSize={"small"} />
-                                  </a>
-                                ) : (
-                                  <> {dataset.datasetName}</>
-                                )}
-                              </Typography>
-                              {dataset.description && (
-                                <Typography variant={"body2"}>
-                                  {dataset.description}
-                                </Typography>
-                              )}
-                              {dataset.performanceMetrics && (
-                                <TableContainer
-                                  component={MuiCard}
-                                  style={{
-                                    margin: theme.spacing(1, 0),
-                                  }}
-                                >
-                                  <Table size="small" style={{ width: "100%" }}>
-                                    <TableHead>
-                                      <TableRow>
-                                        <TableCell>Metric</TableCell>
-                                        <TableCell align="right">
-                                          Value
-                                        </TableCell>
-                                      </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                      {dataset.performanceMetrics.map((row) => (
-                                        <TableRow key={row.name}>
-                                          <TableCell component="th" scope="row">
-                                            {row.name}
-                                          </TableCell>
-                                          <TableCell align="right">
-                                            {row.value}
-                                          </TableCell>
-                                        </TableRow>
-                                      ))}
-                                    </TableBody>
-                                  </Table>
-                                </TableContainer>
-                              )}
-                              {dataset.performanceGraphs && (
-                                <Accordion
-                                  style={{
-                                    flexDirection: "column",
-                                    margin: theme.spacing(1, 0),
-                                  }}
-                                >
-                                  <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                  >
-                                    <Typography variant={"body2"}>
-                                      Performance Graphs
-                                    </Typography>
-                                  </AccordionSummary>
-                                  <AccordionDetails>
-                                    <Grid
-                                      container
-                                      spacing={3}
-                                      style={{ width: "100%" }}
-                                    >
-                                      {dataset.performanceGraphs.map(
-                                        (graph) => (
-                                          <Grid
-                                            item
-                                            xs={6}
-                                            style={{ flexDirection: "column" }}
-                                          >
-                                            <img
-                                              src={graph.resourceLink}
-                                              style={{
-                                                width: "100%",
-                                                minHeight: 100,
-                                                boxShadow:
-                                                  "3px 3px 30px rgba(0, 0, 0, 0.05)",
-                                              }}
-                                              alt={`Graph of ${graph.name}`}
-                                            />
-                                            <Typography variant={"body2"}>
-                                              <strong>{graph.name}</strong>{" "}
-                                              {graph.description}
-                                            </Typography>
-                                          </Grid>
-                                        )
-                                      )}
-                                    </Grid>
-                                  </AccordionDetails>
-                                </Accordion>
-                              )}
-                            </div>
-                          </Grid>
-                        ))}
-                    </Grid>
-                  </div>
-                </Grid>
-                <Grid item xs={12} className={classes.subBox}>
-                  <AccountCircleIcon fontSize={"large"} />
-                  <div className={classes.subContainer}>
-                    <Typography
-                      style={{ fontWeight: "bold", lineHeight: 1 }}
-                      variant={"h4"}
-                    >
-                      Authors
-                    </Typography>
-                    <Grid container spacing={3}>
-                      {spec.authors &&
-                        spec.authors.map(({ name, contact }) => (
-                          <Grid item xs={4}>
-                            <div style={{ flexDirection: "column" }}>
-                              <Typography
-                                variant={"h6"}
-                                style={{ marginTop: 10 }}
-                              >
-                                {name}
-                              </Typography>
-                              <Typography variant={"body2"}>
-                                {contact}
-                              </Typography>
-                            </div>
-                          </Grid>
-                        ))}
-                    </Grid>
-                  </div>
-                </Grid>
+                {spec.datasetPerformance && (
+                  <Grid item xs={12} className={classes.subBox}>
+                    <Performance datasetPerformance={spec.datasetPerformance} />
+                  </Grid>
+                )}
+                {spec.authors && (
+                  <Grid item xs={12} className={classes.subBox}>
+                    <Authors authors={spec.authors} />
+                  </Grid>
+                )}
               </Grid>
             </Grid>
-            <Grid item xs={4} className={classes.metaBarRow}>
-              <div style={{ flexDirection: "column" }}>
-                <Grid container>
-                  <Grid item xs={5} className={classes.metaBarRow}>
-                    <Typography
-                      variant={"h6"}
-                      className={classes.metaBarTypography}
-                    >
-                      Inputs
-                    </Typography>
-                    <Typography
-                      variant={"body2"}
-                      className={classes.metaBarTypographyBody}
-                    >
-                      {typeof spec.input !== "string"
-                        ? spec.input.join("\n")
-                        : spec.input}
-                    </Typography>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={2}
-                    style={{
-                      alignItems: "center",
-                      justifyContent: "center",
-                      display: "flex",
-                    }}
-                  >
-                    <ArrowForwardIosIcon style={{ opacity: 0.5 }} />
-                  </Grid>
-
-                  <Grid item xs={5} className={classes.metaBarRow}>
-                    <Typography
-                      variant={"h6"}
-                      className={classes.metaBarTypography}
-                    >
-                      Outputs
-                    </Typography>
-                    <Typography
-                      variant={"body2"}
-                      className={classes.metaBarTypographyBody}
-                    >
-                      {typeof spec.output !== "string"
-                        ? spec.output.join("\n")
-                        : spec.output}
-                    </Typography>
-                  </Grid>
-                </Grid>
-
-                <Box m={1} />
-                <Typography
-                  variant={"h6"}
-                  className={classes.metaBarTypography}
-                >
-                  Example
-                </Typography>
-                <img
-                  style={{ width: "100%", borderRadius: 10, marginTop: 5 }}
-                  alt={"input example"}
-                  src={
-                    "https://modelcards.withgoogle.com/assets/images/object-detection/obj-detection-model-description.png"
-                  }
-                />
-                <Box m={1} />
-
-                {spec.architectureDescription && (
-                  <>
-                    <Divider />
-                    <Grid item xs={12} className={classes.metaBarRow}>
-                      <Typography
-                        variant={"h6"}
-                        className={classes.metaBarTypography}
-                      >
-                        Architecture
-                      </Typography>
-                      <Typography
-                        variant={"body2"}
-                        className={classes.metaBarTypographyBody}
-                      >
-                        <ListOrParagraph
-                          content={spec.architectureDescription}
-                        />
-                      </Typography>
-                    </Grid>
-                    <Box m={1} />
-                  </>
-                )}
-
-                <Divider />
-                <Grid container>
-                  <Grid item xs={6} className={classes.metaBarRow}>
-                    <Typography
-                      variant={"h6"}
-                      className={classes.metaBarTypography}
-                    >
-                      Model Type
-                    </Typography>
-                    <Typography
-                      variant={"body2"}
-                      className={classes.metaBarTypographyBody}
-                    >
-                      {spec.type}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={6} className={classes.metaBarRow}>
-                    <Typography
-                      variant={"h6"}
-                      className={classes.metaBarTypography}
-                    >
-                      Version
-                    </Typography>
-                    <Typography
-                      variant={"body2"}
-                      className={classes.metaBarTypographyBody}
-                    >
-                      {spec.version}
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Box m={1} />
-
-                <Divider />
-                <Grid container>
-                  <Grid item xs={6} className={classes.metaBarRow}>
-                    <Typography
-                      variant={"h6"}
-                      className={classes.metaBarTypography}
-                    >
-                      License
-                    </Typography>
-                    <Typography
-                      variant={"body2"}
-                      className={classes.metaBarTypographyBody}
-                    >
-                      {spec.license}
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Box m={1} />
-
-                {spec.githubLink && (
-                  <>
-                    <Divider />
-                    <Grid item xs={12} className={classes.metaBarRow}>
-                      <Typography
-                        variant={"h6"}
-                        className={classes.metaBarTypography}
-                      >
-                        Github
-                      </Typography>
-                      <Box m={0.5} />
-                      <div
-                        style={{ flexDirection: "row", alignItems: "center" }}
-                      >
-                        <GitHubIcon />
-                        <Box mx={0.5} />
-                        <Typography
-                          variant={"body2"}
-                          className={classes.metaBarTypographyBody}
-                        >
-                          <ListOrParagraph content={spec.githubLink} />
-                        </Typography>
-                      </div>
-                    </Grid>
-                    <Box m={1} />
-                  </>
-                )}
-                {spec.supportingLinks && !!spec.supportingLinks.length && (
-                  <>
-                    <Divider />
-                    <Grid item xs={12} className={classes.metaBarRow}>
-                      <Typography
-                        variant={"h6"}
-                        className={classes.metaBarTypography}
-                      >
-                        Supporting Resources
-                      </Typography>
-                      <Box m={0.5} />
-                      {spec.supportingLinks.map((link) => (
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "flex-starts",
-                          }}
-                        >
-                          <LinkIcon />
-                          <Box mx={0.5} />
-                          <Typography
-                            variant={"body2"}
-                            className={classes.metaBarTypographyBody}
-                            style={{
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            <ListOrParagraph content={link} />
-                          </Typography>
-                        </div>
-                      ))}
-                    </Grid>
-                    <Box m={1} />
-                  </>
-                )}
-              </div>
+            <Grid
+              item
+              xs={4}
+              style={{
+                flexDirection: "column",
+              }}
+            >
+              <InfoBar {...spec} />
             </Grid>
           </Grid>
         </div>
