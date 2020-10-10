@@ -12,6 +12,7 @@ import { useLocalStorage } from "../utils/LocalStorage";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
 import { AnimatePresence, motion } from "framer-motion";
+import { useCardLocalStorage } from "../utils/useCardState";
 
 interface ListEntryProps {
   textPlaceholder?: string;
@@ -218,7 +219,8 @@ export default function ListEntry(
   }
 ) {
   const classes = useStyles();
-  const [values, setValues] = useLocalStorage<Record<string, string>[]>(
+  const [values, setValues] = useCardLocalStorage<Record<string, string>[]>(
+    "card",
     props.mainField,
     []
   );

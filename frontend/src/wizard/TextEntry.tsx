@@ -8,6 +8,7 @@ import {
 import React from "react";
 import { useLocalStorage } from "../utils/LocalStorage";
 import { Autocomplete } from "@material-ui/lab";
+import { useCardLocalStorage } from "../utils/useCardState";
 
 const useStyles = makeStyles<Theme, { smallText?: boolean }>(() => ({
   root: {
@@ -52,7 +53,7 @@ export default function TextEntry({
   smallText?: boolean;
 }) {
   const classes = useStyles({ smallText });
-  const [value, setValue] = useLocalStorage(field, "");
+  const [value, setValue] = useCardLocalStorage("card", field, "");
 
   return (
     <div className={classes.root}>

@@ -1,6 +1,6 @@
 import { Box, makeStyles, Paper, Drawer, AppBar, Fab } from "@material-ui/core";
 import React from "react";
-import Card from "./Card";
+import Card, { SAMPLE_SPEC } from "./Card";
 import BuildIcon from "@material-ui/icons/Build";
 import InfoIcon from "@material-ui/icons/Info";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -234,7 +234,7 @@ export default function Presenter() {
           </List>
         </Drawer>
         <Paper className={classes.paper}>
-          <Card />
+          <Card defaultSpec={SAMPLE_SPEC} />
         </Paper>
       </div>
     </>

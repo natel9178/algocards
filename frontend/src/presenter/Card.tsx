@@ -1,5 +1,5 @@
 import { Box, Grid, makeStyles } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { Spec } from "../spec/spec";
 import { LoremIpsum } from "lorem-ipsum";
 import { AnimatePresence, motion } from "framer-motion";
@@ -9,6 +9,9 @@ import Header from "./cardmodules/Header";
 import IntendedUse from "./cardmodules/IntendedUse";
 import Limitations from "./cardmodules/Limitations";
 import Performance from "./cardmodules/Performance";
+import useEventListener from "@use-it/event-listener";
+import { card } from "../utils/useCardState";
+import { useRecoilState } from "recoil";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -76,7 +79,7 @@ function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const SAMPLE_SPEC = {
+export const SAMPLE_SPEC = {
   title: "AI Object Detection", // done
   supportingLinks: [
     "https://arxiv.org/abs/2005.14165",
@@ -196,8 +199,21 @@ const SAMPLE_SPEC = {
   ],
 };
 
-export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
+export default function Card({
+  defaultSpec,
+  fromRecoil,
+}: {
+  defaultSpec?: Spec;
+  fromRecoil?: boolean;
+}) {
   const classes = useStyles();
+
+  const [recoilSpec, _] = useRecoilState<Spec>(card);
+  let spec = defaultSpec || {};
+  if (fromRecoil) {
+    spec = recoilSpec;
+  }
+
   return (
     <AnimatePresence>
       <motion.div
@@ -212,15 +228,20 @@ export default function Card({ spec = SAMPLE_SPEC }: { spec?: Spec }) {
           <Grid container spacing={10}>
             <Grid item xs={8}>
               <Grid container spacing={3}>
-                <Grid item xs={12} className={classes.subBox}>
-                  <IntendedUse
-                    primaryUsecase={spec.intendedUse?.primaryUsecase}
-                    antiGoals={spec.intendedUse?.antiGoals}
-                  />
-                </Grid>
-                <Grid item xs={12} className={classes.subBox}>
-                  <Limitations {...spec} />
-                </Grid>
+                {spec.intendedUse && (
+                  <Grid item xs={12} className={classes.subBox}>
+                    <IntendedUse
+                      primaryUsecase={spec.intendedUse.primaryUsecase}
+                      antiGoals={spec.intendedUse.antiGoals}
+                    />
+                  </Grid>
+                )}
+
+                {spec.limitations && (
+                  <Grid item xs={12} className={classes.subBox}>
+                    <Limitations limitations={spec.limitations} />
+                  </Grid>
+                )}
                 {spec.datasetPerformance && (
                   <Grid item xs={12} className={classes.subBox}>
                     <Performance datasetPerformance={spec.datasetPerformance} />

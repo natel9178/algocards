@@ -19,6 +19,9 @@ import TextEntry from "./TextEntry";
 import LicenseList from "spdx-license-list/simple";
 import ListEntry from "./ListEntry";
 import { useLocalStorage } from "../utils/LocalStorage";
+import Card from "../presenter/Card";
+import { motion, useTransform, useViewportScroll } from "framer-motion";
+import { useWindowDimensions } from "../utils/useWindowDimensions";
 
 const WizardSpec = [
   {
@@ -281,10 +284,20 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     height: "100%",
+    position: "relative",
   },
   container: {
     width: "100%",
     height: "100%",
+  },
+  cardPaper: {
+    borderRadius: 18,
+    minHeight: 500,
+    boxShadow: "3px 3px 30px rgba(0, 0, 0, 0.1)",
+    padding: "31px 50px",
+    width: "100%",
+    boxSizing: "border-box",
+    flexGrow: 1,
   },
   paper: {
     borderRadius: 18,
@@ -347,9 +360,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CardWizard() {
   const classes = useStyles();
-  //   const [specBuilder, setSpecBuilder] = useLocalStorage<Partial<Spec>>(
-  //     "specBuilder"
-  //   );
+  const [card, _] = useLocalStorage<any>("card", {});
+  const { scrollY } = useViewportScroll();
+  const { height } = useWindowDimensions();
+
+  const previewOpacity = useTransform(scrollY, [0, height * 0.7], [0, 1]);
+  const previewScale = useTransform(scrollY, [0, height * 0.7], [0.9, 1]);
+
   const [ethicalConsiderations, setEthicalConsiderations] = useLocalStorage(
     "ethicalConsiderations"
   );
@@ -429,27 +446,6 @@ export default function CardWizard() {
                                       {wizardStep.component}
                                     </Step>
                                   ))}
-                                  {ethicalConsiderations.map(
-                                    (_: string, idx: number) => {
-                                      return (
-                                        <Step
-                                          key={`wizard/example${idx}`}
-                                          id={`wizard/example${idx}`}
-                                        >
-                                          <TextEntry
-                                            field={`title${idx}`}
-                                            title={"Name?"}
-                                            description={
-                                              "This will eventually be the title of your card."
-                                            }
-                                            isMultiline={true}
-                                            placeholder={"Yolov4 Faces"}
-                                            textLimit={50}
-                                          />
-                                        </Step>
-                                      );
-                                    }
-                                  )}
                                 </Steps>
                               </div>
                             </CSSTransition>
@@ -506,6 +502,18 @@ export default function CardWizard() {
               )}
             />
           </Paper>
+        </Grid>
+        <Grid item xs={1} className={classes.sidebar}></Grid>
+      </Grid>
+      <Box m={10} />
+      <Grid container wrap="nowrap" className={classes.container}>
+        <Grid item xs={1} className={classes.sidebar}></Grid>
+        <Grid item xs={10}>
+          <motion.div style={{ opacity: previewOpacity, scale: previewScale }}>
+            <Paper className={classes.cardPaper}>
+              <Card fromRecoil />
+            </Paper>
+          </motion.div>
         </Grid>
         <Grid item xs={1} className={classes.sidebar}></Grid>
       </Grid>
