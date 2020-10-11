@@ -61,10 +61,7 @@ export default function Performance({
     <div style={{ display: "flex", flexDirection: "row" }}>
       <BarChartIcon fontSize={"large"} />
       <div className={classes.subContainer}>
-        <Typography
-          style={{ fontWeight: "bold", lineHeight: 1 }}
-          variant={"h4"}
-        >
+        <Typography style={{ lineHeight: 1 }} variant={"h4"}>
           Dataset Performance
         </Typography>
         {datasets && (

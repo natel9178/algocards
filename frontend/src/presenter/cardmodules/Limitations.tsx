@@ -67,10 +67,7 @@ export default function Limitations(props: LimitationsProps) {
     <div style={{ display: "flex", flexDirection: "row" }}>
       <WarningIcon fontSize={"large"} />
       <div className={classes.subContainer}>
-        <Typography
-          style={{ fontWeight: "bold", lineHeight: 1 }}
-          variant={"h4"}
-        >
+        <Typography style={{ lineHeight: 1 }} variant={"h4"}>
           Limitations & Tradeoffs
         </Typography>
         <Grid container spacing={3}>

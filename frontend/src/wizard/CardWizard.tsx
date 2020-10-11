@@ -27,6 +27,7 @@ import UploadEntry from "./UploadEntry";
 const WizardSpec = [
   {
     path: "title",
+    text: "Title",
     component: (
       <TextEntry
         field={"title"}
@@ -40,6 +41,7 @@ const WizardSpec = [
   },
   {
     path: "description",
+    text: "Description",
     component: (
       <TextEntry
         field={"description"}
@@ -54,6 +56,8 @@ const WizardSpec = [
   },
   {
     path: "type",
+    text: "Model Type",
+
     component: (
       <TextEntry
         field={"type"}
@@ -72,6 +76,7 @@ const WizardSpec = [
   },
   {
     path: "authors",
+    text: "Authors",
     component: (
       <ListEntry
         textPlaceholder="Name"
@@ -87,6 +92,7 @@ const WizardSpec = [
   },
   {
     path: "version",
+    text: "Version",
     component: (
       <TextEntry
         field={"version"}
@@ -101,6 +107,7 @@ const WizardSpec = [
   },
   {
     path: "links",
+    text: "Links",
     component: (
       <ListEntry
         short
@@ -116,6 +123,7 @@ const WizardSpec = [
   },
   {
     path: "license",
+    text: "License",
     component: (
       <TextEntry
         field={"license"}
@@ -129,6 +137,7 @@ const WizardSpec = [
   },
   {
     path: "inputs",
+    text: "Inputs",
     component: (
       <ListEntry
         short
@@ -142,6 +151,7 @@ const WizardSpec = [
   },
   {
     path: "outputs",
+    text: "Outputs",
     component: (
       <ListEntry
         short
@@ -157,6 +167,7 @@ const WizardSpec = [
   },
   {
     path: "architecture",
+    text: "Architecture",
     component: (
       <TextEntry
         field={"architectureDescription"}
@@ -173,6 +184,8 @@ const WizardSpec = [
   },
   {
     path: "primaryUsecase",
+    text: "Primary Usecase",
+
     component: (
       <TextEntry
         smallText
@@ -189,19 +202,21 @@ const WizardSpec = [
     ),
   },
   {
-    path: "antiGoals",
+    path: "outOfScope",
+    text: "Out Of Scope Usecases",
     component: (
       <ListEntry
         subtextPlaceholder="Resolving distinct identities for people in crowds (i.e. facial recognition)."
         mainField="antiGoals"
         subtextField="description"
-        title={"Anti-Goals?"}
+        title={"Out Of Scope Usecases??"}
         description={"What usecases was this model not designed for?"}
       />
     ),
   },
   {
     path: "stakeholderImpacts",
+    text: "Stakeholder Impacts",
     component: (
       <ListEntry
         minWidth={"50ch"}
@@ -219,6 +234,7 @@ const WizardSpec = [
   },
   {
     path: "limitations",
+    text: "Limitations",
     component: (
       <ListEntry
         textPlaceholder="Occlusion"
@@ -233,6 +249,7 @@ const WizardSpec = [
   },
   {
     path: "ethicalConsiderations",
+    text: "Ethical Considerations",
     component: (
       <ListEntry
         subtextPlaceholder="Using this model for tracking people may lead to innaccurate results and harmful consequences in mission-critical contexts."
@@ -247,6 +264,8 @@ const WizardSpec = [
   },
   {
     path: "datasets",
+    text: "Datasets",
+
     component: (
       <ListEntry
         minWidth={"50ch"}
@@ -264,6 +283,8 @@ const WizardSpec = [
   },
   {
     path: "performanceOverview",
+    text: "Performance Overview",
+
     component: (
       <TextEntry
         smallText
@@ -281,6 +302,8 @@ const WizardSpec = [
   },
   {
     path: "performanceMetrics",
+    text: "Performance Metrics",
+
     component: (
       <ListEntry
         short
@@ -300,6 +323,8 @@ const WizardSpec = [
   },
   {
     path: "figures",
+    text: "Figures",
+
     component: (
       <UploadEntry
         title={"Figures?"}
@@ -443,7 +468,10 @@ export default function CardWizard() {
                           <Tooltip
                             title={
                               stepIndex > 0
-                                ? `Back to ${WizardSpec[stepIndex - 1].path}`
+                                ? `Back to ${
+                                    WizardSpec[stepIndex - 1].text ||
+                                    WizardSpec[stepIndex - 1].path
+                                  }`
                                 : ""
                             }
                           >
@@ -510,7 +538,8 @@ export default function CardWizard() {
                             title={
                               stepIndex < steps.length - 1
                                 ? `Go to ${
-                                    WizardSpec[stepIndex + 1].path || ""
+                                    WizardSpec[stepIndex + 1].text ||
+                                    WizardSpec[stepIndex + 1].path
                                   }`
                                 : ""
                             }

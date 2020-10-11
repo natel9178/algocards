@@ -44,10 +44,7 @@ export default function EthicalConsiderations(
     <div style={{ display: "flex", flexDirection: "row" }}>
       <BuildIcon fontSize={"large"} />
       <div className={classes.subContainer}>
-        <Typography
-          style={{ fontWeight: "bold", lineHeight: 1 }}
-          variant={"h4"}
-        >
+        <Typography style={{ lineHeight: 1 }} variant={"h4"}>
           Ethical Considerations
         </Typography>
         <Box m={1} />

@@ -64,10 +64,7 @@ export default function Authors({ authors }: AuthorsProps) {
     <div style={{ display: "flex", flexDirection: "row", flexGrow: 1 }}>
       <AccountCircleIcon fontSize={"large"} />
       <div className={classes.subContainer}>
-        <Typography
-          style={{ fontWeight: "bold", lineHeight: 1 }}
-          variant={"h4"}
-        >
+        <Typography style={{ lineHeight: 1 }} variant={"h4"}>
           Authors
         </Typography>
         <Grid container spacing={3} style={{ width: "100%" }}>
