@@ -57,6 +57,7 @@ const useItemStyles = makeStyles<Theme, { center?: boolean }>((theme) => ({
     alignItems: "stretch",
     margin: theme.spacing(2),
     width: "100%",
+    boxSizing: "border-box",
   },
   textField: {},
   subtextField: { flexGrow: 1 },
@@ -113,7 +114,7 @@ const SortableItem = SortableElement(
               ? props.maxWidth
               : props.short
               ? "40ch"
-              : "inherit",
+              : undefined,
           }}
         >
           {props.textPlaceholder && props.textField && (

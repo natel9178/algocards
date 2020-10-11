@@ -76,29 +76,54 @@ export default function Header(props: HeaderProps) {
         </Typography>
         <Typography variant={"body1"}>{description}</Typography>
       </Grid>
-      <Grid item xs={4} className={classes.rightTitle}>
-        <Icon
-          icon={<TranslateIcon fontSize={"large"} />}
-          title={type}
-          label={""}
-        />
-        <Divider variant={"middle"} orientation={"vertical"} light flexItem />
-        <Icon
-          icon={<BookIcon fontSize={"large"} />}
-          title={version}
-          label={""}
-        />
-        <Divider variant={"middle"} orientation={"vertical"} light flexItem />
-        <Icon
-          icon={
-            <Typography variant={"h5"} style={{ fontWeight: "bolder" }}>
-              {license}
-            </Typography>
-          }
-          title={"License"}
-          label={""}
-        />
-      </Grid>
+      {/* <Grid item xs={4} className={classes.rightTitle}>
+        {type && (
+          <Icon
+            icon={<TranslateIcon fontSize={"large"} />}
+            title={type}
+            label={""}
+          />
+        )}
+        {version && (
+          <>
+            {type && (
+              <Divider
+                variant={"middle"}
+                orientation={"vertical"}
+                light
+                flexItem
+              />
+            )}
+            <Icon
+              icon={<BookIcon fontSize={"large"} />}
+              title={version}
+              label={""}
+            />
+          </>
+        )}
+
+        {license && (
+          <>
+            {(version || type) && (
+              <Divider
+                variant={"middle"}
+                orientation={"vertical"}
+                light
+                flexItem
+              />
+            )}
+            <Icon
+              icon={
+                <Typography variant={"h5"} style={{ fontWeight: "bolder" }}>
+                  {license}
+                </Typography>
+              }
+              title={"License"}
+              label={""}
+            />
+          </>
+        )}
+      </Grid> */}
     </Grid>
   );
 }

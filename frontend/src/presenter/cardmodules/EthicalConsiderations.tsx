@@ -1,0 +1,66 @@
+import { Box, makeStyles, Typography } from "@material-ui/core";
+import React from "react";
+import BuildIcon from "@material-ui/icons/Build";
+import ListOrParagraph from "../ListOrParagraph";
+
+const useStyles = makeStyles((theme) => ({
+  "@global": {
+    ul: { margin: 0, padding: 0, marginLeft: 20 },
+  },
+  root: {
+    width: "100%",
+    height: "100%",
+    flexDirection: "column",
+  },
+  gridContainer: {
+    width: "100%",
+    height: "100%",
+  },
+  subContainer: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    alignItems: "flex-start",
+    marginLeft: theme.spacing(2),
+    marginTop: 3,
+  },
+  subBox: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginTop: theme.spacing(2),
+  },
+}));
+
+interface EthicalConsiderationsProps {
+  ethicalConsiderations?: { description?: string }[];
+}
+export default function EthicalConsiderations(
+  props: EthicalConsiderationsProps
+) {
+  const { ethicalConsiderations } = props;
+  const classes = useStyles();
+  return (
+    <div style={{ display: "flex", flexDirection: "row" }}>
+      <BuildIcon fontSize={"large"} />
+      <div className={classes.subContainer}>
+        <Typography
+          style={{ fontWeight: "bold", lineHeight: 1 }}
+          variant={"h4"}
+        >
+          Ethical Considerations
+        </Typography>
+        <Box m={1} />
+        {ethicalConsiderations && (
+          <Typography variant={"body2"}>
+            <ListOrParagraph
+              content={ethicalConsiderations
+                .map(({ description }) => description || "")
+                .filter((con) => con !== "")}
+            />
+          </Typography>
+        )}
+      </div>
+    </div>
+  );
+}

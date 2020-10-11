@@ -8,16 +8,14 @@ export interface Spec {
   exampleImageLink?: string;
   version?: string; // added
   type?: string; // added
-  supportingLinks?: string[]; // added
+  supportingLinks?: { link?: string }[]; // added
   license?: string; // added
-  input?: string | string[]; // added
-  output?: string | string[]; // added
+  input?: { name?: string }[]; // added
+  output?: { name?: string }[]; // added
   architectureDescription?: string; // added
 
-  intendedUse?: {
-    primaryUsecase?: string | string[]; // added
-    antiGoals?: string | string[]; // added
-  };
+  primaryUsecase?: string | string[]; // added
+  antiGoals?: string | { description?: string }[]; // added
 
   limitations?: {
     type?: string; // added
@@ -25,24 +23,20 @@ export interface Spec {
     workarounds?: string[];
   }[];
 
-  ethicalConsiderations?: string[]; // added
-
-  datasetPerformance?: {
-    datasetName?: string;
-    description?: string;
-    link?: string;
-    exampleImageLinks?: string[];
-
-    performanceMetrics?: {
-      name?: string;
-      value?: string | number;
-      description?: string;
-    }[];
-
-    performanceGraphs?: {
-      name?: string;
-      resourceLink?: string;
-      description?: string;
-    }[];
+  stakeholderImpacts?: {
+    stakeholder?: string;
+    impact?: string;
   }[];
+
+  ethicalConsiderations?: { description?: string }[]; // added
+
+  performanceOverview?: string;
+  performanceMetrics?: {
+    name?: string;
+    value?: string | number;
+    description?: string;
+  }[];
+
+  figures?: string[];
+  datasets?: { name?: string; description?: string }[];
 }

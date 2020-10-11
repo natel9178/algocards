@@ -1,6 +1,7 @@
-import { Divider, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ListOrParagraph from "../ListOrParagraph";
+import GroupIcon from "@material-ui/icons/Group";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -51,34 +52,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface AuthorsProps {
-  authors: {
-    name?: string; // added
-    contact?: string; // added
+interface StakeholderImpactsProps {
+  stakeholderImpacts?: {
+    stakeholder?: string;
+    impact?: string;
   }[];
 }
 
-export default function Authors({ authors }: AuthorsProps) {
+export default function StakeholderImpacts(props: StakeholderImpactsProps) {
+  const { stakeholderImpacts } = props;
   const classes = useStyles();
   return (
-    <div style={{ display: "flex", flexDirection: "row", flexGrow: 1 }}>
-      <AccountCircleIcon fontSize={"large"} />
+    <div style={{ display: "flex", flexDirection: "row" }}>
+      <GroupIcon fontSize={"large"} />
       <div className={classes.subContainer}>
         <Typography
           style={{ fontWeight: "bold", lineHeight: 1 }}
           variant={"h4"}
         >
-          Authors
+          Stakeholder Impacts
         </Typography>
-        <Grid container spacing={3} style={{ width: "100%" }}>
-          {authors &&
-            authors.map(({ name, contact }) => (
-              <Grid item xs={4}>
+        <Grid container spacing={3}>
+          {stakeholderImpacts &&
+            stakeholderImpacts.map(({ stakeholder, impact }) => (
+              <Grid item xs={6}>
                 <div style={{ flexDirection: "column" }}>
                   <Typography variant={"h6"} style={{ marginTop: 10 }}>
-                    {name}
+                    {stakeholder}
                   </Typography>
-                  <Typography variant={"body2"}>{contact}</Typography>
+                  {impact && (
+                    <Typography variant={"body2"}>
+                      <ListOrParagraph content={impact} />
+                    </Typography>
+                  )}
                 </div>
               </Grid>
             ))}

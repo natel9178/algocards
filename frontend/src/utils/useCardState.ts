@@ -12,7 +12,7 @@ export const useCardLocalStorage = <T = any>(
   key: string,
   initialValue?: T
 ): [T, Dispatch<T>] => {
-  const [_, setRecoilItem] = useRecoilState(card);
+  const [recoilItem, setRecoilItem] = useRecoilState(card);
 
   const [item, setValue] = useState<T>(() => {
     const mainDict = JSON.parse(localStorage.getItem("card") || "{}");
@@ -25,15 +25,13 @@ export const useCardLocalStorage = <T = any>(
     localStorage.setItem("card", JSON.stringify(mainDict));
     return value;
   });
-  const debouncedItem = useDebounce(item, 1000);
 
   useEffect(() => {
     const mainDict = JSON.parse(localStorage.getItem("card") || "{}");
-    mainDict[key] = debouncedItem;
-
-    localStorage.setItem("card", JSON.stringify(mainDict));
+    mainDict[key] = item;
     setRecoilItem(mainDict);
-  }, [debouncedItem, key]);
+    localStorage.setItem("card", JSON.stringify(mainDict));
+  }, [item, key]);
 
   return [item, setValue];
 };

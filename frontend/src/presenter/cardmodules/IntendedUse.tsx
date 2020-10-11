@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface IntendedUseProps {
   primaryUsecase?: string | string[];
-  antiGoals?: string | string[];
+  antiGoals?: string | { description?: string }[];
 }
 export default function IntendedUse(props: IntendedUseProps) {
   const { primaryUsecase, antiGoals } = props;
@@ -69,7 +69,15 @@ export default function IntendedUse(props: IntendedUseProps) {
               Anti-Goals
             </Typography>
             <Typography variant={"body2"}>
-              <ListOrParagraph content={antiGoals} />
+              <ListOrParagraph
+                content={
+                  typeof antiGoals === "string"
+                    ? antiGoals
+                    : antiGoals
+                        .map((antigoal) => antigoal.description || "")
+                        .filter((text) => text !== "")
+                }
+              />
             </Typography>
           </>
         )}

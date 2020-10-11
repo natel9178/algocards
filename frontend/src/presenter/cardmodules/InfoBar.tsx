@@ -29,20 +29,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface InfoBarProps {
-  input?: string | string[];
-  output?: string | string[];
+  inputs?: { name?: string }[];
+  outputs?: { name?: string }[];
   architectureDescription?: string;
   type?: string;
   version?: string;
   license?: string;
-  supportingLinks?: string[];
+  supportingLinks?: { link?: string }[];
 }
 
 export default function InfoBar(props: InfoBarProps) {
   const classes = useStyles();
   const {
-    input,
-    output,
+    inputs,
+    outputs,
     architectureDescription,
     type,
     version,
@@ -52,10 +52,10 @@ export default function InfoBar(props: InfoBarProps) {
   return (
     <div style={{ flexDirection: "column" }}>
       <Grid container>
-        {input && (
+        {inputs && (
           <Grid
             item
-            xs={input && output ? 5 : 12}
+            xs={inputs && outputs ? 5 : 12}
             className={classes.metaBarRow}
           >
             <Typography variant={"h6"} className={classes.metaBarTypography}>
@@ -65,11 +65,11 @@ export default function InfoBar(props: InfoBarProps) {
               variant={"body2"}
               className={classes.metaBarTypographyBody}
             >
-              {typeof input === "string" ? input : input.join("\n")}
+              {inputs.map((i) => i.name).join("\n")}
             </Typography>
           </Grid>
         )}
-        {input && output && (
+        {inputs && outputs && (
           <Grid
             item
             xs={2}
@@ -82,10 +82,10 @@ export default function InfoBar(props: InfoBarProps) {
             <ArrowForwardIosIcon style={{ opacity: 0.5 }} />
           </Grid>
         )}
-        {output && (
+        {outputs && (
           <Grid
             item
-            xs={input && output ? 5 : 12}
+            xs={inputs && outputs ? 5 : 12}
             className={classes.metaBarRow}
           >
             <Typography variant={"h6"} className={classes.metaBarTypography}>
@@ -95,7 +95,7 @@ export default function InfoBar(props: InfoBarProps) {
               variant={"body2"}
               className={classes.metaBarTypographyBody}
             >
-              {typeof output === "string" ? output : output.join("\n")}
+              {outputs.map((i) => i.name).join("\n")}
             </Typography>
           </Grid>
         )}
@@ -132,47 +132,63 @@ export default function InfoBar(props: InfoBarProps) {
         </>
       )}
 
-      <Divider />
-      <Grid container>
-        <Grid item xs={6} className={classes.metaBarRow}>
-          <Typography variant={"h6"} className={classes.metaBarTypography}>
-            Model Type
-          </Typography>
-          <Typography
-            variant={"body2"}
-            className={classes.metaBarTypographyBody}
-          >
-            {type}
-          </Typography>
-        </Grid>
+      {(type || version) && (
+        <>
+          <Divider />
+          <Grid container>
+            {type && (
+              <Grid item xs={6} className={classes.metaBarRow}>
+                <Typography
+                  variant={"h6"}
+                  className={classes.metaBarTypography}
+                >
+                  Model Type
+                </Typography>
+                <Typography
+                  variant={"body2"}
+                  className={classes.metaBarTypographyBody}
+                >
+                  {type}
+                </Typography>
+              </Grid>
+            )}
 
-        <Grid item xs={6} className={classes.metaBarRow}>
-          <Typography variant={"h6"} className={classes.metaBarTypography}>
-            Version
-          </Typography>
-          <Typography
-            variant={"body2"}
-            className={classes.metaBarTypographyBody}
-          >
-            {version}
-          </Typography>
-        </Grid>
-      </Grid>
+            {version && (
+              <Grid item xs={6} className={classes.metaBarRow}>
+                <Typography
+                  variant={"h6"}
+                  className={classes.metaBarTypography}
+                >
+                  Version
+                </Typography>
+                <Typography
+                  variant={"body2"}
+                  className={classes.metaBarTypographyBody}
+                >
+                  {version}
+                </Typography>
+              </Grid>
+            )}
+          </Grid>
+        </>
+      )}
       <Box m={1} />
 
       <Divider />
       <Grid container>
-        <Grid item xs={6} className={classes.metaBarRow}>
-          <Typography variant={"h6"} className={classes.metaBarTypography}>
-            License
-          </Typography>
-          <Typography
-            variant={"body2"}
-            className={classes.metaBarTypographyBody}
-          >
-            {license}
-          </Typography>
-        </Grid>
+        {license && (
+          <Grid item xs={6} className={classes.metaBarRow}>
+            <Typography variant={"h6"} className={classes.metaBarTypography}>
+              License
+            </Typography>
+            <Typography
+              variant={"body2"}
+              className={classes.metaBarTypographyBody}
+            >
+              {license}
+            </Typography>
+          </Grid>
+        )}
       </Grid>
       <Box m={1} />
 
@@ -225,7 +241,7 @@ export default function InfoBar(props: InfoBarProps) {
                     textOverflow: "ellipsis",
                   }}
                 >
-                  <ListOrParagraph content={link} />
+                  <ListOrParagraph content={link.link || ""} />
                 </Typography>
               </div>
             ))}

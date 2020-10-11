@@ -71,6 +71,10 @@ export default function TextEntry({
         <Autocomplete
           freeSolo
           options={autocompleteOptions}
+          value={value}
+          onChange={(e, value) => {
+            setValue(value || "");
+          }}
           renderInput={(params: any) => (
             <TextField
               {...params}

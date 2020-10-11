@@ -18,6 +18,7 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ListOrParagraph from "../ListOrParagraph";
 
 const useStyles = makeStyles((theme) => ({
   subContainer: {
@@ -37,27 +38,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface PerformanceProps {
-  datasetPerformance: {
-    datasetName?: string;
+  performanceOverview?: string;
+  performanceMetrics?: {
+    name?: string;
+    value?: string | number;
     description?: string;
-    link?: string;
-    exampleImageLinks?: string[];
-
-    performanceMetrics?: {
-      name?: string;
-      value?: string | number;
-      description?: string;
-    }[];
-
-    performanceGraphs?: {
-      name?: string;
-      resourceLink?: string;
-      description?: string;
-    }[];
   }[];
+
+  figures?: string[];
+  datasets?: { name?: string; description?: string }[];
 }
 
-export default function Performance({ datasetPerformance }: PerformanceProps) {
+export default function Performance({
+  performanceOverview,
+  performanceMetrics,
+  figures,
+  datasets,
+}: PerformanceProps) {
   const classes = useStyles();
   const theme = useTheme();
   return (
@@ -70,108 +67,87 @@ export default function Performance({ datasetPerformance }: PerformanceProps) {
         >
           Dataset Performance
         </Typography>
-        <Grid container spacing={3}>
-          {datasetPerformance &&
-            datasetPerformance.map((dataset) => (
-              <Grid item xs={12}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                    alignItems: "stretch",
-                  }}
-                >
-                  <Typography variant={"h6"} style={{ marginTop: 10 }}>
-                    {dataset.link ? (
-                      <a
-                        style={{
-                          color: "black",
-                          textDecoration: "none",
-                        }}
-                        href={dataset.link}
-                      >
-                        {dataset.datasetName} <LinkIcon fontSize={"small"} />
-                      </a>
-                    ) : (
-                      <> {dataset.datasetName}</>
-                    )}
-                  </Typography>
-                  {dataset.description && (
+        {datasets && (
+          <>
+            <Typography variant={"h6"} style={{ marginTop: 10 }}>
+              Datasets
+            </Typography>
+            <Grid container spacing={3}>
+              {datasets.map(({ name, description }) => (
+                <Grid item xs={6}>
+                  {description && (
                     <Typography variant={"body2"}>
-                      {dataset.description}
+                      {name && <strong>{name}</strong>}
+                      <ListOrParagraph content={description} />
                     </Typography>
                   )}
-                  {dataset.performanceMetrics && (
-                    <TableContainer
-                      component={MuiCard}
+                </Grid>
+              ))}
+            </Grid>
+          </>
+        )}
+
+        {(performanceMetrics || figures) && (
+          <Typography variant={"h6"} style={{ marginTop: 10 }}>
+            Performance Metrics
+          </Typography>
+        )}
+
+        {performanceMetrics && (
+          <TableContainer
+            component={MuiCard}
+            style={{
+              margin: theme.spacing(1, 0),
+            }}
+          >
+            <Table size="small" style={{ width: "100%" }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Metric</TableCell>
+                  <TableCell align="right">Value</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {performanceMetrics.map((row) => (
+                  <TableRow key={row.name}>
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell align="right">{row.value}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+        {figures && (
+          <Accordion
+            style={{
+              flexDirection: "column",
+              margin: theme.spacing(1, 0),
+            }}
+          >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography variant={"body2"}>Figures</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container spacing={3} style={{ width: "100%" }}>
+                {figures.map((graph) => (
+                  <Grid item xs={6} style={{ flexDirection: "column" }}>
+                    <img
+                      src={graph}
                       style={{
-                        margin: theme.spacing(1, 0),
+                        width: "100%",
+                        minHeight: 100,
+                        boxShadow: "3px 3px 30px rgba(0, 0, 0, 0.05)",
                       }}
-                    >
-                      <Table size="small" style={{ width: "100%" }}>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>Metric</TableCell>
-                            <TableCell align="right">Value</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {dataset.performanceMetrics.map((row) => (
-                            <TableRow key={row.name}>
-                              <TableCell component="th" scope="row">
-                                {row.name}
-                              </TableCell>
-                              <TableCell align="right">{row.value}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  )}
-                  {dataset.performanceGraphs && (
-                    <Accordion
-                      style={{
-                        flexDirection: "column",
-                        margin: theme.spacing(1, 0),
-                      }}
-                    >
-                      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography variant={"body2"}>
-                          Performance Graphs
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <Grid container spacing={3} style={{ width: "100%" }}>
-                          {dataset.performanceGraphs.map((graph) => (
-                            <Grid
-                              item
-                              xs={6}
-                              style={{ flexDirection: "column" }}
-                            >
-                              <img
-                                src={graph.resourceLink}
-                                style={{
-                                  width: "100%",
-                                  minHeight: 100,
-                                  boxShadow: "3px 3px 30px rgba(0, 0, 0, 0.05)",
-                                }}
-                                alt={`Graph of ${graph.name}`}
-                              />
-                              <Typography variant={"body2"}>
-                                <strong>{graph.name}</strong>{" "}
-                                {graph.description}
-                              </Typography>
-                            </Grid>
-                          ))}
-                        </Grid>
-                      </AccordionDetails>
-                    </Accordion>
-                  )}
-                </div>
+                    />
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-        </Grid>
+            </AccordionDetails>
+          </Accordion>
+        )}
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { Route } from "react-router-dom";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Wizard, Steps, Step } from "react-albus";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
@@ -22,6 +22,7 @@ import { useLocalStorage } from "../utils/LocalStorage";
 import Card from "../presenter/Card";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import { useWindowDimensions } from "../utils/useWindowDimensions";
+import UploadEntry from "./UploadEntry";
 
 const WizardSpec = [
   {
@@ -174,10 +175,14 @@ const WizardSpec = [
     path: "primaryUsecase",
     component: (
       <TextEntry
-        field={"intendedUse.primaryUsecase"}
+        smallText
+        field={"primaryUsecase"}
         title={"What is the primary usecase of your model?"}
         description={
-          "Include relevant stakeholders, and how people should be using the model."
+          "When creating and training this algorithm, what usecase did you have in mind?"
+        }
+        placeholder={
+          "To help social media users engage with their friends more easily by automatically identifying taggable faces in images."
         }
         isMultiline={true}
       />
@@ -192,6 +197,23 @@ const WizardSpec = [
         subtextField="description"
         title={"Anti-Goals?"}
         description={"What usecases was this model not designed for?"}
+      />
+    ),
+  },
+  {
+    path: "stakeholderImpacts",
+    component: (
+      <ListEntry
+        minWidth={"50ch"}
+        textPlaceholder="Innocent bystanders"
+        subtextPlaceholder="Bystanders to security cameras may have their faces recognized without their consent."
+        mainField="stakeholderImpacts"
+        textField="stakeholder"
+        subtextField="impact"
+        title={"Stakeholder Impacts?"}
+        description={
+          "What are stakeholders (impacted groups) and potential harmful impacts on each?"
+        }
       />
     ),
   },
@@ -215,10 +237,10 @@ const WizardSpec = [
       <ListEntry
         subtextPlaceholder="Using this model for tracking people may lead to innaccurate results and harmful consequences in mission-critical contexts."
         mainField="ethicalConsiderations"
-        subtextField="consideration"
+        subtextField="description"
         title={"Ethical Considerations?"}
         description={
-          "Because of the limitations and usecases, are there ethical considerstions that model users should be aware of?"
+          "Are there ethical considerations that model users should be aware of? What improvements and future investigations are needed to address these?"
         }
       />
     ),
@@ -273,6 +295,18 @@ const WizardSpec = [
         description={
           "Give all quantative metrics necessary to give people the big picture."
         }
+      />
+    ),
+  },
+  {
+    path: "figures",
+    component: (
+      <UploadEntry
+        title={"Figures?"}
+        description={
+          "Add the most important figures that show your performance and limitations."
+        }
+        field={"figures"}
       />
     ),
   },
@@ -491,7 +525,7 @@ export default function CardWizard() {
                               }}
                               size={"medium"}
                             >
-                              <ChevronRightIcon />
+                              <ArrowForwardIcon />
                             </IconButton>
                           </Tooltip>
                         </div>
