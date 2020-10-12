@@ -36,6 +36,7 @@ interface InfoBarProps {
   version?: string;
   license?: string;
   supportingLinks?: { link?: string }[];
+  showcase?: string[];
 }
 
 export default function InfoBar(props: InfoBarProps) {
@@ -48,6 +49,7 @@ export default function InfoBar(props: InfoBarProps) {
     version,
     license,
     supportingLinks,
+    showcase,
   } = props;
   return (
     <div style={{ flexDirection: "column" }}>
@@ -102,16 +104,18 @@ export default function InfoBar(props: InfoBarProps) {
       </Grid>
 
       <Box m={1} />
-      <Typography variant={"h6"} className={classes.metaBarTypography}>
-        Example
-      </Typography>
-      <img
-        style={{ width: "100%", borderRadius: 10, marginTop: 5 }}
-        alt={"input example"}
-        src={
-          "https://modelcards.withgoogle.com/assets/images/object-detection/obj-detection-model-description.png"
-        }
-      />
+      {showcase && !!showcase.length && (
+        <>
+          <Typography variant={"h6"} className={classes.metaBarTypography}>
+            Showcase
+          </Typography>
+          <img
+            style={{ width: "100%", borderRadius: 10, marginTop: 5 }}
+            alt={"image showcase"}
+            src={showcase[0]}
+          />
+        </>
+      )}
       <Box m={1} />
 
       {architectureDescription && (

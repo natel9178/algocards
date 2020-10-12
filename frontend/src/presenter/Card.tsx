@@ -223,7 +223,8 @@ export default function Card({
           <Grid container spacing={10}>
             <Grid item xs={8}>
               <Grid container spacing={3}>
-                {(spec.primaryUsecase || spec.antiGoals) && (
+                {((spec.primaryUsecase && !!spec.primaryUsecase.length) ||
+                  (spec.antiGoals && !!spec.antiGoals.length)) && (
                   <Grid item xs={12} className={classes.subBox}>
                     <IntendedUse
                       primaryUsecase={spec.primaryUsecase}
@@ -232,7 +233,7 @@ export default function Card({
                   </Grid>
                 )}
 
-                {spec.stakeholderImpacts && (
+                {spec.stakeholderImpacts && !!spec.stakeholderImpacts.length && (
                   <Grid item xs={12} className={classes.subBox}>
                     <StakeholderImpacts
                       stakeholderImpacts={spec.stakeholderImpacts}
@@ -240,19 +241,20 @@ export default function Card({
                   </Grid>
                 )}
 
-                {spec.limitations && (
+                {spec.limitations && !!spec.limitations.length && (
                   <Grid item xs={12} className={classes.subBox}>
                     <Limitations limitations={spec.limitations} />
                   </Grid>
                 )}
 
-                {spec.ethicalConsiderations && (
-                  <Grid item xs={12} className={classes.subBox}>
-                    <EthicalConsiderations
-                      ethicalConsiderations={spec.ethicalConsiderations}
-                    />
-                  </Grid>
-                )}
+                {spec.ethicalConsiderations &&
+                  !!spec.ethicalConsiderations.length && (
+                    <Grid item xs={12} className={classes.subBox}>
+                      <EthicalConsiderations
+                        ethicalConsiderations={spec.ethicalConsiderations}
+                      />
+                    </Grid>
+                  )}
 
                 {(spec.figures ||
                   spec.datasets ||
@@ -267,7 +269,7 @@ export default function Card({
                     />
                   </Grid>
                 )}
-                {spec.authors && (
+                {spec.authors && !!spec.authors.length && (
                   <Grid item xs={12} className={classes.subBox}>
                     <Authors authors={spec.authors} />
                   </Grid>

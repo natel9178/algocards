@@ -23,6 +23,7 @@ import Card from "../presenter/Card";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import { useWindowDimensions } from "../utils/useWindowDimensions";
 import UploadEntry from "./UploadEntry";
+import Finish from "./Finish";
 
 const WizardSpec = [
   {
@@ -166,6 +167,20 @@ const WizardSpec = [
     ),
   },
   {
+    path: "showcase",
+    text: "Showcase",
+
+    component: (
+      <UploadEntry
+        title={"Showcase Image?"}
+        description={
+          "If appropiate, you may add a showcase image below showing your model."
+        }
+        field={"showcase"}
+      />
+    ),
+  },
+  {
     path: "architecture",
     text: "Architecture",
     component: (
@@ -209,7 +224,7 @@ const WizardSpec = [
         subtextPlaceholder="Resolving distinct identities for people in crowds (i.e. facial recognition)."
         mainField="antiGoals"
         subtextField="description"
-        title={"Out Of Scope Usecases??"}
+        title={"Out Of Scope Usecases?"}
         description={"What usecases was this model not designed for?"}
       />
     ),
@@ -335,6 +350,7 @@ const WizardSpec = [
       />
     ),
   },
+  { path: "finish", text: "Finish", component: <Finish /> },
 ];
 
 const drawerWidth = 240;
@@ -419,16 +435,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CardWizard() {
   const classes = useStyles();
-  const [card, _] = useLocalStorage<any>("card", {});
   const { scrollY } = useViewportScroll();
   const { height } = useWindowDimensions();
 
   const previewOpacity = useTransform(scrollY, [0, height * 0.7], [0, 1]);
   const previewScale = useTransform(scrollY, [0, height * 0.7], [0.9, 1]);
-
-  const [ethicalConsiderations, setEthicalConsiderations] = useLocalStorage(
-    "ethicalConsiderations"
-  );
 
   return (
     <div className={classes.root}>

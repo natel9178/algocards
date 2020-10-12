@@ -58,10 +58,12 @@ export default function UploadEntry({
   title,
   description,
   field,
+  multiple,
 }: {
   title: string;
   description?: string;
   field: string;
+  multiple?: boolean;
 }) {
   const classes = useStyles();
   const [files, setFiles] = useCardLocalStorage<string[]>("card", field, []);
@@ -72,16 +74,27 @@ export default function UploadEntry({
     maxSize: 1000000,
     noClick: true,
     onDrop: (acceptedFiles) => {
-      acceptedFiles.forEach((file) => {
+      if (multiple && !!acceptedFiles.length) {
         var reader = new FileReader();
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(acceptedFiles[0]);
         reader.onload = function () {
-          setFiles([...files, `${reader.result}`]);
+          setFiles([`${reader.result}`]);
         };
         reader.onerror = function (error) {
           console.log("Error: ", error);
         };
-      });
+      } else {
+        acceptedFiles.forEach((file) => {
+          var reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = function () {
+            setFiles([...files, `${reader.result}`]);
+          };
+          reader.onerror = function (error) {
+            console.log("Error: ", error);
+          };
+        });
+      }
     },
     onDropRejected: () => {
       setSnackOpen(true);
