@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
+import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useLocation } from "react-router-dom";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
@@ -58,7 +53,11 @@ const useStyles = makeStyles<Theme, { showHeader: boolean }>((theme) => ({
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const classes = useStyles({ showHeader: location.pathname !== "/presenter" });
+  const classes = useStyles({
+    showHeader:
+      location.pathname !== "/presenter" &&
+      !location.pathname.startsWith("/wizard"),
+  });
   const { scrollY } = useViewportScroll();
   const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
 

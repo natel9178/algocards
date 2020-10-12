@@ -198,9 +198,11 @@ export const SAMPLE_SPEC = {
 export default function Card({
   defaultSpec,
   fromRecoil,
+  preview,
 }: {
   defaultSpec?: Spec;
   fromRecoil?: boolean;
+  preview?: boolean;
 }) {
   const classes = useStyles();
 
@@ -218,7 +220,10 @@ export default function Card({
         exit={{ opacity: 0 }}
         className={classes.root}
       >
-        <Header {...spec} />
+        <Header
+          {...spec}
+          title={preview ? `[PREVIEW] ${spec.title}` : spec.title}
+        />
         <div style={{ width: "100%" }}>
           <Grid container spacing={10}>
             <Grid item xs={8}>

@@ -1,8 +1,9 @@
-import { Divider, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Chip, Divider, Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import Icon from "../Icon";
-import BookIcon from "@material-ui/icons/Book";
-import TranslateIcon from "@material-ui/icons/Translate";
+import LinkIcon from "@material-ui/icons/Link";
+import BuildIcon from "@material-ui/icons/Build";
+import GavelIcon from "@material-ui/icons/Gavel";
+import CategoryIcon from "@material-ui/icons/Category";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -23,10 +24,16 @@ const useStyles = makeStyles((theme) => ({
   },
   rightTitle: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "flex-end",
     alignSelf: "center",
+    flexGrow: 1,
+    padding: 0,
+  },
+  chip: {
+    margin: theme.spacing(0.5),
   },
   header: {
     flexDirection: "row",
@@ -59,13 +66,14 @@ interface HeaderProps {
   type?: string;
   version?: string;
   license?: string;
+  supportingLinks?: { link?: string }[];
 }
 export default function Header(props: HeaderProps) {
-  const { title, description, type, version, license } = props;
+  const { title, description, type, version, license, supportingLinks } = props;
   const classes = useStyles();
   return (
     <Grid container spacing={10}>
-      <Grid item xs={8} className={classes.leftTitle}>
+      <Grid item xs={7} className={classes.leftTitle}>
         <Typography style={{ fontWeight: "bold" }} variant={"h3"}>
           <a
             style={{ color: "black", textDecoration: "none" }}
@@ -76,54 +84,28 @@ export default function Header(props: HeaderProps) {
         </Typography>
         <Typography variant={"body1"}>{description}</Typography>
       </Grid>
-      {/* <Grid item xs={4} className={classes.rightTitle}>
+      <Grid item xs={5} className={classes.rightTitle}>
         {type && (
-          <Icon
-            icon={<TranslateIcon fontSize={"large"} />}
-            title={type}
-            label={""}
-          />
+          <Chip className={classes.chip} icon={<CategoryIcon />} label={type} />
         )}
         {version && (
-          <>
-            {type && (
-              <Divider
-                variant={"middle"}
-                orientation={"vertical"}
-                light
-                flexItem
-              />
-            )}
-            <Icon
-              icon={<BookIcon fontSize={"large"} />}
-              title={version}
-              label={""}
-            />
-          </>
+          <Chip className={classes.chip} icon={<BuildIcon />} label={version} />
         )}
-
         {license && (
-          <>
-            {(version || type) && (
-              <Divider
-                variant={"middle"}
-                orientation={"vertical"}
-                light
-                flexItem
-              />
-            )}
-            <Icon
-              icon={
-                <Typography variant={"h5"} style={{ fontWeight: "bolder" }}>
-                  {license}
-                </Typography>
-              }
-              title={"License"}
-              label={""}
-            />
-          </>
+          <Chip className={classes.chip} icon={<GavelIcon />} label={license} />
         )}
-      </Grid> */}
+        {supportingLinks && !!supportingLinks.length && (
+          <Chip
+            className={classes.chip}
+            clickable
+            icon={<LinkIcon />}
+            label={"Homepage"}
+            onClick={() => {
+              console.log(supportingLinks[0]);
+            }}
+          />
+        )}
+      </Grid>
     </Grid>
   );
 }
