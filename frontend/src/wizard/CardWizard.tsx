@@ -1,6 +1,7 @@
 import {
   AppBar,
   Box,
+  Fab,
   Grid,
   IconButton,
   LinearProgress,
@@ -8,6 +9,7 @@ import {
   Paper,
   Toolbar,
   Tooltip,
+  useTheme,
   Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
@@ -16,11 +18,18 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Wizard, Steps, Step } from "react-albus";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-
+import {
+  Element,
+  Events,
+  animateScroll as scroll,
+  scrollSpy,
+  scroller,
+} from "react-scroll";
 import TextEntry from "./TextEntry";
 import LicenseList from "spdx-license-list/simple";
 import ListEntry from "./ListEntry";
 import { useLocalStorage } from "../utils/LocalStorage";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import Card from "../presenter/Card";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import { useWindowDimensions } from "../utils/useWindowDimensions";
@@ -459,9 +468,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 6,
     flexGrow: 1,
   },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 export default function CardWizard() {
+  const theme = useTheme();
   const classes = useStyles();
   const { scrollY } = useViewportScroll();
   const { height } = useWindowDimensions();
@@ -491,7 +504,7 @@ export default function CardWizard() {
             <Typography className={classes.title} variant={"h4"}>
               Algo-Card
             </Typography>
-            <Box display="flex" alignItems="center" mx={5} width={150}>
+            <Box display="flex" alignItems="center" ml={5} mr={2} width={150}>
               <Box mr={2} width={"100%"}>
                 <LinearProgress variant="determinate" value={progress} />
               </Box>
@@ -502,6 +515,24 @@ export default function CardWizard() {
                 >{`${progress}%`}</Typography>
               </Box>
             </Box>
+            <Fab
+              style={{
+                marginRight: theme.spacing(5),
+              }}
+              variant="extended"
+              color="primary"
+              size="medium"
+              onClick={() => {
+                scroller.scrollTo("card", {
+                  duration: 1500,
+                  smooth: "easeInOutQuint",
+                  offset: -100,
+                });
+              }}
+            >
+              <VisibilityIcon className={classes.extendedIcon} />
+              Card Preview
+            </Fab>
           </motion.div>
         </Toolbar>
       </AppBar>
@@ -558,6 +589,7 @@ export default function CardWizard() {
                                 style={{
                                   display: stepIndex === 0 ? "none" : undefined,
                                 }}
+                                size={"small"}
                               >
                                 <ChevronLeftIcon />
                               </IconButton>
@@ -633,9 +665,11 @@ export default function CardWizard() {
             <motion.div
               style={{ opacity: previewOpacity, scale: previewScale }}
             >
-              <Paper className={classes.cardPaper}>
-                <Card fromRecoil preview />
-              </Paper>
+              <Element name="card">
+                <Paper className={classes.cardPaper}>
+                  <Card fromRecoil preview />
+                </Paper>
+              </Element>
             </motion.div>
           </Grid>
           <Grid item xs={1} className={classes.sidebar}></Grid>

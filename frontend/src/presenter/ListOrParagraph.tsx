@@ -9,8 +9,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListOrParagraph({
   content,
+  ulStyle,
+  liStyle,
 }: {
   content: string | string[];
+  ulStyle?: React.CSSProperties;
+  liStyle?: React.CSSProperties;
 }) {
   const classes = useStyles();
   if (typeof content === "string") {
@@ -30,9 +34,9 @@ export default function ListOrParagraph({
       return <p className={classes.text}>{content[0]}</p>;
     }
     return (
-      <ul>
+      <ul style={ulStyle}>
         {content.map((sentence) => (
-          <li>{sentence}</li>
+          <li style={liStyle}>{sentence}</li>
         ))}
       </ul>
     );

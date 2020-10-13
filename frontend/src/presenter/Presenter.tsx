@@ -15,6 +15,8 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import AddIcon from "@material-ui/icons/Add";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 const drawerWidth = 240;
 

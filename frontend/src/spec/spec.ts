@@ -15,7 +15,7 @@ export interface Spec {
   architectureDescription?: string; // added
 
   primaryUsecase?: string | string[]; // added
-  antiGoals?: string | { description?: string }[]; // added
+  antiGoals?: { description?: string }[]; // added
 
   limitations?: {
     type?: string; // added

@@ -10,6 +10,10 @@ import React from "react";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import Card from "../presenter/Card";
+import fileDownload from "js-file-download";
+import { card } from "../utils/useCardState";
+import { useRecoilState } from "recoil";
+import { Spec } from "../spec/spec";
 
 const useStyles = makeStyles<Theme>(() => ({
   root: {
@@ -34,6 +38,7 @@ const useStyles = makeStyles<Theme>(() => ({
 
 export default function Finish({}: {}) {
   const classes = useStyles({});
+  const [recoilSpec, _] = useRecoilState<Spec>(card);
 
   return (
     <div className={classes.root}>
@@ -55,8 +60,13 @@ export default function Finish({}: {}) {
           variant="outlined"
           size="large"
           color="primary"
-          className={classes.margin}
           startIcon={<FileCopyIcon />}
+          onClick={() => {
+            fileDownload(
+              JSON.stringify(recoilSpec),
+              `${recoilSpec.title || "export"}-card.json`
+            );
+          }}
         >
           Download Algo-Card File
         </Button>
@@ -65,7 +75,6 @@ export default function Finish({}: {}) {
           variant="outlined"
           size="large"
           color="primary"
-          className={classes.margin}
           startIcon={<GitHubIcon />}
         >
           Submit Pull Request to Github Repo

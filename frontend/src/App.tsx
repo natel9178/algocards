@@ -8,6 +8,7 @@ import Presenter from "./presenter/Presenter";
 import CardWizard from "./wizard/CardWizard";
 import "./animation.css";
 import { RecoilRoot } from "recoil";
+import Browse from "./browse/Browse";
 
 function App() {
   return (
@@ -17,7 +18,10 @@ function App() {
           <CssBaseline />
           <Layout>
             <Switch>
-              <Redirect path="/" to="/presenter" exact={true} />
+              <Redirect path="/" to="/browse" exact={true} />
+              <Route path="/browse">
+                <Browse />
+              </Route>
               <Route path="/presenter">
                 <Presenter />
               </Route>

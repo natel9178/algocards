@@ -63,27 +63,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="relative" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-          <Link to="/">
-            <img src={"/logo.svg"} alt="Nice" width="40" />
-          </Link>
-          <motion.div
-            style={{
-              opacity: opacityAnim,
-              display: "flex",
-              flexGrow: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography className={classes.title} variant={"h4"}>
-              Algo-Card
-            </Typography>
-          </motion.div>
-        </Toolbar>
-      </AppBar>
       <main className={classes.content}>
         <Box className={classes.container}>{children}</Box>
       </main>
