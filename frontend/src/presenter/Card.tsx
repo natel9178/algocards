@@ -1,4 +1,4 @@
-import { Box, Grid, makeStyles } from "@material-ui/core";
+import { Box, Grid, makeStyles, Typography, useTheme } from "@material-ui/core";
 import React, { useState } from "react";
 import { Spec } from "../spec/spec";
 import { LoremIpsum } from "lorem-ipsum";
@@ -204,6 +204,7 @@ export default function Card({
   fromRecoil?: boolean;
   preview?: boolean;
 }) {
+  const theme = useTheme();
   const classes = useStyles();
 
   const [recoilSpec, _] = useRecoilState<Spec>(card);
@@ -220,10 +221,28 @@ export default function Card({
         exit={{ opacity: 0 }}
         className={classes.root}
       >
-        <Header
-          {...spec}
-          title={preview ? `[PREVIEW] ${spec.title}` : spec.title}
-        />
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          width="100%"
+          border="1px solid rgba(0,0,0,0.1)"
+          borderRadius={10}
+          mb={3}
+          style={{ backgroundColor: theme.palette.primary.main }}
+        >
+          <Typography
+            variant="body1"
+            style={{
+              fontFamily: "Roboto Mono",
+              color: "white",
+              margin: theme.spacing(1),
+            }}
+          >
+            You are viewing a preview
+          </Typography>
+        </Box>
+        <Header {...spec} title={spec.title} />
         <div style={{ width: "100%" }}>
           <Grid container spacing={10}>
             <Grid item xs={8}>
