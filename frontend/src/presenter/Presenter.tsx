@@ -17,6 +17,9 @@ import { motion, useTransform, useViewportScroll } from "framer-motion";
 import AddIcon from "@material-ui/icons/Add";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import GitHubIcon from "@material-ui/icons/GitHub";
+import { useRecoilState } from "recoil";
+import { useQueryParam, BooleanParam } from "use-query-params";
+import { loadedCard } from "../utils/useCardState";
 
 const drawerWidth = 240;
 
@@ -113,6 +116,8 @@ export default function Presenter() {
   const [open, setOpen] = React.useState(false);
   const { scrollY } = useViewportScroll();
   const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
+  const [fromFileUpload] = useQueryParam("fromFileUpload", BooleanParam);
+  const [loadCard] = useRecoilState(loadedCard);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -236,7 +241,7 @@ export default function Presenter() {
           </List>
         </Drawer>
         <Paper className={classes.paper}>
-          <Card defaultSpec={SAMPLE_SPEC} />
+          <Card defaultSpec={fromFileUpload ? loadCard : SAMPLE_SPEC} />
         </Paper>
       </div>
     </>

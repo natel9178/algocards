@@ -58,8 +58,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
       location.pathname !== "/presenter" &&
       !location.pathname.startsWith("/wizard"),
   });
-  const { scrollY } = useViewportScroll();
-  const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
 
   return (
     <div className={classes.root}>

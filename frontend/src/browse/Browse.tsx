@@ -20,6 +20,9 @@ import AbstractCard from "./AbstractCard";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { useHistory } from "react-router-dom";
+import { useDropzone } from "react-dropzone";
+import { useRecoilState } from "recoil";
+import { loadedCard } from "../utils/useCardState";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
   title: {},
   toolbarTitle: {
     marginLeft: theme.spacing(3),
+    flexGrow: 1,
+    fontSize: 25,
+    marginBottom: 3,
   },
   paper: {
     borderRadius: 18,
@@ -61,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface BrowseProps {}
 
-const appearDistance = 200;
+const appearDistance = 100;
 
 export default function Browse(props: BrowseProps) {
   const history = useHistory();
@@ -70,10 +76,31 @@ export default function Browse(props: BrowseProps) {
   const { scrollY } = useViewportScroll();
   const opacityAnim = useTransform(
     scrollY,
-    [0, appearDistance, appearDistance + 50],
+    [0, appearDistance, appearDistance + 100],
     [0, 0, 1]
   );
   const [openAboutModal, setOpenAboutModal] = useState(false);
+  const [_, setLoadCard] = useRecoilState(loadedCard);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: "application/json",
+    maxSize: 1000000,
+    noClick: true,
+    onDrop: (acceptedFiles) => {
+      if (!!acceptedFiles.length) {
+        var reader = new FileReader();
+        reader.readAsText(acceptedFiles[0]);
+        reader.onload = function () {
+          localStorage.setItem("loadedCard", String(reader.result));
+          setLoadCard(JSON.parse(String(reader.result)));
+          history.push("/presenter?fromFileUpload=1");
+        };
+        reader.onerror = function (error) {
+          console.log("Error: ", error);
+        };
+      }
+    },
+  });
 
   return (
     <>
@@ -81,21 +108,61 @@ export default function Browse(props: BrowseProps) {
         style={{
           opacity: opacityAnim,
           position: "fixed",
+          minHeight: 80,
+          backgroundColor: "rgba(255, 255, 255, 1.00)",
+          width: "100%",
+          zIndex: 1000,
+          borderBottomWidth: 1,
+          borderBottomColor: "rgba(0, 0, 0, 0.1)",
+          borderBottomStyle: "solid",
           display: "flex",
-          flexDirection: "row",
-          padding: theme.spacing(4, 8),
-          backgroundColor: "rgna(250, 250, 250, 1.00)",
+          flexDirection: "column",
         }}
       >
-        <Link to="/">
-          <img src={"/logo.svg"} alt="Nice" width="40" />
-        </Link>
+        <Container
+          maxWidth={"lg"}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            flexGrow: 1,
+          }}
+        >
+          <Link to="/">
+            <img src={"/logo.svg"} alt="Nice" width="40" />
+          </Link>
 
-        <Typography className={classes.toolbarTitle} variant={"h4"}>
-          Algo-Card
-        </Typography>
+          <Typography className={classes.toolbarTitle} variant={"h4"}>
+            Algo-Card
+          </Typography>
+          <Button
+            style={{ borderRadius: 100 }}
+            variant="outlined"
+            size="medium"
+            color="primary"
+            startIcon={<InfoIcon />}
+            onClick={() => setOpenAboutModal(true)}
+          >
+            About Algo-Cards
+          </Button>
+          <Box m={1} />
+          <Button
+            style={{ borderRadius: 100 }}
+            variant="contained"
+            size="medium"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={() => history.push("/wizard")}
+          >
+            Create New Card
+          </Button>
+        </Container>
       </motion.div>
-      <div className={classes.root}>
+      <div className={classes.root} {...getRootProps()}>
+        <input
+          style={{ position: "absolute", width: "100%", height: "100%" }}
+          {...getInputProps()}
+        />
         <div className={classes.hero}>
           <Link to="/">
             <img src={"/logo.svg"} alt="Nice" width="70" />
@@ -141,19 +208,19 @@ export default function Browse(props: BrowseProps) {
         <Box m={5} />
         <Container maxWidth={"lg"}>
           <Grid container spacing={3}>
-            <Grid item xs={4}>
+            <Grid item lg={4} xs={12}>
               <AbstractCard />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} xs={12}>
               <AbstractCard />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} xs={12}>
               <AbstractCard />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} xs={12}>
               <AbstractCard />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} xs={12}>
               <AbstractCard />
             </Grid>
           </Grid>
@@ -166,6 +233,11 @@ export default function Browse(props: BrowseProps) {
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
+        }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <Fade in={openAboutModal}>

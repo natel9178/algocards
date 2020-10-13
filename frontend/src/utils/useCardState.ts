@@ -1,6 +1,12 @@
 import { Dispatch, useState, useEffect } from "react";
 import { atom, useRecoilState } from "recoil";
+import { Spec } from "../spec/spec";
 import { useDebounce } from "./useDebounce";
+
+export const loadedCard = atom<Spec>({
+  key: "loadedCard",
+  default: JSON.parse(localStorage.getItem("loadedCard") || "{}"),
+});
 
 export const card = atom({
   key: "card",

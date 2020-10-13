@@ -2,12 +2,6 @@ import { Paper, makeStyles } from "@material-ui/core";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: theme.spacing(10, 0),
-  },
   paper: {
     width: "clamp(400px, 50%, 1000px)",
     display: "flex",
@@ -22,11 +16,8 @@ const useStyles = makeStyles((theme) => ({
 export default function About(props: {}) {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <img src={"/logo.svg"} alt="Nice" width="70" />
-        
-      </Paper>
-    </div>
+    <Paper className={classes.paper}>
+      <img src={"/logo.svg"} alt="Nice" width="70" />
+    </Paper>
   );
 }

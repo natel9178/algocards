@@ -286,7 +286,6 @@ export default function Card({
               xs={4}
               style={{
                 flexDirection: "column",
-                position: "fixed",
               }}
             >
               <InfoBar {...spec} />

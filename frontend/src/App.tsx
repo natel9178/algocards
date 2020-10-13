@@ -9,27 +9,39 @@ import CardWizard from "./wizard/CardWizard";
 import "./animation.css";
 import { RecoilRoot } from "recoil";
 import Browse from "./browse/Browse";
+import { QueryParamProvider } from "use-query-params";
+import { AnimatedSwitch } from "react-router-transition";
 
 function App() {
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <CssBaseline />
-          <Layout>
-            <Switch>
-              <Redirect path="/" to="/browse" exact={true} />
-              <Route path="/browse">
-                <Browse />
+          <QueryParamProvider ReactRouterRoute={Route}>
+            <CssBaseline />
+            <AnimatedSwitch
+              atEnter={{ opacity: 0 }}
+              atLeave={{ opacity: 0 }}
+              atActive={{ opacity: 1 }}
+              className="switch-wrapper"
+            >
+              <Route path="/" exact={true}>
+                <Layout>
+                  <Browse />
+                </Layout>
               </Route>
               <Route path="/presenter">
-                <Presenter />
+                <Layout>
+                  <Presenter />
+                </Layout>
               </Route>
               <Route path="/wizard">
-                <CardWizard />
+                <Layout>
+                  <CardWizard />
+                </Layout>
               </Route>
-            </Switch>
-          </Layout>
+            </AnimatedSwitch>
+          </QueryParamProvider>
         </BrowserRouter>
       </ThemeProvider>
     </RecoilRoot>

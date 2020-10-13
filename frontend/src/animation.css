@@ -23,3 +23,11 @@
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
+
+.switch-wrapper {
+  position: relative;
+}
+ 
+.switch-wrapper > div {
+  position: absolute;
+}
