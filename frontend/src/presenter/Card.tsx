@@ -179,6 +179,7 @@ export const SAMPLE_SPEC = {
 export default function Card({
   defaultSpec,
   fromRecoil,
+  preview,
 }: {
   defaultSpec?: Spec;
   fromRecoil?: boolean;
@@ -201,27 +202,29 @@ export default function Card({
         exit={{ opacity: 0 }}
         className={classes.root}
       >
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          width="100%"
-          border="1px solid rgba(0,0,0,0.1)"
-          borderRadius={10}
-          mb={3}
-          style={{ backgroundColor: theme.palette.primary.main }}
-        >
-          <Typography
-            variant="body1"
-            style={{
-              fontFamily: "Roboto Mono",
-              color: "white",
-              margin: theme.spacing(1),
-            }}
+        {preview && (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            width="100%"
+            border="1px solid rgba(0,0,0,0.1)"
+            borderRadius={10}
+            mb={3}
+            style={{ backgroundColor: theme.palette.primary.main }}
           >
-            You are viewing a preview
-          </Typography>
-        </Box>
+            <Typography
+              variant="body1"
+              style={{
+                fontFamily: "Roboto Mono",
+                color: "white",
+                margin: theme.spacing(1),
+              }}
+            >
+              You are viewing a preview
+            </Typography>
+          </Box>
+        )}
         <Header {...spec} title={spec.title} />
         <div style={{ width: "100%" }}>
           <Grid container spacing={10}>
