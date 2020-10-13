@@ -1,7 +1,6 @@
 import { Dispatch, useState, useEffect } from "react";
 import { atom, useRecoilState } from "recoil";
 import { Spec } from "../spec/spec";
-import { useDebounce } from "./useDebounce";
 
 export const loadedCard = atom<Spec>({
   key: "loadedCard",
@@ -18,7 +17,7 @@ export const useCardLocalStorage = <T = any>(
   key: string,
   initialValue?: T
 ): [T, Dispatch<T>] => {
-  const [recoilItem, setRecoilItem] = useRecoilState(card);
+  const [, setRecoilItem] = useRecoilState(card);
 
   const [item, setValue] = useState<T>(() => {
     const mainDict = JSON.parse(localStorage.getItem("card") || "{}");
@@ -37,7 +36,7 @@ export const useCardLocalStorage = <T = any>(
     mainDict[key] = item;
     setRecoilItem(mainDict);
     localStorage.setItem("card", JSON.stringify(mainDict));
-  }, [item, key]);
+  }, [item, key, setRecoilItem]);
 
   return [item, setValue];
 };

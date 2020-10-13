@@ -6,7 +6,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
-import { useLocalStorage } from "../utils/LocalStorage";
 import { Autocomplete } from "@material-ui/lab";
 import { useCardLocalStorage } from "../utils/useCardState";
 

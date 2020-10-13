@@ -2,10 +2,9 @@ import React from "react";
 import { makeStyles, Grid, Typography, Box, Divider } from "@material-ui/core";
 import ListOrParagraph from "../ListOrParagraph";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import GitHubIcon from "@material-ui/icons/GitHub";
 import LinkIcon from "@material-ui/icons/Link";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   metaBarContainer: {
     flexDirection: "column",
   },
@@ -111,7 +110,7 @@ export default function InfoBar(props: InfoBarProps) {
           </Typography>
           <img
             style={{ width: "100%", borderRadius: 10, marginTop: 5 }}
-            alt={"image showcase"}
+            alt={"showcase"}
             src={showcase[0]}
           />
         </>

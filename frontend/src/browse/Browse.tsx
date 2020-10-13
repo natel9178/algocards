@@ -2,10 +2,8 @@ import {
   makeStyles,
   Typography,
   Box,
-  useTheme,
   TextField,
   Grid,
-  Paper,
   Button,
   Modal,
   Container,
@@ -69,9 +67,8 @@ interface BrowseProps {}
 
 const appearDistance = 100;
 
-export default function Browse(props: BrowseProps) {
+export default function Browse() {
   const history = useHistory();
-  const theme = useTheme();
   const classes = useStyles();
   const { scrollY } = useViewportScroll();
   const opacityAnim = useTransform(
@@ -80,7 +77,7 @@ export default function Browse(props: BrowseProps) {
     [0, 0, 1]
   );
   const [openAboutModal, setOpenAboutModal] = useState(false);
-  const [_, setLoadCard] = useRecoilState(loadedCard);
+  const [, setLoadCard] = useRecoilState(loadedCard);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: "application/json",

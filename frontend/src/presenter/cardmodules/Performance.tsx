@@ -6,7 +6,6 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import React from "react";
-import LinkIcon from "@material-ui/icons/Link";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -132,6 +131,7 @@ export default function Performance({
                 {figures.map((graph) => (
                   <Grid item xs={6} style={{ flexDirection: "column" }}>
                     <img
+                      alt=""
                       src={graph}
                       style={{
                         width: "100%",

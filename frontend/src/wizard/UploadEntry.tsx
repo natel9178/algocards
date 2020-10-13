@@ -3,13 +3,11 @@ import {
   IconButton,
   makeStyles,
   Snackbar,
-  TextField,
   Theme,
   Typography,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { useLocalStorage } from "../utils/LocalStorage";
-import { Alert, Autocomplete } from "@material-ui/lab";
+import React from "react";
+import { Alert } from "@material-ui/lab";
 import { useCardLocalStorage } from "../utils/useCardState";
 import { useDropzone } from "react-dropzone";
 import { motion } from "framer-motion";
@@ -180,6 +178,7 @@ export default function UploadEntry({
                   borderRadius: 10,
                 }}
                 src={file}
+                alt=""
               />
             </motion.div>
           ))

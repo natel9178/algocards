@@ -1,4 +1,4 @@
-import { Chip, Divider, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Chip, Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import LinkIcon from "@material-ui/icons/Link";
 import BuildIcon from "@material-ui/icons/Build";

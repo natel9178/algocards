@@ -1,8 +1,7 @@
 import React from "react";
-import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { Link, useLocation } from "react-router-dom";
-import { motion, useTransform, useViewportScroll } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles<Theme, { showHeader: boolean }>((theme) => ({
   "@global": {

@@ -1,7 +1,6 @@
 import { Box, Grid, makeStyles, Typography, useTheme } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
 import { Spec } from "../spec/spec";
-import { LoremIpsum } from "lorem-ipsum";
 import { AnimatePresence, motion } from "framer-motion";
 import InfoBar from "./cardmodules/InfoBar";
 import Authors from "./cardmodules/Authors";
@@ -9,7 +8,6 @@ import Header from "./cardmodules/Header";
 import IntendedUse from "./cardmodules/IntendedUse";
 import Limitations from "./cardmodules/Limitations";
 import Performance from "./cardmodules/Performance";
-import useEventListener from "@use-it/event-listener";
 import { card } from "../utils/useCardState";
 import { useRecoilState } from "recoil";
 import StakeholderImpacts from "./cardmodules/StakeholderImpacts";
@@ -63,23 +61,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
 }));
-
-const lorem = new LoremIpsum({
-  sentencesPerParagraph: {
-    max: 8,
-    min: 4,
-  },
-  wordsPerSentence: {
-    max: 16,
-    min: 4,
-  },
-});
-
-function getRandomInt(min: number, max: number) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 export const SAMPLE_SPEC = {
   // title: "AI Object Detection", // done
@@ -198,7 +179,6 @@ export const SAMPLE_SPEC = {
 export default function Card({
   defaultSpec,
   fromRecoil,
-  preview,
 }: {
   defaultSpec?: Spec;
   fromRecoil?: boolean;
@@ -207,7 +187,7 @@ export default function Card({
   const theme = useTheme();
   const classes = useStyles();
 
-  const [recoilSpec, _] = useRecoilState<Spec>(card);
+  const [recoilSpec] = useRecoilState<Spec>(card);
   let spec = defaultSpec || {};
   if (fromRecoil) {
     spec = recoilSpec;

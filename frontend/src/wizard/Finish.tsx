@@ -1,15 +1,7 @@
-import {
-  Box,
-  makeStyles,
-  TextField,
-  Theme,
-  Typography,
-  Button,
-} from "@material-ui/core";
+import { Box, makeStyles, Theme, Typography, Button } from "@material-ui/core";
 import React from "react";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import GitHubIcon from "@material-ui/icons/GitHub";
-import Card from "../presenter/Card";
 import fileDownload from "js-file-download";
 import { card } from "../utils/useCardState";
 import { useRecoilState } from "recoil";
@@ -36,9 +28,11 @@ const useStyles = makeStyles<Theme>(() => ({
   },
 }));
 
-export default function Finish({}: {}) {
-  const classes = useStyles({});
-  const [recoilSpec, _] = useRecoilState<Spec>(card);
+interface FinishProps {}
+
+export default function Finish(props: FinishProps) {
+  const classes = useStyles();
+  const [recoilSpec] = useRecoilState<Spec>(card);
 
   return (
     <div className={classes.root}>

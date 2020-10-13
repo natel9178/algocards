@@ -42,7 +42,7 @@ interface AbstractCardProps {}
 
 export default function AbstractCard(props: AbstractCardProps) {
   const classes = useStyles();
-  const [spec, _] = useRecoilState<Spec>(card);
+  const [spec] = useRecoilState<Spec>(card);
 
   return (
     <Paper className={classes.paper}>

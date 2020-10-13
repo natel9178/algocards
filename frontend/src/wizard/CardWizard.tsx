@@ -18,24 +18,17 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Wizard, Steps, Step } from "react-albus";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import {
-  Element,
-  Events,
-  animateScroll as scroll,
-  scrollSpy,
-  scroller,
-} from "react-scroll";
+import { Element, scroller } from "react-scroll";
 import TextEntry from "./TextEntry";
 import LicenseList from "spdx-license-list/simple";
 import ListEntry from "./ListEntry";
-import { useLocalStorage } from "../utils/LocalStorage";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Card from "../presenter/Card";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import { useWindowDimensions } from "../utils/useWindowDimensions";
 import UploadEntry from "./UploadEntry";
 import Finish from "./Finish";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const WizardSpec = [
   {

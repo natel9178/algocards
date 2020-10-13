@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@material-ui/core/styles";
 import React from "react";
 import { theme } from "./styling/Theme";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 import { Layout } from "./styling/Layout";
 import Presenter from "./presenter/Presenter";

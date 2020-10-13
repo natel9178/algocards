@@ -8,7 +8,6 @@ import {
   useTheme,
 } from "@material-ui/core";
 import React from "react";
-import { useLocalStorage } from "../utils/LocalStorage";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
 import { AnimatePresence, motion } from "framer-motion";
