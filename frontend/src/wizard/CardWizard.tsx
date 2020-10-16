@@ -2,7 +2,6 @@ import {
   AppBar,
   Box,
   Fab,
-  Grid,
   IconButton,
   LinearProgress,
   makeStyles,
@@ -11,6 +10,7 @@ import {
   Tooltip,
   useTheme,
   Typography,
+  Container,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { Route } from "react-router-dom";
@@ -530,143 +530,132 @@ export default function CardWizard() {
         </Toolbar>
       </AppBar>
       <div className={classes.root}>
-        <Grid container wrap="nowrap" className={classes.container}>
-          <Grid item xs={1} className={classes.sidebar}></Grid>
-          <Grid item xs={10}>
-            <Paper className={classes.paper}>
-              <Route
-                render={({ history }) => (
-                  <Wizard
-                    history={history}
-                    render={({ step, next, previous, steps }) => {
-                      const stepIndex = steps.indexOf(step);
+        <Container maxWidth={"lg"} className={classes.container}>
+          <Paper className={classes.paper}>
+            <Route
+              render={({ history }) => (
+                <Wizard
+                  history={history}
+                  render={({ step, next, previous, steps }) => {
+                    const stepIndex = steps.indexOf(step);
 
-                      setProgress(
-                        Math.round(((stepIndex + 1) / steps.length) * 100)
-                      );
-                      return (
-                        <div
-                          style={{
-                            // position: "relative",
-                            width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "center",
-                          }}
-                          // onKeyDown={(event) => {
-                          //   if (event.key === "ArrowLeft" && stepIndex > 0) {
-                          //     previous();
-                          //   } else if (
-                          //     event.key === "ArrowRight" &&
-                          //     stepIndex < steps.length - 1
-                          //   ) {
-                          //     next();
-                          //   }
-                          // }}
-                          // tabIndex={0}
-                        >
-                          <div className={classes.nextbar}>
-                            <Tooltip
-                              title={
-                                stepIndex > 0
-                                  ? `Back to ${
-                                      WizardSpec[stepIndex - 1].text ||
-                                      WizardSpec[stepIndex - 1].path
-                                    }`
-                                  : ""
-                              }
+                    setProgress(
+                      Math.round(((stepIndex + 1) / steps.length) * 100)
+                    );
+                    return (
+                      <div
+                        style={{
+                          // position: "relative",
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                        }}
+                        // onKeyDown={(event) => {
+                        //   if (event.key === "ArrowLeft" && stepIndex > 0) {
+                        //     previous();
+                        //   } else if (
+                        //     event.key === "ArrowRight" &&
+                        //     stepIndex < steps.length - 1
+                        //   ) {
+                        //     next();
+                        //   }
+                        // }}
+                        // tabIndex={0}
+                      >
+                        <div className={classes.nextbar}>
+                          <Tooltip
+                            title={
+                              stepIndex > 0
+                                ? `Back to ${
+                                    WizardSpec[stepIndex - 1].text ||
+                                    WizardSpec[stepIndex - 1].path
+                                  }`
+                                : ""
+                            }
+                          >
+                            <IconButton
+                              onClick={previous}
+                              style={{
+                                display: stepIndex === 0 ? "none" : undefined,
+                              }}
+                              size={"small"}
                             >
-                              <IconButton
-                                onClick={previous}
-                                style={{
-                                  display: stepIndex === 0 ? "none" : undefined,
-                                }}
-                                size={"small"}
-                              >
-                                <ChevronLeftIcon />
-                              </IconButton>
-                            </Tooltip>
-                          </div>
-                          <div style={{ flexGrow: 1, position: "relative" }}>
-                            <TransitionGroup>
-                              <CSSTransition
-                                key={step.id}
-                                classNames="wizard"
-                                timeout={{ enter: 200, exit: 300 }}
-                              >
-                                <div
-                                  style={{
-                                    position: "absolute",
-                                    width: "100%",
-                                    height: "100%",
-                                  }}
-                                >
-                                  <Steps key={step.id} step={step}>
-                                    {WizardSpec.map((wizardStep) => (
-                                      <Step
-                                        key={`wizard/${wizardStep.path}`}
-                                        id={`wizard/${wizardStep.path}`}
-                                      >
-                                        {wizardStep.component}
-                                      </Step>
-                                    ))}
-                                  </Steps>
-                                </div>
-                              </CSSTransition>
-                            </TransitionGroup>
-                          </div>
-                          <div className={classes.nextbar}>
-                            <Tooltip
-                              title={
-                                stepIndex < steps.length - 1
-                                  ? `Go to ${
-                                      WizardSpec[stepIndex + 1].text ||
-                                      WizardSpec[stepIndex + 1].path
-                                    }`
-                                  : ""
-                              }
-                            >
-                              <IconButton
-                                onClick={next}
-                                style={{
-                                  display:
-                                    stepIndex === steps.length - 1
-                                      ? "none"
-                                      : undefined,
-                                }}
-                                size={"medium"}
-                              >
-                                <ArrowForwardIcon />
-                              </IconButton>
-                            </Tooltip>
-                          </div>
+                              <ChevronLeftIcon />
+                            </IconButton>
+                          </Tooltip>
                         </div>
-                      );
-                    }}
-                  />
-                )}
-              />
-            </Paper>
-          </Grid>
-          <Grid item xs={1} className={classes.sidebar}></Grid>
-        </Grid>
-        <Box m={10} />
-        <Grid container wrap="nowrap" className={classes.container}>
-          <Grid item xs={1} className={classes.sidebar}></Grid>
-          <Grid item xs={10}>
-            <motion.div
-              style={{ opacity: previewOpacity, scale: previewScale }}
-            >
-              <Element name="card">
-                <Paper className={classes.cardPaper}>
-                  <Card fromRecoil preview />
-                </Paper>
-              </Element>
-            </motion.div>
-          </Grid>
-          <Grid item xs={1} className={classes.sidebar}></Grid>
-        </Grid>
+                        <div style={{ flexGrow: 1, position: "relative" }}>
+                          <TransitionGroup>
+                            <CSSTransition
+                              key={step.id}
+                              classNames="wizard"
+                              timeout={{ enter: 200, exit: 300 }}
+                            >
+                              <div
+                                style={{
+                                  position: "absolute",
+                                  width: "100%",
+                                  height: "100%",
+                                }}
+                              >
+                                <Steps key={step.id} step={step}>
+                                  {WizardSpec.map((wizardStep) => (
+                                    <Step
+                                      key={`wizard/${wizardStep.path}`}
+                                      id={`wizard/${wizardStep.path}`}
+                                    >
+                                      {wizardStep.component}
+                                    </Step>
+                                  ))}
+                                </Steps>
+                              </div>
+                            </CSSTransition>
+                          </TransitionGroup>
+                        </div>
+                        <div className={classes.nextbar}>
+                          <Tooltip
+                            title={
+                              stepIndex < steps.length - 1
+                                ? `Go to ${
+                                    WizardSpec[stepIndex + 1].text ||
+                                    WizardSpec[stepIndex + 1].path
+                                  }`
+                                : ""
+                            }
+                          >
+                            <IconButton
+                              onClick={next}
+                              style={{
+                                display:
+                                  stepIndex === steps.length - 1
+                                    ? "none"
+                                    : undefined,
+                              }}
+                              size={"medium"}
+                            >
+                              <ArrowForwardIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </div>
+                      </div>
+                    );
+                  }}
+                />
+              )}
+            />
+          </Paper>
+          <Box m={10} />
+
+          <motion.div style={{ opacity: previewOpacity, scale: previewScale }}>
+            <Element name="card">
+              <Paper className={classes.cardPaper}>
+                <Card fromRecoil preview />
+              </Paper>
+            </Element>
+          </motion.div>
+        </Container>
       </div>
     </>
   );

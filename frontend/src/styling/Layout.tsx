@@ -17,7 +17,7 @@ const useStyles = makeStyles<Theme, { showHeader: boolean }>((theme) => ({
     display: "flex",
     flexDirection: "column",
     backgroundColor: "#FAFAFA",
-    width: "100%",
+    width: "100vw",
   },
   toolbar: {
     minHeight: 30,
