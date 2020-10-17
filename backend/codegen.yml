@@ -1,0 +1,36 @@
+overwrite: true
+schema: ./src/schema.ts # You can use .js files as well
+require:
+  - ts-node/register/transpile-only # required if you're using TS-Node
+documents:
+  - ../frontend/src/**/*.{tsx,ts}
+generates:
+  ./generated-schema.graphql:
+    plugins:
+      - schema-ast
+  ./src/generated-models.ts:
+    plugins:
+      - typescript
+      - typescript-resolvers
+    config:
+      contextType: "./schema#MyModuleContext"
+      defaultMapper: Partial<{T}>
+      scalars:
+        Upload: "{ file: UploadedFile & { createReadStream: () => any } }"
+        MentionMap: "Record<number, string>"
+  ../frontend/src/generated-models.tsx:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true
+      withHOC: false
+      withComponent: false
+      # hooksImportFrom: "@apollo/client"
+      scalars:
+        Upload: "File"
+        MentionMap: "Record<number, string>"
+  ../frontend/src/fragmentTypes.json:
+    plugins:
+      - fragment-matcher

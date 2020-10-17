@@ -21,6 +21,7 @@ import { useHistory } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { useRecoilState } from "recoil";
 import { loadedCard } from "../utils/useCardState";
+import gql from "graphql-tag";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -244,3 +245,9 @@ export default function Browse() {
     </>
   );
 }
+
+export const GET_SERVER_VERSION = gql`
+  query getVersion {
+    version
+  }
+`;
