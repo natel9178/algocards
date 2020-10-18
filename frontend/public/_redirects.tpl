@@ -1,0 +1,1 @@
+/graphql  HOST/graphql  200   # graphql
