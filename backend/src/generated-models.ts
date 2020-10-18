@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { MyModuleContext } from './schema';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -9,18 +9,44 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
+  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSONObject: any;
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
   /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   Date: any;
 };
 
+
+
 export type Query = {
   __typename?: 'Query';
+  getCardFromLink: GetCardFromLinkOutput;
   version: Scalars['String'];
 };
 
+
+export type QueryGetCardFromLinkArgs = {
+  input: GetCardFromLinkInput;
+};
+
+export type GetCardFromLinkInput = {
+  link: Scalars['String'];
+};
+
+export type GetCardFromLinkOutput = {
+  __typename?: 'GetCardFromLinkOutput';
+  files: Array<File>;
+};
+
+export type File = {
+  __typename?: 'File';
+  name: Scalars['String'];
+  path: Scalars['String'];
+  download_url: Scalars['String'];
+};
 
 
 
@@ -102,31 +128,56 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  JSON: ResolverTypeWrapper<Scalars['JSON']>;
+  JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
   Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Partial<Scalars['String']>>;
-  JSON: ResolverTypeWrapper<Partial<Scalars['JSON']>>;
-  DateTime: ResolverTypeWrapper<Partial<Scalars['DateTime']>>;
-  Date: ResolverTypeWrapper<Partial<Scalars['Date']>>;
-  Boolean: ResolverTypeWrapper<Partial<Scalars['Boolean']>>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  GetCardFromLinkInput: GetCardFromLinkInput;
+  GetCardFromLinkOutput: ResolverTypeWrapper<GetCardFromLinkOutput>;
+  File: ResolverTypeWrapper<File>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  JSON: Scalars['JSON'];
+  JSONObject: Scalars['JSONObject'];
   Query: {};
-  String: Partial<Scalars['String']>;
-  JSON: Partial<Scalars['JSON']>;
-  DateTime: Partial<Scalars['DateTime']>;
-  Date: Partial<Scalars['Date']>;
-  Boolean: Partial<Scalars['Boolean']>;
-};
-
-export type QueryResolvers<ContextType = MyModuleContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  version?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  String: Scalars['String'];
+  GetCardFromLinkInput: GetCardFromLinkInput;
+  GetCardFromLinkOutput: GetCardFromLinkOutput;
+  File: File;
+  DateTime: Scalars['DateTime'];
+  Date: Scalars['Date'];
+  Boolean: Scalars['Boolean'];
 };
 
 export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
   name: 'JSON';
 }
+
+export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSONObject'], any> {
+  name: 'JSONObject';
+}
+
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getCardFromLink?: Resolver<ResolversTypes['GetCardFromLinkOutput'], ParentType, ContextType, RequireFields<QueryGetCardFromLinkArgs, 'input'>>;
+  version?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
+
+export type GetCardFromLinkOutputResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetCardFromLinkOutput'] = ResolversParentTypes['GetCardFromLinkOutput']> = {
+  files?: Resolver<Array<ResolversTypes['File']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FileResolvers<ContextType = any, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  path?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  download_url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
@@ -136,9 +187,12 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
-export type Resolvers<ContextType = MyModuleContext> = {
-  Query?: QueryResolvers<ContextType>;
+export type Resolvers<ContextType = any> = {
   JSON?: GraphQLScalarType;
+  JSONObject?: GraphQLScalarType;
+  Query?: QueryResolvers<ContextType>;
+  GetCardFromLinkOutput?: GetCardFromLinkOutputResolvers<ContextType>;
+  File?: FileResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   Date?: GraphQLScalarType;
 };
@@ -148,4 +202,4 @@ export type Resolvers<ContextType = MyModuleContext> = {
  * @deprecated
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
-export type IResolvers<ContextType = MyModuleContext> = Resolvers<ContextType>;
+export type IResolvers<ContextType = any> = Resolvers<ContextType>;

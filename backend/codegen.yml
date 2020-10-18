@@ -12,12 +12,6 @@ generates:
     plugins:
       - typescript
       - typescript-resolvers
-    config:
-      contextType: "./schema#MyModuleContext"
-      defaultMapper: Partial<{T}>
-      scalars:
-        Upload: "{ file: UploadedFile & { createReadStream: () => any } }"
-        MentionMap: "Record<number, string>"
   ../frontend/src/generated-models.tsx:
     plugins:
       - typescript
