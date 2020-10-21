@@ -8,7 +8,12 @@ import {
   Modal,
   Container,
 } from "@material-ui/core";
-import { motion, useTransform, useViewportScroll } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useTransform,
+  useViewportScroll,
+} from "framer-motion";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
@@ -206,20 +211,59 @@ export default function Browse() {
         <Box m={5} />
         <Container maxWidth={"lg"}>
           <Grid container spacing={3}>
-            <Grid item lg={4} xs={12}>
-              <AbstractCard />
+            <Grid item lg={4} sm={6} xs={12}>
+              <AbstractCard
+                layoutId={`/github.com/natel9178/algo-cards`}
+                fullCardLocation="/github.com/natel9178/algo-cards"
+                link={
+                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+                }
+              />
             </Grid>
-            <Grid item lg={4} xs={12}>
-              <AbstractCard />
+            <Grid item lg={4} sm={6} xs={12}>
+              <AbstractCard
+                layoutId={`/github.com/natel9178/algo-cards`}
+                fullCardLocation="/github.com/natel9178/algo-cards"
+                link={
+                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+                }
+              />
             </Grid>
-            <Grid item lg={4} xs={12}>
-              <AbstractCard />
+            <Grid item lg={4} sm={6} xs={12}>
+              <AbstractCard
+                layoutId={`/github.com/natel9178/algo-cards`}
+                fullCardLocation="/github.com/natel9178/algo-cards"
+                link={
+                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+                }
+              />
             </Grid>
-            <Grid item lg={4} xs={12}>
-              <AbstractCard />
+            <Grid item lg={4} sm={6} xs={12}>
+              <AbstractCard
+                layoutId={`/github.com/natel9178/algo-cards`}
+                fullCardLocation="/github.com/natel9178/algo-cards"
+                link={
+                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+                }
+              />
             </Grid>
-            <Grid item lg={4} xs={12}>
-              <AbstractCard />
+            <Grid item lg={4} sm={6} xs={12}>
+              <AbstractCard
+                layoutId={`/github.com/natel9178/algo-cards`}
+                fullCardLocation="/github.com/natel9178/algo-cards"
+                link={
+                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+                }
+              />
+            </Grid>
+            <Grid item lg={4} sm={6} xs={12}>
+              <AbstractCard
+                layoutId={`/github.com/natel9178/algo-cards`}
+                fullCardLocation="/github.com/natel9178/algo-cards"
+                link={
+                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+                }
+              />
             </Grid>
           </Grid>
         </Container>

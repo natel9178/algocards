@@ -1,7 +1,6 @@
 import { Box, Grid, makeStyles, Typography, useTheme } from "@material-ui/core";
 import React from "react";
 import { Spec } from "../spec/spec";
-import { AnimatePresence, motion } from "framer-motion";
 import InfoBar from "./cardmodules/InfoBar";
 import Authors from "./cardmodules/Authors";
 import Header from "./cardmodules/Header";
@@ -113,115 +112,108 @@ export default function Card({
   const classes = useStyles();
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className={classes.root}
-      >
-        {preview && (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            width="100%"
-            border="1px solid rgba(0,0,0,0.1)"
-            borderRadius={10}
-            mb={3}
-            style={{ backgroundColor: theme.palette.primary.main }}
+    <div className={classes.root}>
+      {preview && (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          width="100%"
+          border="1px solid rgba(0,0,0,0.1)"
+          borderRadius={10}
+          mb={3}
+          style={{ backgroundColor: theme.palette.primary.main }}
+        >
+          <Typography
+            variant="body1"
+            style={{
+              fontFamily: "Roboto Mono",
+              color: "white",
+              margin: theme.spacing(1),
+            }}
           >
-            <Typography
-              variant="body1"
-              style={{
-                fontFamily: "Roboto Mono",
-                color: "white",
-                margin: theme.spacing(1),
-              }}
-            >
-              You are viewing a preview
-            </Typography>
-          </Box>
-        )}
-        <Element name={PAGE_BOOKMARK_HEADER}>
-          <Header {...spec} title={spec.title} />
-        </Element>
-        <div style={{ width: "100%" }}>
-          <Grid container spacing={10}>
-            <Grid item xs={8}>
-              <Grid container spacing={3}>
-                {hasIntendedUse(spec) && (
-                  <Element name={PAGE_BOOKMARK_INTENDED_USE}>
-                    <Grid item xs={12} className={classes.subBox}>
-                      <IntendedUse
-                        primaryUsecase={spec.primaryUsecase}
-                        antiGoals={spec.antiGoals}
-                      />
-                    </Grid>
-                  </Element>
-                )}
+            You are viewing a preview
+          </Typography>
+        </Box>
+      )}
+      <Element name={PAGE_BOOKMARK_HEADER}>
+        <Header {...spec} title={spec.title} />
+      </Element>
+      <div style={{ width: "100%" }}>
+        <Grid container spacing={10}>
+          <Grid item xs={8}>
+            <Grid container spacing={3}>
+              {hasIntendedUse(spec) && (
+                <Element name={PAGE_BOOKMARK_INTENDED_USE}>
+                  <Grid item xs={12} className={classes.subBox}>
+                    <IntendedUse
+                      primaryUsecase={spec.primaryUsecase}
+                      antiGoals={spec.antiGoals}
+                    />
+                  </Grid>
+                </Element>
+              )}
 
-                {hasStakeholderImpacts(spec) && (
-                  <Element name={PAGE_BOOKMARK_STAKEHOLDER_IMPACTS}>
-                    <Grid item xs={12} className={classes.subBox}>
-                      <StakeholderImpacts
-                        stakeholderImpacts={spec.stakeholderImpacts}
-                      />
-                    </Grid>
-                  </Element>
-                )}
+              {hasStakeholderImpacts(spec) && (
+                <Element name={PAGE_BOOKMARK_STAKEHOLDER_IMPACTS}>
+                  <Grid item xs={12} className={classes.subBox}>
+                    <StakeholderImpacts
+                      stakeholderImpacts={spec.stakeholderImpacts}
+                    />
+                  </Grid>
+                </Element>
+              )}
 
-                {hasLimitations(spec) && (
-                  <Element name={PAGE_BOOKMARK_LIMITATIONS}>
-                    <Grid item xs={12} className={classes.subBox}>
-                      <Limitations limitations={spec.limitations} />
-                    </Grid>
-                  </Element>
-                )}
+              {hasLimitations(spec) && (
+                <Element name={PAGE_BOOKMARK_LIMITATIONS}>
+                  <Grid item xs={12} className={classes.subBox}>
+                    <Limitations limitations={spec.limitations} />
+                  </Grid>
+                </Element>
+              )}
 
-                {hasEthicalConsiderations(spec) && (
-                  <Element name={PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS}>
-                    <Grid item xs={12} className={classes.subBox}>
-                      <EthicalConsiderations
-                        ethicalConsiderations={spec.ethicalConsiderations}
-                      />
-                    </Grid>
-                  </Element>
-                )}
+              {hasEthicalConsiderations(spec) && (
+                <Element name={PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS}>
+                  <Grid item xs={12} className={classes.subBox}>
+                    <EthicalConsiderations
+                      ethicalConsiderations={spec.ethicalConsiderations}
+                    />
+                  </Grid>
+                </Element>
+              )}
 
-                {hasPerformance(spec) && (
-                  <Element name={PAGE_BOOKMARK_PERFORMANCE}>
-                    <Grid item xs={12} className={classes.subBox}>
-                      <Performance
-                        figures={spec.figures}
-                        datasets={spec.datasets}
-                        performanceMetrics={spec.performanceMetrics}
-                        performanceOverview={spec.performanceOverview}
-                      />
-                    </Grid>
-                  </Element>
-                )}
-                {hasAuthors(spec) && (
-                  <Element name={PAGE_BOOKMARK_AUTHORS}>
-                    <Grid item xs={12} className={classes.subBox}>
-                      <Authors authors={spec.authors || []} />
-                    </Grid>
-                  </Element>
-                )}
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              xs={4}
-              style={{
-                flexDirection: "column",
-              }}
-            >
-              <InfoBar {...spec} />
+              {hasPerformance(spec) && (
+                <Element name={PAGE_BOOKMARK_PERFORMANCE}>
+                  <Grid item xs={12} className={classes.subBox}>
+                    <Performance
+                      figures={spec.figures}
+                      datasets={spec.datasets}
+                      performanceMetrics={spec.performanceMetrics}
+                      performanceOverview={spec.performanceOverview}
+                    />
+                  </Grid>
+                </Element>
+              )}
+              {hasAuthors(spec) && (
+                <Element name={PAGE_BOOKMARK_AUTHORS}>
+                  <Grid item xs={12} className={classes.subBox}>
+                    <Authors authors={spec.authors || []} />
+                  </Grid>
+                </Element>
+              )}
             </Grid>
           </Grid>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+          <Grid
+            item
+            xs={4}
+            style={{
+              flexDirection: "column",
+            }}
+          >
+            <InfoBar {...spec} />
+          </Grid>
+        </Grid>
+      </div>
+    </div>
   );
 }

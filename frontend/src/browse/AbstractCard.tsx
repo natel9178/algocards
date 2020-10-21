@@ -1,12 +1,23 @@
-import { Box, makeStyles, Paper, Typography, Chip } from "@material-ui/core";
+import {
+  Box,
+  makeStyles,
+  Paper,
+  Typography,
+  Chip,
+  CircularProgress,
+} from "@material-ui/core";
 import React from "react";
 import SimCardIcon from "@material-ui/icons/SimCard";
 import ListOrParagraph from "../presenter/ListOrParagraph";
-import { card } from "../utils/useCardState";
-import { useRecoilState } from "recoil";
-import { Spec } from "../spec/spec";
+import useFetchCard from "../presenter/useFetchCard";
+import { useHistory } from "react-router-dom";
+import { motion } from "framer-motion";
+import { CARD_LAYOUT_ID } from "../presenter/Presenter";
 
 const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    width: "100%",
+  },
   paper: {
     borderRadius: 18,
     boxShadow: "3px 3px 30px rgba(0, 0, 0, 0.1)",
@@ -16,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "stretch",
     justifyContent: "stretch",
     flexDirection: "column",
+    minHeight: 200,
+    cursor: "pointer",
   },
   title: {
     marginLeft: theme.spacing(1),
@@ -38,81 +51,113 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface AbstractCardProps {}
+interface AbstractCardProps {
+  link: string;
+  fullCardLocation: string;
+  layoutId: string;
+}
 
-export default function AbstractCard(props: AbstractCardProps) {
+export default function AbstractCard({
+  link,
+  fullCardLocation,
+  layoutId,
+}: AbstractCardProps) {
   const classes = useStyles();
-  const [spec] = useRecoilState<Spec>(card);
+  const history = useHistory();
+  const spec = useFetchCard(link);
 
   return (
-    <Paper className={classes.paper}>
-      <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="flex-start"
-        alignItems="center"
-        mb={0.5}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2 }}
+      className={classes.wrapper}
+    >
+      <Paper
+        className={classes.paper}
+        onClick={() => history.push(fullCardLocation)}
       >
-        <SimCardIcon fontSize={"large"} />
-        <Typography className={classes.title} variant={"h4"}>
-          {spec.title || "Model"}
-        </Typography>
-        <Typography className={classes.captionText} variant={"body1"}>
-          Algo-Card
-        </Typography>
-      </Box>
-
-      {spec.primaryUsecase && (
-        <Typography
-          style={{ marginBottom: 5 }}
-          className={classes.text}
-          variant={"body2"}
-        >
-          <ListOrParagraph content={spec.primaryUsecase} />
-        </Typography>
-      )}
-
-      {spec.antiGoals && (
-        <>
-          <Typography className={classes.subHeader} variant={"body1"}>
-            Anti-Goals
-          </Typography>
-          <Typography
-            style={{ marginBottom: 5 }}
-            className={classes.text}
-            variant={"body2"}
-          >
-            <ListOrParagraph
-              ulStyle={{ margin: 0, paddingLeft: 15 }}
-              content={spec.antiGoals
-                .map(({ description }) => description || "")
-                .filter((desc) => desc !== "")}
-            />
-          </Typography>
-        </>
-      )}
-
-      {spec.limitations && (
-        <>
-          <Typography className={classes.subHeader} variant={"body1"}>
-            Limitations
-          </Typography>
+        {!spec ? (
           <Box
             display="flex"
             alignItems="center"
-            justifyContent="flex-start"
-            flexWrap="wrap"
+            justifyContent="center"
+            flexGrow={1}
           >
-            {spec.limitations
-              .map(({ type }) => type || "")
-              .filter((desc) => desc !== "")
-              .filter((_, idx) => idx < 6)
-              .map((desc) => (
-                <Chip style={{ margin: 2 }} label={desc} size={"small"} />
-              ))}
+            <CircularProgress />
           </Box>
-        </>
-      )}
-    </Paper>
+        ) : (
+          <>
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="flex-start"
+              alignItems="center"
+              mb={0.5}
+            >
+              <SimCardIcon fontSize={"large"} />
+              <Typography className={classes.title} variant={"h4"}>
+                {spec.title || "Model"}
+              </Typography>
+              <Typography className={classes.captionText} variant={"body1"}>
+                Algo-Card
+              </Typography>
+            </Box>
+
+            {spec.primaryUsecase && (
+              <Typography
+                style={{ marginBottom: 5 }}
+                className={classes.text}
+                variant={"body2"}
+              >
+                <ListOrParagraph content={spec.primaryUsecase} />
+              </Typography>
+            )}
+
+            {spec.antiGoals && (
+              <>
+                <Typography className={classes.subHeader} variant={"body1"}>
+                  Anti-Goals
+                </Typography>
+                <Typography
+                  style={{ marginBottom: 5 }}
+                  className={classes.text}
+                  variant={"body2"}
+                >
+                  <ListOrParagraph
+                    ulStyle={{ margin: 0, paddingLeft: 15 }}
+                    content={spec.antiGoals
+                      .map(({ description }) => description || "")
+                      .filter((desc) => desc !== "")}
+                  />
+                </Typography>
+              </>
+            )}
+
+            {spec.limitations && (
+              <>
+                <Typography className={classes.subHeader} variant={"body1"}>
+                  Limitations
+                </Typography>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-start"
+                  flexWrap="wrap"
+                >
+                  {spec.limitations
+                    .map(({ type }) => type || "")
+                    .filter((desc) => desc !== "")
+                    .filter((_, idx) => idx < 6)
+                    .map((desc) => (
+                      <Chip style={{ margin: 2 }} label={desc} size={"small"} />
+                    ))}
+                </Box>
+              </>
+            )}
+          </>
+        )}
+      </Paper>
+    </motion.div>
   );
 }
