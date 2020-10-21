@@ -91,7 +91,7 @@ export default function Browse() {
         reader.onload = function () {
           localStorage.setItem("loadedCard", String(reader.result));
           setLoadCard(JSON.parse(String(reader.result)));
-          history.push("/presenter?fromFileUpload=1");
+          history.push("?fromFileUpload=1");
         };
         reader.onerror = function (error) {
           console.log("Error: ", error);

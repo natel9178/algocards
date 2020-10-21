@@ -6,6 +6,7 @@ import {
   AppBar,
   Fab,
   CircularProgress,
+  Button,
 } from "@material-ui/core";
 import React from "react";
 import Card, {
@@ -34,7 +35,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import clsx from "clsx";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import AddIcon from "@material-ui/icons/Add";
 import { useRecoilState } from "recoil";
@@ -148,9 +149,10 @@ export default function Presenter() {
   const location = useLocation();
   const { data, loading, error } = useGetCardFromLinkQuery({
     variables: {
-      input: { link: location.pathname.replace("/presenter/", "") },
+      input: { link: location.pathname },
     },
   });
+  const history = useHistory();
 
   const files = data?.getCardFromLink.files;
   const cardData = useFetchCard(
@@ -187,18 +189,16 @@ export default function Presenter() {
             <Typography className={classes.title} variant={"h4"}>
               Algo-Card
             </Typography>
-            <Link to="/wizard">
-              <Fab
-                style={{
-                  backgroundColor: "rgba(250,250,250,0.3)",
-                  textDecoration: "none",
-                }}
-                variant="extended"
-              >
-                <AddIcon className={classes.extendedIcon} />
-                Add Card
-              </Fab>
-            </Link>
+            <Button
+              style={{ borderRadius: 100 }}
+              variant="contained"
+              size="large"
+              color="primary"
+              startIcon={<AddIcon />}
+              onClick={() => history.push("/wizard")}
+            >
+              Add Card
+            </Button>
           </motion.div>
         </Toolbar>
       </AppBar>
@@ -413,12 +413,29 @@ export default function Presenter() {
           ) : error && !fromFileUpload ? (
             <Box
               display="flex"
+              flexDirection="column"
               alignItems="center"
               justifyContent="center"
               width="100%"
               height="100%"
             >
-              <Typography variant={"h6"}>Could not load card.</Typography>
+              <Typography variant={"h6"}>
+                Could not load card from{" "}
+                {
+                  <a href={`https://${location.pathname.substring(1)}`}>
+                    {location.pathname.substring(1)}
+                  </a>
+                }
+              </Typography>
+              <Box m={1} />
+              <Button
+                variant="outlined"
+                size="large"
+                color="primary"
+                onClick={() => history.push("/")}
+              >
+                Come browse other cards :)
+              </Button>
             </Box>
           ) : (
             <Card spec={finalCard} />

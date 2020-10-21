@@ -42,7 +42,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "makeTypes": "cd ../backend && yarn makeTypes",
-    "build:prod": "sed 's|HOST|https://algocards.herokuapp.com|g' public/_redirects.tpl > public/_redirects && yarn build"
+    "build:prod": "sed 's|API_ENDPOINT|https://algocards.herokuapp.com|g' public/_redirects.tpl > public/_redirects && yarn build"
   },
   "eslintConfig": {
     "extends": "react-app"
