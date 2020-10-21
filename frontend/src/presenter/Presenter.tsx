@@ -1,6 +1,28 @@
-import { Box, makeStyles, Paper, Drawer, AppBar, Fab } from "@material-ui/core";
+import {
+  Box,
+  makeStyles,
+  Paper,
+  Drawer,
+  AppBar,
+  Fab,
+  CircularProgress,
+} from "@material-ui/core";
 import React from "react";
-import Card, { SAMPLE_SPEC } from "./Card";
+import Card, {
+  hasAuthors,
+  hasIntendedUse,
+  hasPerformance,
+  PAGE_BOOKMARK_PERFORMANCE,
+  PAGE_BOOKMARK_AUTHORS,
+  PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS,
+  PAGE_BOOKMARK_INTENDED_USE,
+  PAGE_BOOKMARK_HEADER,
+  PAGE_BOOKMARK_LIMITATIONS,
+  PAGE_BOOKMARK_STAKEHOLDER_IMPACTS,
+  hasEthicalConsiderations,
+  hasLimitations,
+  hasStakeholderImpacts,
+} from "./Card";
 import BuildIcon from "@material-ui/icons/Build";
 import InfoIcon from "@material-ui/icons/Info";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -12,12 +34,19 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import AddIcon from "@material-ui/icons/Add";
 import { useRecoilState } from "recoil";
 import { useQueryParam, BooleanParam } from "use-query-params";
 import { loadedCard } from "../utils/useCardState";
+import useFetchCard from "./useFetchCard";
+import gql from "graphql-tag";
+import { useGetCardFromLinkQuery } from "../generated-models";
+import { scroller } from "react-scroll";
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import GroupIcon from "@material-ui/icons/Group";
+import WarningIcon from "@material-ui/icons/Warning";
 
 const drawerWidth = 240;
 
@@ -116,6 +145,17 @@ export default function Presenter() {
   const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
   const [fromFileUpload] = useQueryParam("fromFileUpload", BooleanParam);
   const [loadCard] = useRecoilState(loadedCard);
+  const location = useLocation();
+  const { data, loading, error } = useGetCardFromLinkQuery({
+    variables: {
+      input: { link: location.pathname.replace("/presenter/", "") },
+    },
+  });
+
+  const files = data?.getCardFromLink.files;
+  const cardData = useFetchCard(
+    files && !!files.length ? files[0].download_url : ""
+  );
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -124,6 +164,8 @@ export default function Presenter() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const finalCard = fromFileUpload ? loadCard : cardData;
 
   return (
     <>
@@ -180,68 +222,221 @@ export default function Presenter() {
           <Box mt={5} mb={13} ml={1}></Box>
 
           <List>
-            <ListItem button key={"Info"} className={classes.drawerListItem}>
+            <ListItem
+              button
+              key={"Info"}
+              className={classes.drawerListItem}
+              onClick={() =>
+                scroller.scrollTo(PAGE_BOOKMARK_HEADER, {
+                  duration: 1500,
+                  smooth: "easeInOutQuint",
+                  offset: -140,
+                })
+              }
+            >
               <ListItemIcon>
                 <InfoIcon />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
                   variant: "h6",
-                  style: { fontSize: 17 },
+                  style: { fontSize: 16 },
                 }}
                 primary={"Info"}
               />
             </ListItem>
-            <ListItem
-              button
-              key={"Intended Use"}
-              className={classes.drawerListItem}
-            >
-              <ListItemIcon>
-                <BuildIcon />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  variant: "h6",
-                  style: { fontSize: 17 },
-                }}
-                primary={"Intended Use"}
-              />
-            </ListItem>
-            <ListItem
-              button
-              key={"Performance"}
-              className={classes.drawerListItem}
-            >
-              <ListItemIcon>
-                <BarChartIcon />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  variant: "h6",
-                  style: { fontSize: 17 },
-                }}
-                primary={"Performance"}
-              />
-            </ListItem>
-            <ListItem button key={"Authors"} className={classes.drawerListItem}>
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  variant: "h6",
-                  style: { fontSize: 17 },
-                }}
-                primary={"Authors"}
-              />
-            </ListItem>
+
+            {hasIntendedUse(finalCard) && (
+              <ListItem
+                button
+                key={"Intended Use"}
+                className={classes.drawerListItem}
+                onClick={() =>
+                  scroller.scrollTo(PAGE_BOOKMARK_INTENDED_USE, {
+                    duration: 1500,
+                    smooth: "easeInOutQuint",
+                    offset: -100,
+                  })
+                }
+              >
+                <ListItemIcon>
+                  <BuildIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    variant: "h6",
+                    style: { fontSize: 16 },
+                  }}
+                  primary={"Intended Use"}
+                />
+              </ListItem>
+            )}
+            {hasStakeholderImpacts(finalCard) && (
+              <ListItem
+                button
+                key={"Stakeholders"}
+                className={classes.drawerListItem}
+                onClick={() =>
+                  scroller.scrollTo(PAGE_BOOKMARK_STAKEHOLDER_IMPACTS, {
+                    duration: 1000,
+                    smooth: "easeInOutQuint",
+                    offset: -100,
+                  })
+                }
+              >
+                <ListItemIcon>
+                  <GroupIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    variant: "h6",
+                    style: { fontSize: 16 },
+                  }}
+                  primary={"Stakeholders"}
+                />
+              </ListItem>
+            )}
+            {hasLimitations(finalCard) && (
+              <ListItem
+                button
+                key={"Limitations"}
+                className={classes.drawerListItem}
+                onClick={() =>
+                  scroller.scrollTo(PAGE_BOOKMARK_LIMITATIONS, {
+                    duration: 1000,
+                    smooth: "easeInOutQuint",
+                    offset: -100,
+                  })
+                }
+              >
+                <ListItemIcon>
+                  <WarningIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    variant: "h6",
+                    style: { fontSize: 16 },
+                  }}
+                  primary={"Limitations"}
+                />
+              </ListItem>
+            )}
+            {hasEthicalConsiderations(finalCard) && (
+              <ListItem
+                button
+                key={"Ethical Considerations"}
+                className={classes.drawerListItem}
+                onClick={() =>
+                  scroller.scrollTo(PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS, {
+                    duration: 1000,
+                    smooth: "easeInOutQuint",
+                    offset: -100,
+                  })
+                }
+              >
+                <ListItemIcon>
+                  <AccountBalanceIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    variant: "h6",
+                    style: { fontSize: 16 },
+                  }}
+                  primary={"Considerations"}
+                />
+              </ListItem>
+            )}
+            {hasPerformance(finalCard) && (
+              <ListItem
+                button
+                key={"Performance"}
+                className={classes.drawerListItem}
+                onClick={() =>
+                  scroller.scrollTo(PAGE_BOOKMARK_PERFORMANCE, {
+                    duration: 1500,
+                    smooth: "easeInOutQuint",
+                    offset: -100,
+                  })
+                }
+              >
+                <ListItemIcon>
+                  <BarChartIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    variant: "h6",
+                    style: { fontSize: 16 },
+                  }}
+                  primary={"Performance"}
+                />
+              </ListItem>
+            )}
+
+            {hasAuthors(finalCard) && (
+              <ListItem
+                button
+                key={"Authors"}
+                className={classes.drawerListItem}
+                onClick={() =>
+                  scroller.scrollTo(PAGE_BOOKMARK_AUTHORS, {
+                    duration: 1500,
+                    smooth: "easeInOutQuint",
+                    offset: -100,
+                  })
+                }
+              >
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    variant: "h6",
+                    style: { fontSize: 16 },
+                  }}
+                  primary={"Authors"}
+                />
+              </ListItem>
+            )}
           </List>
         </Drawer>
         <Paper className={classes.paper}>
-          <Card defaultSpec={fromFileUpload ? loadCard : SAMPLE_SPEC} />
+          {loading ? (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              width="100%"
+              height="100%"
+            >
+              <CircularProgress />
+            </Box>
+          ) : error && !fromFileUpload ? (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              width="100%"
+              height="100%"
+            >
+              <Typography variant={"h6"}>Could not load card.</Typography>
+            </Box>
+          ) : (
+            <Card spec={finalCard} />
+          )}
         </Paper>
       </div>
     </>
   );
 }
+
+export const GET_CARD_RAW_CONTENT_FROM_LINK = gql`
+  query getCardFromLink($input: GetCardFromLinkInput!) {
+    getCardFromLink(input: $input) {
+      files {
+        name
+        path
+        download_url
+      }
+    }
+  }
+`;

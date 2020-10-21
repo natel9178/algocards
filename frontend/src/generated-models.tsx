@@ -58,6 +58,22 @@ export type GetVersionQuery = (
   & Pick<Query, 'version'>
 );
 
+export type GetCardFromLinkQueryVariables = Exact<{
+  input: GetCardFromLinkInput;
+}>;
+
+
+export type GetCardFromLinkQuery = (
+  { __typename?: 'Query' }
+  & { getCardFromLink: (
+    { __typename?: 'GetCardFromLinkOutput' }
+    & { files: Array<(
+      { __typename?: 'File' }
+      & Pick<File, 'name' | 'path' | 'download_url'>
+    )> }
+  ) }
+);
+
 
 export const GetVersionDocument = gql`
     query getVersion {
@@ -89,3 +105,40 @@ export function useGetVersionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetVersionQueryHookResult = ReturnType<typeof useGetVersionQuery>;
 export type GetVersionLazyQueryHookResult = ReturnType<typeof useGetVersionLazyQuery>;
 export type GetVersionQueryResult = Apollo.QueryResult<GetVersionQuery, GetVersionQueryVariables>;
+export const GetCardFromLinkDocument = gql`
+    query getCardFromLink($input: GetCardFromLinkInput!) {
+  getCardFromLink(input: $input) {
+    files {
+      name
+      path
+      download_url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCardFromLinkQuery__
+ *
+ * To run a query within a React component, call `useGetCardFromLinkQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCardFromLinkQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCardFromLinkQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetCardFromLinkQuery(baseOptions?: Apollo.QueryHookOptions<GetCardFromLinkQuery, GetCardFromLinkQueryVariables>) {
+        return Apollo.useQuery<GetCardFromLinkQuery, GetCardFromLinkQueryVariables>(GetCardFromLinkDocument, baseOptions);
+      }
+export function useGetCardFromLinkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCardFromLinkQuery, GetCardFromLinkQueryVariables>) {
+          return Apollo.useLazyQuery<GetCardFromLinkQuery, GetCardFromLinkQueryVariables>(GetCardFromLinkDocument, baseOptions);
+        }
+export type GetCardFromLinkQueryHookResult = ReturnType<typeof useGetCardFromLinkQuery>;
+export type GetCardFromLinkLazyQueryHookResult = ReturnType<typeof useGetCardFromLinkLazyQuery>;
+export type GetCardFromLinkQueryResult = Apollo.QueryResult<GetCardFromLinkQuery, GetCardFromLinkQueryVariables>;

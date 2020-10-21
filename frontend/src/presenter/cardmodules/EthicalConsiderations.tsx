@@ -1,7 +1,7 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import BuildIcon from "@material-ui/icons/Build";
 import ListOrParagraph from "../ListOrParagraph";
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -42,7 +42,7 @@ export default function EthicalConsiderations(
   const classes = useStyles();
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
-      <BuildIcon fontSize={"large"} />
+      <AccountBalanceIcon fontSize={"large"} />
       <div className={classes.subContainer}>
         <Typography style={{ lineHeight: 1 }} variant={"h4"}>
           Ethical Considerations
