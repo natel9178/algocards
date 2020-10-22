@@ -2,7 +2,6 @@ import { makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import BuildIcon from "@material-ui/icons/Build";
 import ListOrParagraph from "../ListOrParagraph";
-import { divide } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {

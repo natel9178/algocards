@@ -8,12 +8,7 @@ import {
   Modal,
   Container,
 } from "@material-ui/core";
-import {
-  AnimatePresence,
-  motion,
-  useTransform,
-  useViewportScroll,
-} from "framer-motion";
+import { motion, useTransform, useViewportScroll } from "framer-motion";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";

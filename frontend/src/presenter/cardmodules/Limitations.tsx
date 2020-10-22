@@ -2,7 +2,6 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import ListOrParagraph from "../ListOrParagraph";
 import WarningIcon from "@material-ui/icons/Warning";
-import { divide } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {

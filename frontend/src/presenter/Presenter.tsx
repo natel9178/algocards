@@ -4,7 +4,6 @@ import {
   Paper,
   Drawer,
   AppBar,
-  Fab,
   CircularProgress,
   Button,
 } from "@material-ui/core";
@@ -36,19 +35,13 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import clsx from "clsx";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import {
-  AnimatePresence,
-  motion,
-  useTransform,
-  useViewportScroll,
-} from "framer-motion";
+import { motion, useTransform, useViewportScroll } from "framer-motion";
 import AddIcon from "@material-ui/icons/Add";
 import { useRecoilState } from "recoil";
 import { useQueryParam, BooleanParam } from "use-query-params";
 import { loadedCard } from "../utils/useCardState";
 import useFetchCard from "./useFetchCard";
 import gql from "graphql-tag";
-import { useGetCardFromLinkQuery } from "../generated-models";
 import { scroller } from "react-scroll";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import GroupIcon from "@material-ui/icons/Group";

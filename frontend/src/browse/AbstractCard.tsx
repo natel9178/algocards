@@ -12,7 +12,6 @@ import ListOrParagraph from "../presenter/ListOrParagraph";
 import useFetchCard from "../presenter/useFetchCard";
 import { useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
-import { CARD_LAYOUT_ID } from "../presenter/Presenter";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {

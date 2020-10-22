@@ -9,6 +9,7 @@ export default function useGithubCardFetch(link: string) {
 
   useEffect(() => {
     setLoading(false);
+    setError(null);
   }, [githubFiles]);
 
   useEffect(() => {
@@ -23,7 +24,8 @@ export default function useGithubCardFetch(link: string) {
           .split("/")
           .filter((s) => s !== "");
         if (splitLink.length < 2) {
-          throw "Invalid github link";
+          setError("Invalid github link");
+          return;
         }
 
         const username = splitLink[0];
@@ -42,6 +44,7 @@ export default function useGithubCardFetch(link: string) {
           .catch((reason) => {
             setError(reason);
           });
+        break;
       default:
         setGithubFiles([]);
         setError("Link not readable");
