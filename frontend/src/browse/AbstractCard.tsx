@@ -140,8 +140,13 @@ export default function AbstractCard({
                     .map(({ type }) => type || "")
                     .filter((desc) => desc !== "")
                     .filter((_, idx) => idx < 6)
-                    .map((desc) => (
-                      <Chip style={{ margin: 2 }} label={desc} size={"small"} />
+                    .map((desc, idx) => (
+                      <Chip
+                        style={{ margin: 2 }}
+                        label={desc}
+                        size={"small"}
+                        key={idx}
+                      />
                     ))}
                 </Box>
               </>
