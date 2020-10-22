@@ -69,8 +69,8 @@ export default function Authors({ authors }: AuthorsProps) {
         </Typography>
         <Grid container spacing={3} style={{ width: "100%" }}>
           {authors &&
-            authors.map(({ name, contact }) => (
-              <Grid item xs={4}>
+            authors.map(({ name, contact }, idx) => (
+              <Grid item xs={4} key={idx}>
                 <div style={{ flexDirection: "column" }}>
                   <Typography variant={"h6"} style={{ marginTop: 10 }}>
                     {name}

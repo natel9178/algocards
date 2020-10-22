@@ -105,13 +105,9 @@ export default function AbstractCard({
             </Box>
 
             {spec.primaryUsecase && (
-              <Typography
-                style={{ marginBottom: 5 }}
-                className={classes.text}
-                variant={"body2"}
-              >
+              <div style={{ marginBottom: 5 }} className={classes.text}>
                 <ListOrParagraph content={spec.primaryUsecase} />
-              </Typography>
+              </div>
             )}
 
             {spec.antiGoals && (
@@ -119,18 +115,14 @@ export default function AbstractCard({
                 <Typography className={classes.subHeader} variant={"body1"}>
                   Anti-Goals
                 </Typography>
-                <Typography
-                  style={{ marginBottom: 5 }}
-                  className={classes.text}
-                  variant={"body2"}
-                >
+                <div style={{ marginBottom: 5 }} className={classes.text}>
                   <ListOrParagraph
                     ulStyle={{ margin: 0, paddingLeft: 15 }}
                     content={spec.antiGoals
                       .map(({ description }) => description || "")
                       .filter((desc) => desc !== "")}
                   />
-                </Typography>
+                </div>
               </>
             )}
 

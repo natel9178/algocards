@@ -71,16 +71,16 @@ export default function StakeholderImpacts(props: StakeholderImpactsProps) {
         </Typography>
         <Grid container spacing={3}>
           {stakeholderImpacts &&
-            stakeholderImpacts.map(({ stakeholder, impact }) => (
-              <Grid item xs={6}>
+            stakeholderImpacts.map(({ stakeholder, impact }, idx) => (
+              <Grid item xs={6} key={idx}>
                 <div style={{ flexDirection: "column" }}>
                   <Typography variant={"h6"} style={{ marginTop: 10 }}>
                     {stakeholder}
                   </Typography>
                   {impact && (
-                    <Typography variant={"body2"}>
+                    <div>
                       <ListOrParagraph content={impact} />
-                    </Typography>
+                    </div>
                   )}
                 </div>
               </Grid>

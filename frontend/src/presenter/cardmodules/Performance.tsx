@@ -69,13 +69,13 @@ export default function Performance({
               Datasets
             </Typography>
             <Grid container spacing={3}>
-              {datasets.map(({ name, description }) => (
-                <Grid item xs={6}>
+              {datasets.map(({ name, description }, idx) => (
+                <Grid item xs={6} key={idx}>
                   {description && (
-                    <Typography variant={"body2"}>
+                    <div>
                       {name && <strong>{name}</strong>}
                       <ListOrParagraph content={description} />
-                    </Typography>
+                    </div>
                   )}
                 </Grid>
               ))}
@@ -128,8 +128,13 @@ export default function Performance({
             </AccordionSummary>
             <AccordionDetails>
               <Grid container spacing={3} style={{ width: "100%" }}>
-                {figures.map((graph) => (
-                  <Grid item xs={6} style={{ flexDirection: "column" }}>
+                {figures.map((graph, idx) => (
+                  <Grid
+                    item
+                    xs={6}
+                    style={{ flexDirection: "column" }}
+                    key={idx}
+                  >
                     <img
                       alt=""
                       src={graph}

@@ -53,6 +53,7 @@ import { scroller } from "react-scroll";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import GroupIcon from "@material-ui/icons/Group";
 import WarningIcon from "@material-ui/icons/Warning";
+import useGithubCardFetch from "../utils/useGithubCardFetch";
 
 const drawerWidth = 240;
 export const CARD_LAYOUT_ID = "CARD_LAYOUT_ID";
@@ -160,14 +161,10 @@ export default function Presenter() {
   const [fromFileUpload] = useQueryParam("fromFileUpload", BooleanParam);
   const [loadCard] = useRecoilState(loadedCard);
   const location = useLocation();
-  const { data, loading, error } = useGetCardFromLinkQuery({
-    variables: {
-      input: { link: location.pathname },
-    },
-  });
+  const { githubFiles, loading, error } = useGithubCardFetch(location.pathname);
   const history = useHistory();
 
-  const files = data?.getCardFromLink.files;
+  const files = githubFiles;
   const cardData = useFetchCard(
     files && !!files.length ? files[0].download_url : ""
   );

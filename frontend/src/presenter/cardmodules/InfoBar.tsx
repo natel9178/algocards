@@ -124,12 +124,9 @@ export default function InfoBar(props: InfoBarProps) {
             <Typography variant={"h6"} className={classes.metaBarTypography}>
               Architecture
             </Typography>
-            <Typography
-              variant={"body2"}
-              className={classes.metaBarTypographyBody}
-            >
+            <div className={classes.metaBarTypographyBody}>
               <ListOrParagraph content={architectureDescription} />
-            </Typography>
+            </div>
           </Grid>
           <Box m={1} />
         </>
@@ -225,18 +222,18 @@ export default function InfoBar(props: InfoBarProps) {
               Supporting Resources
             </Typography>
             <Box m={0.5} />
-            {supportingLinks.map((link) => (
+            {supportingLinks.map((link, idx) => (
               <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "flex-starts",
                 }}
+                key={idx}
               >
                 <LinkIcon />
                 <Box mx={0.5} />
-                <Typography
-                  variant={"body2"}
+                <div
                   className={classes.metaBarTypographyBody}
                   style={{
                     whiteSpace: "nowrap",
@@ -245,7 +242,7 @@ export default function InfoBar(props: InfoBarProps) {
                   }}
                 >
                   <ListOrParagraph content={link.link || ""} />
-                </Typography>
+                </div>
               </div>
             ))}
           </Grid>

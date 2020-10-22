@@ -58,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     marginTop: theme.spacing(2),
   },
+  fill: {
+    width: "100%",
+    height: "100%",
+  },
 }));
 
 export const PAGE_BOOKMARK_HEADER = "PAGE_BOOKMARK_HEADER";
@@ -144,62 +148,80 @@ export default function Card({
           <Grid item xs={8}>
             <Grid container spacing={3}>
               {hasIntendedUse(spec) && (
-                <Element name={PAGE_BOOKMARK_INTENDED_USE}>
-                  <Grid item xs={12} className={classes.subBox}>
+                <Grid item xs={12} className={classes.subBox}>
+                  <Element
+                    className={classes.fill}
+                    name={PAGE_BOOKMARK_INTENDED_USE}
+                  >
                     <IntendedUse
                       primaryUsecase={spec.primaryUsecase}
                       antiGoals={spec.antiGoals}
                     />
-                  </Grid>
-                </Element>
+                  </Element>
+                </Grid>
               )}
 
               {hasStakeholderImpacts(spec) && (
-                <Element name={PAGE_BOOKMARK_STAKEHOLDER_IMPACTS}>
-                  <Grid item xs={12} className={classes.subBox}>
+                <Grid item xs={12} className={classes.subBox}>
+                  <Element
+                    className={classes.fill}
+                    name={PAGE_BOOKMARK_STAKEHOLDER_IMPACTS}
+                  >
                     <StakeholderImpacts
                       stakeholderImpacts={spec.stakeholderImpacts}
                     />
-                  </Grid>
-                </Element>
+                  </Element>
+                </Grid>
               )}
 
               {hasLimitations(spec) && (
-                <Element name={PAGE_BOOKMARK_LIMITATIONS}>
-                  <Grid item xs={12} className={classes.subBox}>
+                <Grid item xs={12} className={classes.subBox}>
+                  <Element
+                    className={classes.fill}
+                    name={PAGE_BOOKMARK_LIMITATIONS}
+                  >
                     <Limitations limitations={spec.limitations} />
-                  </Grid>
-                </Element>
+                  </Element>
+                </Grid>
               )}
 
               {hasEthicalConsiderations(spec) && (
-                <Element name={PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS}>
-                  <Grid item xs={12} className={classes.subBox}>
+                <Grid item xs={12} className={classes.subBox}>
+                  <Element
+                    className={classes.fill}
+                    name={PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS}
+                  >
                     <EthicalConsiderations
                       ethicalConsiderations={spec.ethicalConsiderations}
                     />
-                  </Grid>
-                </Element>
+                  </Element>
+                </Grid>
               )}
 
               {hasPerformance(spec) && (
-                <Element name={PAGE_BOOKMARK_PERFORMANCE}>
-                  <Grid item xs={12} className={classes.subBox}>
+                <Grid item xs={12} className={classes.subBox}>
+                  <Element
+                    className={classes.fill}
+                    name={PAGE_BOOKMARK_PERFORMANCE}
+                  >
                     <Performance
                       figures={spec.figures}
                       datasets={spec.datasets}
                       performanceMetrics={spec.performanceMetrics}
                       performanceOverview={spec.performanceOverview}
                     />
-                  </Grid>
-                </Element>
+                  </Element>
+                </Grid>
               )}
               {hasAuthors(spec) && (
-                <Element name={PAGE_BOOKMARK_AUTHORS}>
-                  <Grid item xs={12} className={classes.subBox}>
+                <Grid item xs={12} className={classes.subBox}>
+                  <Element
+                    className={classes.fill}
+                    name={PAGE_BOOKMARK_AUTHORS}
+                  >
                     <Authors authors={spec.authors || []} />
-                  </Grid>
-                </Element>
+                  </Element>
+                </Grid>
               )}
             </Grid>
           </Grid>

@@ -49,13 +49,13 @@ export default function EthicalConsiderations(
         </Typography>
         <Box m={1} />
         {ethicalConsiderations && (
-          <Typography variant={"body2"}>
+          <div>
             <ListOrParagraph
               content={ethicalConsiderations
                 .map(({ description }) => description || "")
                 .filter((con) => con !== "")}
             />
-          </Typography>
+          </div>
         )}
       </div>
     </div>

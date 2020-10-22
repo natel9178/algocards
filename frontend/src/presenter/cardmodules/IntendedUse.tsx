@@ -2,6 +2,7 @@ import { makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import BuildIcon from "@material-ui/icons/Build";
 import ListOrParagraph from "../ListOrParagraph";
+import { divide } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -54,9 +55,9 @@ export default function IntendedUse(props: IntendedUseProps) {
             >
               Primary Usecases
             </Typography>
-            <Typography variant={"body2"}>
+            <div>
               <ListOrParagraph content={primaryUsecase} />
-            </Typography>
+            </div>
           </>
         )}
 
@@ -65,7 +66,7 @@ export default function IntendedUse(props: IntendedUseProps) {
             <Typography variant={"h6"} style={{ marginTop: 10 }}>
               Anti-Goals
             </Typography>
-            <Typography variant={"body2"}>
+            <div>
               <ListOrParagraph
                 content={
                   typeof antiGoals === "string"
@@ -75,7 +76,7 @@ export default function IntendedUse(props: IntendedUseProps) {
                         .filter((text) => text !== "")
                 }
               />
-            </Typography>
+            </div>
           </>
         )}
       </div>

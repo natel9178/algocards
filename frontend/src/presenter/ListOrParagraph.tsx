@@ -22,10 +22,10 @@ export default function ListOrParagraph({
     return (
       <>
         {splitContent.map((c, idx) => (
-          <>
+          <div style={{ width: "100%" }} key={idx}>
             <p className={classes.text}>{c}</p>
             {idx !== splitContent.length - 1 && <br />}
-          </>
+          </div>
         ))}
       </>
     );
@@ -35,8 +35,10 @@ export default function ListOrParagraph({
     }
     return (
       <ul style={ulStyle}>
-        {content.map((sentence) => (
-          <li style={liStyle}>{sentence}</li>
+        {content.map((sentence, idx) => (
+          <li style={liStyle} key={idx}>
+            {sentence}
+          </li>
         ))}
       </ul>
     );

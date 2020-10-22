@@ -2,6 +2,7 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import ListOrParagraph from "../ListOrParagraph";
 import WarningIcon from "@material-ui/icons/Warning";
+import { divide } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -72,22 +73,22 @@ export default function Limitations(props: LimitationsProps) {
         </Typography>
         <Grid container spacing={3}>
           {limitations &&
-            limitations.map(({ type, description, workarounds }) => (
-              <Grid item xs={6}>
+            limitations.map(({ type, description, workarounds }, idx) => (
+              <Grid item xs={6} key={idx}>
                 <div style={{ flexDirection: "column" }}>
                   <Typography variant={"h6"} style={{ marginTop: 10 }}>
                     {type}
                   </Typography>
                   {description && (
-                    <Typography variant={"body2"}>
+                    <div>
                       <ListOrParagraph content={description} />
-                    </Typography>
+                    </div>
                   )}
                   {workarounds && (
-                    <Typography variant={"body2"} style={{ marginTop: 10 }}>
+                    <div style={{ marginTop: 10 }}>
                       <strong>Workaround: </strong>
                       <ListOrParagraph content={workarounds} />
-                    </Typography>
+                    </div>
                   )}
                 </div>
               </Grid>
