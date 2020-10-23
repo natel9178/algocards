@@ -59,7 +59,7 @@ const useItemStyles = makeStyles<Theme, { center?: boolean }>((theme) => ({
     boxSizing: "border-box",
   },
   textField: {},
-  subtextField: { flexGrow: 1 },
+  subtextField: { flexGrow: 1, flexShrink: 1 },
   textInput: {
     fontSize: 25,
     lineHeight: 1.3,
@@ -138,25 +138,27 @@ const SortableItem = SortableElement(
               placeholder={props.textPlaceholder}
             />
           )}
-          <TextField
-            className={classes.subtextField}
-            InputProps={{
-              classes: {
-                input: classes.subtextInput,
-              },
-              disableUnderline: true,
-            }}
-            multiline={!props.short}
-            value={props.item[props.subtextField] || ""}
-            onChange={(e) =>
-              props.editFunc(
-                props.itemIndex,
-                props.subtextField,
-                e.target.value
-              )
-            }
-            placeholder={props.subtextPlaceholder}
-          />
+          <Box flexGrow={1} overflow={"auto"}>
+            <TextField
+              style={{ maxHeight: "100%", width: "100%" }}
+              InputProps={{
+                classes: {
+                  input: classes.subtextInput,
+                },
+                disableUnderline: true,
+              }}
+              multiline={!props.short}
+              value={props.item[props.subtextField] || ""}
+              onChange={(e) =>
+                props.editFunc(
+                  props.itemIndex,
+                  props.subtextField,
+                  e.target.value
+                )
+              }
+              placeholder={props.subtextPlaceholder}
+            />
+          </Box>
         </Paper>
       </motion.div>
     );

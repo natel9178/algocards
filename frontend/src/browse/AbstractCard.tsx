@@ -6,13 +6,14 @@ import {
   Chip,
   CircularProgress,
 } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SimCardIcon from "@material-ui/icons/SimCard";
 import ListOrParagraph from "../presenter/ListOrParagraph";
 import useFetchCard from "../presenter/useFetchCard";
 import { useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Textfit } from "react-textfit";
+import { Spec } from "../spec/spec";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -55,19 +56,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface AbstractCardProps {
-  link: string;
-  fullCardLocation: string;
-  layoutId: string;
+  link?: string;
+  fullCardLocation?: string;
+  layoutId?: string;
+  spec?: Spec;
 }
 
 export default function AbstractCard({
   link,
   fullCardLocation,
   layoutId,
+  spec: providedSpec,
 }: AbstractCardProps) {
   const classes = useStyles();
   const history = useHistory();
-  const spec = useFetchCard(link);
+  const [spec, setSpec] = useState<Spec | null | undefined>(providedSpec);
+  const linkSpec = useFetchCard(link || "");
+
+  useEffect(() => {
+    if (linkSpec) {
+      setSpec(linkSpec);
+    } else {
+      setSpec(providedSpec);
+    }
+  }, [linkSpec, providedSpec]);
 
   return (
     <motion.div
@@ -78,7 +90,7 @@ export default function AbstractCard({
     >
       <Paper
         className={classes.paper}
-        onClick={() => history.push(fullCardLocation)}
+        onClick={() => fullCardLocation && history.push(fullCardLocation)}
       >
         {!spec ? (
           <Box
