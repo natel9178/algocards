@@ -9,7 +9,9 @@ export default function useFetchCard(link: string) {
       return;
     }
 
-    const parsedLink = `/external/${link}`;
+    const parsedLink = `/external/${link
+      .replace("https://", "")
+      .replace("http://", "")}`;
     fetch(parsedLink)
       .then((response) => {
         return response.json();
