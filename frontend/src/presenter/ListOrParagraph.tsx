@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { Box, makeStyles } from "@material-ui/core";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,10 +22,9 @@ export default function ListOrParagraph({
     return (
       <>
         {splitContent.map((c, idx) => (
-          <div style={{ width: "100%" }} key={idx}>
+          <Box mt={0.5} width="100%" key={idx}>
             <p className={classes.text}>{c}</p>
-            {idx !== splitContent.length - 1 && <br />}
-          </div>
+          </Box>
         ))}
       </>
     );

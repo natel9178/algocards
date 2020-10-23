@@ -2,10 +2,10 @@ import {
   Box,
   makeStyles,
   Paper,
-  Drawer,
   AppBar,
   CircularProgress,
   Button,
+  Container,
 } from "@material-ui/core";
 import React from "react";
 import Card, {
@@ -80,18 +80,16 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     display: "flex",
-    position: "sticky",
     alignSelf: "flex-start",
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
-  },
-  drawerPaper: {
-    borderWidth: 0,
-    backgroundColor: "transparent",
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(1),
+    position: "sticky",
+    alignSelf: "flex-start",
+    top: 100,
   },
   drawerOpen: {
     width: drawerWidth,
@@ -106,10 +104,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: "hidden",
-    width: theme.spacing(8) + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(10) + 1,
-    },
+    width: theme.spacing(7) + 1,
   },
   drawerListItem: { borderRadius: 10 },
   title: {
@@ -205,25 +200,22 @@ export default function Presenter() {
           </motion.div>
         </Toolbar>
       </AppBar>
-      <motion.div className={classes.root}>
-        <Drawer
-          variant="permanent"
+      <Container maxWidth={"lg"} className={classes.root}>
+        <div
           className={clsx(classes.drawer, {
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
           })}
-          classes={{
-            paper: clsx({
-              [classes.drawerPaper]: true,
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            }),
-          }}
+          // classes={{
+          //   paper: clsx({
+          //     [classes.drawerPaper]: true,
+          //     [classes.drawerOpen]: open,
+          //     [classes.drawerClose]: !open,
+          //   }),
+          // }}
           onMouseEnter={handleDrawerOpen}
           onMouseLeave={handleDrawerClose}
         >
-          <Box mt={5} mb={13} ml={1}></Box>
-
           {finalCard && (
             <List>
               <ListItem
@@ -403,7 +395,7 @@ export default function Presenter() {
               )}
             </List>
           )}
-        </Drawer>
+        </div>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -453,7 +445,7 @@ export default function Presenter() {
             )}
           </Paper>
         </motion.div>
-      </motion.div>
+      </Container>
     </>
   );
 }
