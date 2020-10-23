@@ -19,7 +19,6 @@ export default function useGithubCardFetch(link: string) {
       setLoading(false);
       return;
     }
-    console.log(link)
     const parsedLink = new URL(
       link.startsWith("https://") ? link : `https://${link}`
     );
@@ -38,7 +37,7 @@ export default function useGithubCardFetch(link: string) {
         const repo = splitLink[1];
         const remainder = splitLink.slice(2, splitLink.length).join("/");
 
-        getCardsFromGithubMemo(
+        getCardsFromGithub(
           username,
           repo,
           remainder === "" ? undefined : "/" + remainder
@@ -71,12 +70,15 @@ interface File {
 
 export const getCardsFromGithubMemo = _.memoize(getCardsFromGithub);
 
+var memo: Record<string, File[]> = {};
 export async function getCardsFromGithub(
   owner: string,
   repo: string,
   remainingPath?: string
 ): Promise<File[]> {
-  console.log("Called");
+  if (`${owner}/${repo}${remainingPath}` in memo) {
+    return memo[`${owner}/${repo}${remainingPath}`];
+  }
   const content = await octokit.repos.getContent({
     owner,
     repo,
@@ -90,14 +92,17 @@ export async function getCardsFromGithub(
     const cards = castedData
       .map(({ name, path, download_url }) => ({ name, path, download_url })) // extract fields
       .filter(({ name }) => name.endsWith(CARD_SUFFIX));
+    memo[`${owner}/${repo}${remainingPath}`] = cards;
     return cards;
   } else {
-    return [
+    const cards = [
       {
         name: content.data.name,
         path: content.data.path,
         download_url: content.data.download_url,
       },
     ];
+    memo[`${owner}/${repo}${remainingPath}`] = cards;
+    return cards;
   }
 }

@@ -205,7 +205,6 @@ export default function Browse() {
         <Grid container spacing={3}>
           <Grid item lg={4} sm={6} xs={12}>
             <AbstractCard
-              layoutId={`/github.com/natel9178/algo-cards`}
               fullCardLocation="/github.com/natel9178/algo-cards"
               link={
                 "https://raw.githubusercontent.com/natel9178/algo-cards/main/Face%20Detection-card.json"
@@ -214,8 +213,7 @@ export default function Browse() {
           </Grid>
           <Grid item lg={4} sm={6} xs={12}>
             <AbstractCard
-              layoutId={`/github.com/natel9178/algo-cards`}
-              fullCardLocation="/github.com/natel9178/algo-cards"
+              fullCardLocation="github.com/natel9178/algo-cards/Yolov4-card.json"
               link={
                 "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
               }
@@ -223,8 +221,7 @@ export default function Browse() {
           </Grid>
           <Grid item lg={4} sm={6} xs={12}>
             <AbstractCard
-              layoutId={`/github.com/natel9178/algo-cards`}
-              fullCardLocation="/github.com/natel9178/algo-cards"
+              fullCardLocation="github.com/natel9178/algo-cards/Yolov4-card.json"
               link={
                 "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
               }
@@ -232,8 +229,7 @@ export default function Browse() {
           </Grid>
           <Grid item lg={4} sm={6} xs={12}>
             <AbstractCard
-              layoutId={`/github.com/natel9178/algo-cards`}
-              fullCardLocation="/github.com/natel9178/algo-cards"
+              fullCardLocation="github.com/natel9178/algo-cards/Yolov4-card.json"
               link={
                 "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
               }
@@ -241,8 +237,7 @@ export default function Browse() {
           </Grid>
           <Grid item lg={4} sm={6} xs={12}>
             <AbstractCard
-              layoutId={`/github.com/natel9178/algo-cards`}
-              fullCardLocation="/github.com/natel9178/algo-cards"
+              fullCardLocation="github.com/natel9178/algo-cards/Yolov4-card.json"
               link={
                 "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
               }
@@ -250,8 +245,7 @@ export default function Browse() {
           </Grid>
           <Grid item lg={4} sm={6} xs={12}>
             <AbstractCard
-              layoutId={`/github.com/natel9178/algo-cards`}
-              fullCardLocation="/github.com/natel9178/algo-cards"
+              fullCardLocation="github.com/natel9178/algo-cards/Yolov4-card.json"
               link={
                 "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
               }
