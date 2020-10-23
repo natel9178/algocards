@@ -70,7 +70,7 @@ export default function Performance({
             </Typography>
             <Grid container spacing={3}>
               {datasets.map(({ name, description }, idx) => (
-                <Grid item xs={6} key={idx}>
+                <Grid item xs={12} key={idx}>
                   {description && (
                     <div>
                       {name && <strong>{name}</strong>}

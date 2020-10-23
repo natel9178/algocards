@@ -36,6 +36,160 @@ export const WizardSpec = [
     ),
   },
   {
+    path: "primaryUsecase",
+    text: "Primary Usecase",
+
+    component: (
+      <TextEntry
+        smallText
+        field={"primaryUsecase"}
+        title={"What is the primary usecase of your model?"}
+        description={
+          "When creating and training this algorithm, what usecase did you have in mind?"
+        }
+        placeholder={
+          "To help social media users engage with their friends more easily by automatically identifying taggable faces in images."
+        }
+        isMultiline={true}
+      />
+    ),
+  },
+  {
+    path: "outOfScope",
+    text: "Out Of Scope Usecases",
+    component: (
+      <ListEntry
+        subtextPlaceholder="Resolving distinct identities for people in crowds (i.e. facial recognition)."
+        mainField="antiGoals"
+        subtextField="description"
+        title={"Out Of Scope Usecases?"}
+        description={"What usecases was this model not designed for?"}
+      />
+    ),
+  },
+  {
+    path: "stakeholderImpacts",
+    text: "Stakeholder Impacts",
+    component: (
+      <ListEntry
+        minWidth={"50ch"}
+        textPlaceholder="Innocent bystanders"
+        subtextPlaceholder="Bystanders to security cameras may have their faces recognized without their consent."
+        mainField="stakeholderImpacts"
+        textField="stakeholder"
+        subtextField="impact"
+        title={"Stakeholder Impacts?"}
+        description={
+          "What are stakeholders (impacted groups) and potential harmful impacts on each?"
+        }
+      />
+    ),
+  },
+  {
+    path: "limitations",
+    text: "Limitations",
+    component: (
+      <ListEntry
+        textPlaceholder="Occlusion"
+        subtextPlaceholder="While faces or objects are occluded, this model may not be able to resolve these objects accurately."
+        mainField="limitations"
+        textField="type"
+        subtextField="description"
+        title={"Limitations?"}
+        description={"What are the core limitations of the model?"}
+      />
+    ),
+  },
+  {
+    path: "ethicalConsiderations",
+    text: "Ethical Considerations",
+    component: (
+      <ListEntry
+        subtextPlaceholder="Using this model for tracking people may lead to innaccurate results and harmful consequences in mission-critical contexts."
+        mainField="ethicalConsiderations"
+        subtextField="description"
+        title={"Ethical Considerations?"}
+        description={
+          "Are there ethical considerations that model users should be aware of? What improvements and future investigations are needed to address these?"
+        }
+      />
+    ),
+  },
+
+  {
+    path: "datasets",
+    text: "Datasets",
+
+    component: (
+      <ListEntry
+        minWidth={"50ch"}
+        textPlaceholder="COCO (People)"
+        subtextPlaceholder="A subset of the COCO dataset, meaning “Common Objects In Context”, is a set of challenging, high quality datasets for computer vision, mostly state-of-the-art neural networks. We only selected face labels on this dataset. "
+        mainField="datasets"
+        textField="name"
+        subtextField="description"
+        title={"Datasets?"}
+        description={
+          "What datasets did your model use for training and evaluation?"
+        }
+      />
+    ),
+  },
+  {
+    path: "performanceOverview",
+    text: "Performance Overview",
+
+    component: (
+      <TextEntry
+        smallText
+        field={"performanceOverview"}
+        title={"Performance Summary?"}
+        description={
+          "Describe how the model was trained and any qualatative insights from your performance evaluation."
+        }
+        isMultiline={true}
+        placeholder={
+          "We trained this model with standard Yolov4 training procedures. We noticed that on our evaluation dataset, our recall metrics dropped significantly when there was occlusion, or when there were multiple objects grouped in the frame. "
+        }
+      />
+    ),
+  },
+  {
+    path: "performanceMetrics",
+    text: "Performance Metrics",
+
+    component: (
+      <ListEntry
+        short
+        center
+        maxWidth={"20ch"}
+        textPlaceholder="PR-AUC"
+        subtextPlaceholder="0.43"
+        mainField="performanceMetrics"
+        textField="name"
+        subtextField="value"
+        title={"Metrics?"}
+        description={
+          "Give all quantative metrics necessary to give people the big picture."
+        }
+      />
+    ),
+  },
+  {
+    path: "figures",
+    text: "Figures",
+
+    component: (
+      <UploadEntry
+        title={"Figures?"}
+        description={
+          "Add the most important figures that show your performance and limitations."
+        }
+        field={"figures"}
+      />
+    ),
+  },
+  {
     path: "type",
     text: "Model Type",
 
@@ -174,159 +328,6 @@ export const WizardSpec = [
         placeholder={
           "A Darknet50 backbone with three Yolov3 heads, trained on CIoU loss."
         }
-      />
-    ),
-  },
-  {
-    path: "primaryUsecase",
-    text: "Primary Usecase",
-
-    component: (
-      <TextEntry
-        smallText
-        field={"primaryUsecase"}
-        title={"What is the primary usecase of your model?"}
-        description={
-          "When creating and training this algorithm, what usecase did you have in mind?"
-        }
-        placeholder={
-          "To help social media users engage with their friends more easily by automatically identifying taggable faces in images."
-        }
-        isMultiline={true}
-      />
-    ),
-  },
-  {
-    path: "outOfScope",
-    text: "Out Of Scope Usecases",
-    component: (
-      <ListEntry
-        subtextPlaceholder="Resolving distinct identities for people in crowds (i.e. facial recognition)."
-        mainField="antiGoals"
-        subtextField="description"
-        title={"Out Of Scope Usecases?"}
-        description={"What usecases was this model not designed for?"}
-      />
-    ),
-  },
-  {
-    path: "stakeholderImpacts",
-    text: "Stakeholder Impacts",
-    component: (
-      <ListEntry
-        minWidth={"50ch"}
-        textPlaceholder="Innocent bystanders"
-        subtextPlaceholder="Bystanders to security cameras may have their faces recognized without their consent."
-        mainField="stakeholderImpacts"
-        textField="stakeholder"
-        subtextField="impact"
-        title={"Stakeholder Impacts?"}
-        description={
-          "What are stakeholders (impacted groups) and potential harmful impacts on each?"
-        }
-      />
-    ),
-  },
-  {
-    path: "limitations",
-    text: "Limitations",
-    component: (
-      <ListEntry
-        textPlaceholder="Occlusion"
-        subtextPlaceholder="While faces or objects are occluded, this model may not be able to resolve these objects accurately."
-        mainField="limitations"
-        textField="type"
-        subtextField="description"
-        title={"Limitations?"}
-        description={"What are the core limitations of the model?"}
-      />
-    ),
-  },
-  {
-    path: "ethicalConsiderations",
-    text: "Ethical Considerations",
-    component: (
-      <ListEntry
-        subtextPlaceholder="Using this model for tracking people may lead to innaccurate results and harmful consequences in mission-critical contexts."
-        mainField="ethicalConsiderations"
-        subtextField="description"
-        title={"Ethical Considerations?"}
-        description={
-          "Are there ethical considerations that model users should be aware of? What improvements and future investigations are needed to address these?"
-        }
-      />
-    ),
-  },
-  {
-    path: "datasets",
-    text: "Datasets",
-
-    component: (
-      <ListEntry
-        minWidth={"50ch"}
-        textPlaceholder="COCO (People)"
-        subtextPlaceholder="A subset of the COCO dataset, meaning “Common Objects In Context”, is a set of challenging, high quality datasets for computer vision, mostly state-of-the-art neural networks. We only selected face labels on this dataset. "
-        mainField="datasets"
-        textField="name"
-        subtextField="description"
-        title={"Datasets?"}
-        description={
-          "What datasets did your model use for training and evaluation?"
-        }
-      />
-    ),
-  },
-  {
-    path: "performanceOverview",
-    text: "Performance Overview",
-
-    component: (
-      <TextEntry
-        smallText
-        field={"performanceOverview"}
-        title={"Performance Summary?"}
-        description={
-          "Describe how the model was trained and any qualatative insights from your performance evaluation."
-        }
-        isMultiline={true}
-        placeholder={
-          "We trained this model with standard Yolov4 training procedures. We noticed that on our evaluation dataset, our recall metrics dropped significantly when there was occlusion, or when there were multiple objects grouped in the frame. "
-        }
-      />
-    ),
-  },
-  {
-    path: "performanceMetrics",
-    text: "Performance Metrics",
-
-    component: (
-      <ListEntry
-        short
-        center
-        maxWidth={"20ch"}
-        textPlaceholder="PR-AUC"
-        subtextPlaceholder="0.43"
-        mainField="performanceMetrics"
-        textField="name"
-        subtextField="value"
-        title={"Metrics?"}
-        description={
-          "Give all quantative metrics necessary to give people the big picture."
-        }
-      />
-    ),
-  },
-  {
-    path: "figures",
-    text: "Figures",
-
-    component: (
-      <UploadEntry
-        title={"Figures?"}
-        description={
-          "Add the most important figures that show your performance and limitations."
-        }
-        field={"figures"}
       />
     ),
   },

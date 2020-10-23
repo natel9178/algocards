@@ -14,6 +14,12 @@ export default function useGithubCardFetch(link: string) {
 
   useEffect(() => {
     setLoading(true);
+
+    if (!link || link === "" || link === "/") {
+      setLoading(false);
+      return;
+    }
+    console.log(link)
     const parsedLink = new URL(
       link.startsWith("https://") ? link : `https://${link}`
     );

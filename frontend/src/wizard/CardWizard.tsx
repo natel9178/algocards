@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     height: "100%",
-    position: "relative",
   },
   container: {
     width: "100%",
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     borderRadius: 18,
-    height: 600,
+    height: "80vh",
     boxShadow: "3px 3px 30px rgba(0, 0, 0, 0.1)",
     padding: "50px 0px",
     width: "100%",
@@ -128,7 +127,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(8),
   },
   title: {
-    marginLeft: 40,
     marginBottom: 6,
     flexGrow: 1,
   },
@@ -150,185 +148,199 @@ export default function CardWizard() {
   const [recoilCard] = useRecoilState<Spec>(card);
 
   return (
-    <>
-      <AppBar position="relative" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
+    <div className={classes.root}>
+      <Container
+        maxWidth={"xl"}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          position: "sticky",
+          zIndex: 1000,
+          height: 110,
+        }}
+      >
+        <Box mx={2}>
           <Link to="/">
             <img src={"/logo.svg"} alt="Nice" width="40" />
           </Link>
-          <motion.div
-            style={{
-              opacity: opacityAnim,
-              display: "flex",
-              flexGrow: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
+        </Box>
+        <Box mx={1} />
+        <motion.div
+          style={{
+            opacity: opacityAnim,
+            display: "flex",
+            flexGrow: 1,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography className={classes.title} variant={"h4"}>
+            Algo-Card
+          </Typography>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent={"flex-end"}
+            ml={5}
+            mr={2}
+            width={150}
+          >
+            <Box mr={2} width={"100%"}>
+              <LinearProgress variant="determinate" value={progress} />
+            </Box>
+            <Box minWidth={35}>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+              >{`${progress}%`}</Typography>
+            </Box>
+          </Box>
+          <Fab
+            variant="extended"
+            color="primary"
+            size="medium"
+            onClick={() => {
+              scroller.scrollTo("card", {
+                duration: 1500,
+                smooth: "easeInOutQuint",
+                offset: -100,
+              });
             }}
           >
-            <Typography className={classes.title} variant={"h4"}>
-              Algo-Card
-            </Typography>
-            <Box display="flex" alignItems="center" ml={5} mr={2} width={150}>
-              <Box mr={2} width={"100%"}>
-                <LinearProgress variant="determinate" value={progress} />
-              </Box>
-              <Box minWidth={35}>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                >{`${progress}%`}</Typography>
-              </Box>
-            </Box>
-            <Fab
-              style={{
-                marginRight: theme.spacing(5),
-              }}
-              variant="extended"
-              color="primary"
-              size="medium"
-              onClick={() => {
-                scroller.scrollTo("card", {
-                  duration: 1500,
-                  smooth: "easeInOutQuint",
-                  offset: -100,
-                });
-              }}
-            >
-              <VisibilityIcon className={classes.extendedIcon} />
-              Card Preview
-            </Fab>
-          </motion.div>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.root}>
-        <Container maxWidth={"lg"} className={classes.container}>
-          <Paper className={classes.paper}>
-            <Route
-              render={({ history }) => (
-                <Wizard
-                  history={history}
-                  render={({ step, next, previous, steps }) => {
-                    const stepIndex = steps.indexOf(step);
+            <VisibilityIcon className={classes.extendedIcon} />
+            Card Preview
+          </Fab>
+        </motion.div>
+      </Container>
+      <Container maxWidth={"xl"} className={classes.container}>
+        <Paper className={classes.paper}>
+          <Route
+            render={({ history }) => (
+              <Wizard
+                history={history}
+                render={({ step, next, previous, steps }) => {
+                  const stepIndex = steps.indexOf(step);
 
-                    setProgress(
-                      Math.round(((stepIndex + 1) / steps.length) * 100)
-                    );
-                    return (
-                      <div
-                        style={{
-                          // position: "relative",
-                          width: "100%",
-                          height: "100%",
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                        }}
-                        // onKeyDown={(event) => {
-                        //   if (event.key === "ArrowLeft" && stepIndex > 0) {
-                        //     previous();
-                        //   } else if (
-                        //     event.key === "ArrowRight" &&
-                        //     stepIndex < steps.length - 1
-                        //   ) {
-                        //     next();
-                        //   }
-                        // }}
-                        // tabIndex={0}
-                      >
-                        <div className={classes.nextbar}>
-                          <Tooltip
-                            title={
-                              stepIndex > 0
-                                ? `Back to ${
-                                    WizardSpec[stepIndex - 1].text ||
-                                    WizardSpec[stepIndex - 1].path
-                                  }`
-                                : ""
-                            }
+                  setProgress(
+                    Math.round(((stepIndex + 1) / steps.length) * 100)
+                  );
+                  return (
+                    <div
+                      style={{
+                        // position: "relative",
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                      }}
+                      // onKeyDown={(event) => {
+                      //   if (event.key === "ArrowLeft" && stepIndex > 0) {
+                      //     previous();
+                      //   } else if (
+                      //     event.key === "ArrowRight" &&
+                      //     stepIndex < steps.length - 1
+                      //   ) {
+                      //     next();
+                      //   }
+                      // }}
+                      // tabIndex={0}
+                    >
+                      <div className={classes.nextbar}>
+                        <Tooltip
+                          title={
+                            stepIndex > 0
+                              ? `Back to ${
+                                  WizardSpec[stepIndex - 1].text ||
+                                  WizardSpec[stepIndex - 1].path
+                                }`
+                              : ""
+                          }
+                        >
+                          <IconButton
+                            onClick={previous}
+                            style={{
+                              display: stepIndex === 0 ? "none" : undefined,
+                            }}
+                            size={"small"}
                           >
-                            <IconButton
-                              onClick={previous}
-                              style={{
-                                display: stepIndex === 0 ? "none" : undefined,
-                              }}
-                              size={"small"}
-                            >
-                              <ChevronLeftIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </div>
-                        <div style={{ flexGrow: 1, position: "relative" }}>
-                          <TransitionGroup>
-                            <CSSTransition
-                              key={step.id}
-                              classNames="wizard"
-                              timeout={{ enter: 200, exit: 300 }}
-                            >
-                              <div
-                                style={{
-                                  position: "absolute",
-                                  width: "100%",
-                                  height: "100%",
-                                }}
-                              >
-                                <Steps key={step.id} step={step}>
-                                  {WizardSpec.map((wizardStep) => (
-                                    <Step
-                                      key={`wizard/${wizardStep.path}`}
-                                      id={`wizard/${wizardStep.path}`}
-                                    >
-                                      {wizardStep.component}
-                                    </Step>
-                                  ))}
-                                </Steps>
-                              </div>
-                            </CSSTransition>
-                          </TransitionGroup>
-                        </div>
-                        <div className={classes.nextbar}>
-                          <Tooltip
-                            title={
-                              stepIndex < steps.length - 1
-                                ? `Go to ${
-                                    WizardSpec[stepIndex + 1].text ||
-                                    WizardSpec[stepIndex + 1].path
-                                  }`
-                                : ""
-                            }
-                          >
-                            <IconButton
-                              onClick={next}
-                              style={{
-                                display:
-                                  stepIndex === steps.length - 1
-                                    ? "none"
-                                    : undefined,
-                              }}
-                              size={"medium"}
-                            >
-                              <ArrowForwardIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </div>
+                            <ChevronLeftIcon />
+                          </IconButton>
+                        </Tooltip>
                       </div>
-                    );
-                  }}
-                />
-              )}
-            />
-          </Paper>
-          <Box m={10} />
+                      <div style={{ flexGrow: 1, position: "relative" }}>
+                        <TransitionGroup>
+                          <CSSTransition
+                            key={step.id}
+                            classNames="wizard"
+                            timeout={{ enter: 200, exit: 300 }}
+                          >
+                            <div
+                              style={{
+                                position: "absolute",
+                                width: "100%",
+                                height: "100%",
+                              }}
+                            >
+                              <Steps key={step.id} step={step}>
+                                {WizardSpec.map((wizardStep) => (
+                                  <Step
+                                    key={`wizard/${wizardStep.path}`}
+                                    id={`wizard/${wizardStep.path}`}
+                                  >
+                                    {wizardStep.component}
+                                  </Step>
+                                ))}
+                              </Steps>
+                            </div>
+                          </CSSTransition>
+                        </TransitionGroup>
+                      </div>
+                      <div className={classes.nextbar}>
+                        <Tooltip
+                          title={
+                            stepIndex < steps.length - 1
+                              ? `Go to ${
+                                  WizardSpec[stepIndex + 1].text ||
+                                  WizardSpec[stepIndex + 1].path
+                                }`
+                              : ""
+                          }
+                        >
+                          <IconButton
+                            onClick={next}
+                            style={{
+                              display:
+                                stepIndex === steps.length - 1
+                                  ? "none"
+                                  : undefined,
+                            }}
+                            size={"medium"}
+                          >
+                            <ArrowForwardIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+                    </div>
+                  );
+                }}
+              />
+            )}
+          />
+        </Paper>
+        <Box m={10} />
 
-          <motion.div style={{ opacity: previewOpacity, scale: previewScale }}>
+        <motion.div style={{ opacity: previewOpacity, scale: previewScale }}>
+          <Container maxWidth={"lg"}>
             <Element name="card">
               <Paper className={classes.cardPaper}>
                 <Card spec={recoilCard} preview />
               </Paper>
             </Element>
-          </motion.div>
-        </Container>
-      </div>
-    </>
+          </Container>
+        </motion.div>
+      </Container>
+    </div>
   );
 }

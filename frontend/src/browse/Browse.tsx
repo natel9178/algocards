@@ -2,13 +2,12 @@ import {
   makeStyles,
   Typography,
   Box,
-  TextField,
   Grid,
   Button,
   Modal,
   Container,
 } from "@material-ui/core";
-import { motion, useTransform, useViewportScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
@@ -30,14 +29,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   hero: {
-    width: "100vw",
     height: "60vh",
     display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    flexDirection: "column",
+    alignItems: "stretch",
+    flexDirection: "row",
+    alignContent: "center",
   },
-  title: {},
+  title: {
+    fontWeight: "bold",
+  },
   toolbarTitle: {
     marginLeft: theme.spacing(3),
     flexGrow: 1,
@@ -64,19 +64,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface BrowseProps {}
-
-const appearDistance = 100;
-
 export default function Browse() {
   const history = useHistory();
   const classes = useStyles();
-  const { scrollY } = useViewportScroll();
-  const opacityAnim = useTransform(
-    scrollY,
-    [0, appearDistance, appearDistance + 100],
-    [0, 0, 1]
-  );
   const [openAboutModal, setOpenAboutModal] = useState(false);
   const [, setLoadCard] = useRecoilState(loadedCard);
 
@@ -104,12 +94,9 @@ export default function Browse() {
     <>
       <motion.div
         style={{
-          opacity: opacityAnim,
-          position: "fixed",
           minHeight: 80,
           backgroundColor: "rgba(255, 255, 255, 1.00)",
           width: "100%",
-          zIndex: 1000,
           borderBottomWidth: 1,
           borderBottomColor: "rgba(0, 0, 0, 0.1)",
           borderBottomStyle: "solid",
@@ -156,113 +143,122 @@ export default function Browse() {
           </Button>
         </Container>
       </motion.div>
-      <div className={classes.root} {...getRootProps()}>
+      <Box m={5} />
+      <Container maxWidth={"lg"} className={classes.root} {...getRootProps()}>
         <input
           style={{ position: "absolute", width: "100%", height: "100%" }}
           {...getInputProps()}
         />
-        <div className={classes.hero}>
-          <Link to="/">
-            <img src={"/logo.svg"} alt="Nice" width="70" />
-          </Link>
-          <Typography className={classes.title} variant={"h3"}>
-            Algo-Cards
-          </Typography>
-          <Box m={0.5} />
-          <Typography variant={"body1"} style={{ fontFamily: "Roboto Mono" }}>
-            Drop a card here to view, or browse below.
-          </Typography>
-
-          <Box display="flex" m={1}>
-            <Button
-              variant="outlined"
-              size="large"
-              color="primary"
-              startIcon={<InfoIcon />}
-              onClick={() => setOpenAboutModal(true)}
-            >
-              About Algo-Cards
-            </Button>
+        <Grid container className={classes.hero}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Typography className={classes.title} variant={"h4"}>
+              Bring the <i>Human</i> back into AI
+            </Typography>
             <Box m={1} />
-            <Button
-              variant="outlined"
-              size="large"
-              color="primary"
-              startIcon={<AddIcon />}
-              onClick={() => history.push("/wizard")}
+            <Typography
+              variant={"body1"}
+              style={{ fontFamily: "Roboto Mono", fontSize: 19 }}
             >
-              Create New Card
-            </Button>
-          </Box>
-          <Box m={4} />
+              AlgoCards is a conversation starter between Machine Learning devs
+              and general users for a more hopeful AI future.
+            </Typography>
 
-          <TextField
-            className={classes.mainInput}
-            size="small"
-            label="Search / Card Link"
-            variant="outlined"
-          />
-        </div>
-        <Box m={5} />
-        <Container maxWidth={"lg"}>
-          <Grid container spacing={3}>
-            <Grid item lg={4} sm={6} xs={12}>
-              <AbstractCard
-                layoutId={`/github.com/natel9178/algo-cards`}
-                fullCardLocation="/github.com/natel9178/algo-cards"
-                link={
-                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-                }
-              />
-            </Grid>
-            <Grid item lg={4} sm={6} xs={12}>
-              <AbstractCard
-                layoutId={`/github.com/natel9178/algo-cards`}
-                fullCardLocation="/github.com/natel9178/algo-cards"
-                link={
-                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-                }
-              />
-            </Grid>
-            <Grid item lg={4} sm={6} xs={12}>
-              <AbstractCard
-                layoutId={`/github.com/natel9178/algo-cards`}
-                fullCardLocation="/github.com/natel9178/algo-cards"
-                link={
-                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-                }
-              />
-            </Grid>
-            <Grid item lg={4} sm={6} xs={12}>
-              <AbstractCard
-                layoutId={`/github.com/natel9178/algo-cards`}
-                fullCardLocation="/github.com/natel9178/algo-cards"
-                link={
-                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-                }
-              />
-            </Grid>
-            <Grid item lg={4} sm={6} xs={12}>
-              <AbstractCard
-                layoutId={`/github.com/natel9178/algo-cards`}
-                fullCardLocation="/github.com/natel9178/algo-cards"
-                link={
-                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-                }
-              />
-            </Grid>
-            <Grid item lg={4} sm={6} xs={12}>
-              <AbstractCard
-                layoutId={`/github.com/natel9178/algo-cards`}
-                fullCardLocation="/github.com/natel9178/algo-cards"
-                link={
-                  "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-                }
-              />
-            </Grid>
+            <Box display="flex" mt={5}>
+              <Button
+                variant="outlined"
+                size="large"
+                color="primary"
+                startIcon={<InfoIcon />}
+                onClick={() => setOpenAboutModal(true)}
+              >
+                About Algo-Cards
+              </Button>
+              <Box m={1} />
+              <Button
+                variant="outlined"
+                size="large"
+                color="primary"
+                startIcon={<AddIcon />}
+                onClick={() => history.push("/wizard")}
+              >
+                Create New Card
+              </Button>
+            </Box>
           </Grid>
-        </Container>
-      </div>
+          <Grid item xs={12} md={6}>
+            <img
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              src={"/humaaans.png"}
+            />
+          </Grid>
+        </Grid>
+        <Box m={5} />
+        <Grid container spacing={3}>
+          <Grid item lg={4} sm={6} xs={12}>
+            <AbstractCard
+              layoutId={`/github.com/natel9178/algo-cards`}
+              fullCardLocation="/github.com/natel9178/algo-cards"
+              link={
+                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Face%20Detection-card.json"
+              }
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <AbstractCard
+              layoutId={`/github.com/natel9178/algo-cards`}
+              fullCardLocation="/github.com/natel9178/algo-cards"
+              link={
+                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+              }
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <AbstractCard
+              layoutId={`/github.com/natel9178/algo-cards`}
+              fullCardLocation="/github.com/natel9178/algo-cards"
+              link={
+                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+              }
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <AbstractCard
+              layoutId={`/github.com/natel9178/algo-cards`}
+              fullCardLocation="/github.com/natel9178/algo-cards"
+              link={
+                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+              }
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <AbstractCard
+              layoutId={`/github.com/natel9178/algo-cards`}
+              fullCardLocation="/github.com/natel9178/algo-cards"
+              link={
+                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+              }
+            />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <AbstractCard
+              layoutId={`/github.com/natel9178/algo-cards`}
+              fullCardLocation="/github.com/natel9178/algo-cards"
+              link={
+                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
+              }
+            />
+          </Grid>
+        </Grid>
+      </Container>
       <Modal
         open={openAboutModal}
         onClose={() => setOpenAboutModal(false)}

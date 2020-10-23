@@ -12,6 +12,7 @@ import ListOrParagraph from "../presenter/ListOrParagraph";
 import useFetchCard from "../presenter/useFetchCard";
 import { useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Textfit } from "react-textfit";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -33,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     fontWeight: "bold",
     flexGrow: 1,
+    flexShrink: 1,
+    fontFamily: "Roboto Mono",
+    fontSize: 15,
   },
   subHeader: {
     fontFamily: "Roboto Mono",
@@ -95,9 +99,9 @@ export default function AbstractCard({
               mb={0.5}
             >
               <SimCardIcon fontSize={"large"} />
-              <Typography className={classes.title} variant={"h4"}>
+              <Textfit max={25} className={classes.title} mode="single">
                 {spec.title || "Model"}
-              </Typography>
+              </Textfit>
               <Typography className={classes.captionText} variant={"body1"}>
                 Algo-Card
               </Typography>

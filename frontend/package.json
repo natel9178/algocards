@@ -33,6 +33,7 @@
     "react-scripts": "3.4.3",
     "react-scroll": "^1.8.1",
     "react-sortable-hoc": "^1.11.0",
+    "react-textfit": "^1.1.0",
     "react-transition-group": "^4.4.1",
     "recoil": "^0.0.13",
     "spdx-license-list": "^6.3.0",
