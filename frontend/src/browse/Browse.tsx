@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   hero: {
-    height: "60vh",
+    minHeight: "60vh",
     display: "flex",
     alignItems: "stretch",
     flexDirection: "row",
