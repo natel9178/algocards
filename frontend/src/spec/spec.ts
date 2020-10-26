@@ -14,7 +14,7 @@ export interface Spec {
   output?: { name?: string }[]; // added
   architectureDescription?: string; // added
 
-  primaryUsecase?: string | string[]; // added
+  primaryGoal?: string | string[]; // added
   antiGoals?: { description?: string }[]; // added
 
   limitations?: {
@@ -23,8 +23,8 @@ export interface Spec {
     workarounds?: string[];
   }[];
 
-  stakeholderImpacts?: {
-    stakeholder?: string;
+  groupImpacts?: {
+    group?: string;
     impact?: string;
   }[];
 

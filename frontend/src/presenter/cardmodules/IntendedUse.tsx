@@ -33,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface IntendedUseProps {
-  primaryUsecase?: string | string[];
+  primaryGoal?: string | string[];
   antiGoals?: string | { description?: string }[];
 }
 export default function IntendedUse(props: IntendedUseProps) {
-  const { primaryUsecase, antiGoals } = props;
+  const { primaryGoal, antiGoals } = props;
   const classes = useStyles();
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
@@ -46,16 +46,16 @@ export default function IntendedUse(props: IntendedUseProps) {
         <Typography style={{ lineHeight: 1 }} variant={"h4"}>
           Intended Use
         </Typography>
-        {primaryUsecase && (
+        {primaryGoal && (
           <>
             <Typography
               variant={"h6"}
               style={{ marginTop: 10, whiteSpace: "pre-wrap" }}
             >
-              Primary Usecases
+              Primary Goals
             </Typography>
             <div>
-              <ListOrParagraph content={primaryUsecase} />
+              <ListOrParagraph content={primaryGoal} />
             </div>
           </>
         )}

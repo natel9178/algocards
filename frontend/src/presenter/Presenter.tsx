@@ -18,10 +18,10 @@ import Card, {
   PAGE_BOOKMARK_INTENDED_USE,
   PAGE_BOOKMARK_HEADER,
   PAGE_BOOKMARK_LIMITATIONS,
-  PAGE_BOOKMARK_STAKEHOLDER_IMPACTS,
+  PAGE_BOOKMARK_GROUP_IMPACTS,
   hasEthicalConsiderations,
   hasLimitations,
-  hasStakeholderImpacts,
+  hasGroupImpacts,
 } from "./Card";
 import BuildIcon from "@material-ui/icons/Build";
 import InfoIcon from "@material-ui/icons/Info";
@@ -241,13 +241,13 @@ export default function Presenter() {
                 />
               </ListItem>
             )}
-            {hasStakeholderImpacts(finalCard) && (
+            {hasGroupImpacts(finalCard) && (
               <ListItem
                 button
-                key={"Stakeholders"}
+                key={"Groups"}
                 className={classes.drawerListItem}
                 onClick={() =>
-                  scroller.scrollTo(PAGE_BOOKMARK_STAKEHOLDER_IMPACTS, {
+                  scroller.scrollTo(PAGE_BOOKMARK_GROUP_IMPACTS, {
                     duration: 1000,
                     smooth: "easeInOutQuint",
                     offset: -100,
@@ -262,7 +262,7 @@ export default function Presenter() {
                     variant: "h6",
                     style: { fontSize: 16 },
                   }}
-                  primary={"Stakeholders"}
+                  primary={"Groups"}
                 />
               </ListItem>
             )}

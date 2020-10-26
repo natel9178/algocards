@@ -120,9 +120,9 @@ export default function AbstractCard({
               </Typography>
             </Box>
 
-            {spec.primaryUsecase && !!spec.primaryUsecase.length && (
+            {spec.primaryGoal && !!spec.primaryGoal.length && (
               <div style={{ marginBottom: 5 }} className={classes.text}>
-                <ListOrParagraph content={spec.primaryUsecase} />
+                <ListOrParagraph content={spec.primaryGoal} />
               </div>
             )}
 

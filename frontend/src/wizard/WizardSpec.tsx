@@ -60,16 +60,16 @@ export const WizardSpec: WizardSpecInterface[] = [
     ],
   },
   {
-    path: "primaryUsecase",
-    text: "Primary Usecase",
+    path: "primaryGoal",
+    text: "Primary Goal",
 
     component: (
       <TextEntry
         smallText
-        field={"primaryUsecase"}
-        title={"What is the primary usecase of your model?"}
+        field={"primaryGoal"}
+        title={"What is the primary goal of your model?"}
         description={
-          "When creating and training this algorithm, what usecase did you have in mind?"
+          "When creating and training this algorithm, what goal did you have in mind?"
         }
         placeholder={
           "To help social media users engage with their friends more easily by automatically identifying taggable faces in images."
@@ -87,14 +87,14 @@ export const WizardSpec: WizardSpecInterface[] = [
   },
   {
     path: "outOfScope",
-    text: "Out of Scope Usecases",
+    text: "Out of Scope Goals",
     component: (
       <ListEntry
         subtextPlaceholder="Resolving distinct identities for people in crowds (i.e. facial recognition)."
         mainField="antiGoals"
         subtextField="description"
-        title={"Out of Scope Usecases?"}
-        description={"What usecases was this model not designed for?"}
+        title={"Out of Scope Goals?"}
+        description={"What goals was this model not designed for?"}
       />
     ),
     examples: [
@@ -106,19 +106,19 @@ export const WizardSpec: WizardSpecInterface[] = [
     ],
   },
   {
-    path: "stakeholderImpacts",
-    text: "Stakeholder Impacts",
+    path: "groupImpacts",
+    text: "Societal Risk Groups & Perspectives",
     component: (
       <ListEntry
         minWidth={"50ch"}
         textPlaceholder="Innocent bystanders"
         subtextPlaceholder="Bystanders to security cameras may have their faces recognized without their consent."
-        mainField="stakeholderImpacts"
-        textField="stakeholder"
+        mainField="groupImpacts"
+        textField="group"
         subtextField="impact"
-        title={"Stakeholder Impacts?"}
+        title={"Group Impacts?"}
         description={
-          "What are stakeholders (impacted groups) and potential harmful impacts on each?"
+          "Consider the main group affected by this model, marginalized subgroups (e.g. LGBTQ+ Individuals), and other societies not mainly targeted by your model."
         }
       />
     ),

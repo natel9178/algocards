@@ -52,30 +52,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface StakeholderImpactsProps {
-  stakeholderImpacts?: {
-    stakeholder?: string;
+interface GroupImpactsProps {
+  groupImpacts?: {
+    group?: string;
     impact?: string;
   }[];
 }
 
-export default function StakeholderImpacts(props: StakeholderImpactsProps) {
-  const { stakeholderImpacts } = props;
+export default function GroupImpacts(props: GroupImpactsProps) {
+  const { groupImpacts } = props;
   const classes = useStyles();
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       <GroupIcon fontSize={"large"} />
       <div className={classes.subContainer}>
         <Typography style={{ lineHeight: 1 }} variant={"h4"}>
-          Stakeholder Impacts
+          Group Impacts
         </Typography>
         <Grid container spacing={3}>
-          {stakeholderImpacts &&
-            stakeholderImpacts.map(({ stakeholder, impact }, idx) => (
+          {groupImpacts &&
+            groupImpacts.map(({ group, impact }, idx) => (
               <Grid item xs={6} key={idx}>
                 <div style={{ flexDirection: "column" }}>
                   <Typography variant={"h6"} style={{ marginTop: 10 }}>
-                    {stakeholder}
+                    {group}
                   </Typography>
                   {impact && (
                     <div>

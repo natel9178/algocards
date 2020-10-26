@@ -7,7 +7,7 @@ import Header from "./cardmodules/Header";
 import IntendedUse from "./cardmodules/IntendedUse";
 import Limitations from "./cardmodules/Limitations";
 import Performance from "./cardmodules/Performance";
-import StakeholderImpacts from "./cardmodules/StakeholderImpacts";
+import GroupImpacts from "./cardmodules/GroupImpacts";
 import EthicalConsiderations from "./cardmodules/EthicalConsiderations";
 import { Element } from "react-scroll";
 
@@ -66,8 +66,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const PAGE_BOOKMARK_HEADER = "PAGE_BOOKMARK_HEADER";
 export const PAGE_BOOKMARK_INTENDED_USE = "PAGE_BOOKMARK_INTENDED_USE";
-export const PAGE_BOOKMARK_STAKEHOLDER_IMPACTS =
-  "PAGE_BOOKMARK_STAKEHOLDER_IMPACTS";
+export const PAGE_BOOKMARK_GROUP_IMPACTS =
+  "PAGE_BOOKMARK_GROUP_IMPACTS";
 export const PAGE_BOOKMARK_LIMITATIONS = "PAGE_BOOKMARK_LIMITATIONS";
 export const PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS =
   "PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS";
@@ -76,13 +76,13 @@ export const PAGE_BOOKMARK_AUTHORS = "PAGE_BOOKMARK_AUTHORS";
 
 export function hasIntendedUse(spec: Spec) {
   return (
-    (!!spec.primaryUsecase && !!spec.primaryUsecase.length) ||
+    (!!spec.primaryGoal && !!spec.primaryGoal.length) ||
     (!!spec.antiGoals && !!spec.antiGoals.length)
   );
 }
 
-export function hasStakeholderImpacts(spec: Spec) {
-  return !!spec.stakeholderImpacts && !!spec.stakeholderImpacts.length;
+export function hasGroupImpacts(spec: Spec) {
+  return !!spec.groupImpacts && !!spec.groupImpacts.length;
 }
 
 export function hasLimitations(spec: Spec) {
@@ -154,21 +154,21 @@ export default function Card({
                     name={PAGE_BOOKMARK_INTENDED_USE}
                   >
                     <IntendedUse
-                      primaryUsecase={spec.primaryUsecase}
+                      primaryGoal={spec.primaryGoal}
                       antiGoals={spec.antiGoals}
                     />
                   </Element>
                 </Grid>
               )}
 
-              {hasStakeholderImpacts(spec) && (
+              {hasGroupImpacts(spec) && (
                 <Grid item xs={12} className={classes.subBox}>
                   <Element
                     className={classes.fill}
-                    name={PAGE_BOOKMARK_STAKEHOLDER_IMPACTS}
+                    name={PAGE_BOOKMARK_GROUP_IMPACTS}
                   >
-                    <StakeholderImpacts
-                      stakeholderImpacts={spec.stakeholderImpacts}
+                    <GroupImpacts
+                      groupImpacts={spec.groupImpacts}
                     />
                   </Element>
                 </Grid>
