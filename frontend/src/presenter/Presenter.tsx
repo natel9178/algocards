@@ -165,7 +165,7 @@ export default function Presenter() {
   const finalCard = fromFileUpload ? loadCard : cardData;
 
   return (
-    <Container maxWidth={"xl"} className={classes.root}>
+    <Container maxWidth={"lg"} className={classes.root}>
       <div
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,

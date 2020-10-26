@@ -6,6 +6,7 @@ import {
   Button,
   Modal,
   Container,
+  CircularProgress,
 } from "@material-ui/core";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
@@ -21,6 +22,8 @@ import { useDropzone } from "react-dropzone";
 import { useRecoilState } from "recoil";
 import { loadedCard } from "../utils/useCardState";
 import gql from "graphql-tag";
+import { StringParam, useQueryParam } from "use-query-params";
+import useGithubCardFetch from "../utils/useGithubCardFetch";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +72,9 @@ export default function Browse() {
   const classes = useStyles();
   const [openAboutModal, setOpenAboutModal] = useState(false);
   const [, setLoadCard] = useRecoilState(loadedCard);
+  const [repo] = useQueryParam("repo", StringParam);
+  const githubLinkToUse = repo || "github.com/natel9178/algo-cards";
+  const { githubFiles, loading, error } = useGithubCardFetch(githubLinkToUse);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: "application/json",
@@ -202,56 +208,22 @@ export default function Browse() {
           </Grid>
         </Grid>
         <Box m={5} />
-        <Grid container spacing={3}>
-          <Grid item lg={4} sm={6} xs={12}>
-            <AbstractCard
-              fullCardLocation="/github.com/natel9178/algo-cards"
-              link={
-                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Face%20Detection-card.json"
-              }
-            />
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Grid container spacing={3}>
+            {githubFiles.map((file, idx) => {
+              return (
+                <Grid key={idx} item lg={4} sm={6} xs={12}>
+                  <AbstractCard
+                    fullCardLocation={`/${githubLinkToUse}/${file.path}`}
+                    link={file.download_url}
+                  />
+                </Grid>
+              );
+            })}
           </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
-            <AbstractCard
-              fullCardLocation="github.com/natel9178/algo-cards/Yolov4-card.json"
-              link={
-                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-              }
-            />
-          </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
-            <AbstractCard
-              fullCardLocation="github.com/natel9178/algo-cards/Yolov4-card.json"
-              link={
-                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-              }
-            />
-          </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
-            <AbstractCard
-              fullCardLocation="github.com/natel9178/algo-cards/Yolov4-card.json"
-              link={
-                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-              }
-            />
-          </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
-            <AbstractCard
-              fullCardLocation="github.com/natel9178/algo-cards/Yolov4-card.json"
-              link={
-                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-              }
-            />
-          </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
-            <AbstractCard
-              fullCardLocation="github.com/natel9178/algo-cards/Yolov4-card.json"
-              link={
-                "https://raw.githubusercontent.com/natel9178/algo-cards/main/Yolov4-card.json"
-              }
-            />
-          </Grid>
-        </Grid>
+        )}
       </Container>
       <Modal
         open={openAboutModal}

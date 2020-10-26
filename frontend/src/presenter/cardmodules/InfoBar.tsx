@@ -10,6 +10,7 @@ import {
 import ListOrParagraph from "../ListOrParagraph";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import LinkIcon from "@material-ui/icons/Link";
+import { Textfit } from "react-textfit";
 
 const useStyles = makeStyles(() => ({
   metaBarContainer: {
@@ -75,16 +76,19 @@ export default function InfoBar(props: InfoBarProps) {
               <Box key={idx} m={0.25}>
                 <Chip
                   variant="outlined"
+                  size="small"
                   label={
-                    <Typography
+                    <Textfit
+                      max={25}
                       style={{
                         whiteSpace: "normal",
                         lineHeight: 1,
                         fontSize: 13,
                       }}
+                      mode="single"
                     >
                       {i.name}
-                    </Typography>
+                    </Textfit>
                   }
                 />
               </Box>
@@ -116,17 +120,20 @@ export default function InfoBar(props: InfoBarProps) {
             {outputs.map((i, idx) => (
               <Box key={idx} m={0.25}>
                 <Chip
+                  size="small"
                   variant="outlined"
                   label={
-                    <Typography
+                    <Textfit
+                      max={25}
                       style={{
                         whiteSpace: "normal",
                         lineHeight: 1,
                         fontSize: 13,
                       }}
+                      mode="single"
                     >
                       {i.name}
-                    </Typography>
+                    </Textfit>
                   }
                 />
               </Box>

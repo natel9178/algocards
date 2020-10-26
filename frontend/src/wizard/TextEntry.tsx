@@ -42,7 +42,7 @@ export default function TextEntry({
   textLimit,
 }: {
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   placeholder?: string;
   isMultiline: boolean;
   field: string;

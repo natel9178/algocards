@@ -32,7 +32,25 @@ export const WizardSpec: WizardSpecInterface[] = [
     ),
     examples: [
       {
+        text: "Multimodal Stress Sensing",
+      },
+      {
         text: "Yolov4 Faces",
+      },
+      {
+        text: "GPT-3 Code",
+      },
+      {
+        text: "Shakespeare Generator",
+      },
+      {
+        text: "CelebA Facemorph",
+      },
+      {
+        text: "FaceGAN",
+      },
+      {
+        text: "CheXNet",
       },
     ],
     textStyle: { textAlign: "center" },
@@ -53,9 +71,20 @@ export const WizardSpec: WizardSpecInterface[] = [
     ),
     examples: [
       {
-        titleText: "Facial Orientation",
         text:
-          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+          "Ambient stress detection methods with skin conductance and computer vision",
+      },
+      {
+        text: "State of the art facial detection with Yolo",
+      },
+      {
+        text: "Automatic sonnet generation from Shakespeare text corpra",
+      },
+      {
+        text: "High speed sentiment analyzer of court transcripts",
+      },
+      {
+        text: "Voice identification with novel transformer architecture",
       },
     ],
   },
@@ -79,9 +108,19 @@ export const WizardSpec: WizardSpecInterface[] = [
     ),
     examples: [
       {
-        titleText: "Facial Orientation",
         text:
-          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+          "To help building managers respond to increased stress levels for building employees",
+      },
+      {
+        text:
+          "To help users of social media more easily tag their friends in images",
+      },
+      {
+        text:
+          "To use novel NLP technologies for computational understanding of Shakespeare's plays",
+      },
+      {
+        text: "To push accuracy limits on the COCO dataset",
       },
     ],
   },
@@ -124,9 +163,24 @@ export const WizardSpec: WizardSpecInterface[] = [
     ),
     examples: [
       {
-        titleText: "Facial Orientation",
+        titleText: "Persons with Mental Illness",
         text:
-          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+          "People who have mental illnesses may not want their stress levels measured and tracked because of patient privacy.",
+      },
+      {
+        titleText: "Marginalized Race Groups",
+        text:
+          "Because of confirmation bias in data, this may indicate that people in marginalized groups have higher crime risk scores than others.",
+      },
+      {
+        titleText: "Persons with Dark Skin",
+        text:
+          "Facial recognition may be less accurate on people with darker skin because of lack of data balance.",
+      },
+      {
+        titleText: "Innocent Bystanders",
+        text:
+          "Bystanders to security cameras may have their faces recognized without their consent.",
       },
     ],
   },
@@ -195,9 +249,9 @@ export const WizardSpec: WizardSpecInterface[] = [
     ),
     examples: [
       {
-        titleText: "Facial Orientation",
+        titleText: "COCO",
         text:
-          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+          "Coco is a ...",
       },
     ],
   },
@@ -336,7 +390,15 @@ export const WizardSpec: WizardSpecInterface[] = [
       <TextEntry
         field={"license"}
         title={"License?"}
-        description={"How should others be able to use your model?"}
+        description={
+          <>
+            How should others be able to use your model?{" "}
+            <a href="https://tldrlegal.com/" target="_blank">
+              https://tldrlegal.com/
+            </a>{" "}
+            can be a resource.
+          </>
+        }
         isMultiline={true}
         placeholder={"MIT"}
         autocompleteOptions={Array.from(LicenseList.values())}

@@ -82,7 +82,7 @@ export async function getCardsFromGithub(
   const content = await octokit.repos.getContent({
     owner,
     repo,
-    path: remainingPath || "",
+    path: decodeURI(remainingPath || ""),
   });
 
   if (Array.isArray(content.data)) {

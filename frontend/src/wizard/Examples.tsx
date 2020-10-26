@@ -81,18 +81,26 @@ export default function Examples({ examples, textStyle }: ExamplesProps) {
         <Typography variant={"h6"} style={{ flexGrow: 1 }}>
           Examples
         </Typography>
-        <IconButton size="small">
+        <IconButton
+          size="small"
+          onClick={() => setCurrentIndex((currentIndex - 1) % examples.length)}
+        >
           <ChevronLeftIcon />
         </IconButton>
-        <IconButton size="small">
+        <IconButton
+          size="small"
+          onClick={() => setCurrentIndex((currentIndex + 1) % examples.length)}
+        >
           <ChevronRightIcon />
         </IconButton>
       </Box>
-      <Paper className={classes.paper}>
+      <Paper
+        className={classes.paper}
+        onClick={() => setCurrentIndex((currentIndex + 1) % examples.length)}
+      >
         <AnimatePresence>
           {examples[currentIndex].titleText ? (
             <motion.div
-              layout
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -108,7 +116,6 @@ export default function Examples({ examples, textStyle }: ExamplesProps) {
             </motion.div>
           ) : (
             <motion.div
-              layout
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
