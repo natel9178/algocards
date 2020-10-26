@@ -5,7 +5,18 @@ import TextEntry from "./TextEntry";
 import UploadEntry from "./UploadEntry";
 import LicenseList from "spdx-license-list/simple";
 
-export const WizardSpec = [
+interface WizardSpecInterface {
+  path: string;
+  text: string;
+  component: JSX.Element;
+  examples?: {
+    titleText?: string;
+    text: string;
+  }[];
+  textStyle?: React.CSSProperties;
+}
+
+export const WizardSpec: WizardSpecInterface[] = [
   {
     path: "title",
     text: "Title",
@@ -19,6 +30,12 @@ export const WizardSpec = [
         textLimit={50}
       />
     ),
+    examples: [
+      {
+        text: "Yolov4 Faces",
+      },
+    ],
+    textStyle: { textAlign: "center" },
   },
   {
     path: "description",
@@ -34,6 +51,13 @@ export const WizardSpec = [
         }
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
   {
     path: "primaryUsecase",
@@ -53,19 +77,33 @@ export const WizardSpec = [
         isMultiline={true}
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
   {
     path: "outOfScope",
-    text: "Out Of Scope Usecases",
+    text: "Out of Scope Usecases",
     component: (
       <ListEntry
         subtextPlaceholder="Resolving distinct identities for people in crowds (i.e. facial recognition)."
         mainField="antiGoals"
         subtextField="description"
-        title={"Out Of Scope Usecases?"}
+        title={"Out of Scope Usecases?"}
         description={"What usecases was this model not designed for?"}
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
   {
     path: "stakeholderImpacts",
@@ -84,6 +122,13 @@ export const WizardSpec = [
         }
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
   {
     path: "limitations",
@@ -99,6 +144,13 @@ export const WizardSpec = [
         description={"What are the core limitations of the model?"}
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
   {
     path: "ethicalConsiderations",
@@ -114,6 +166,13 @@ export const WizardSpec = [
         }
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
 
   {
@@ -134,6 +193,13 @@ export const WizardSpec = [
         }
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
   {
     path: "performanceOverview",
@@ -153,6 +219,13 @@ export const WizardSpec = [
         }
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
   {
     path: "performanceMetrics",
@@ -283,6 +356,13 @@ export const WizardSpec = [
         description={"Add relevant inputs to this model."}
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
   {
     path: "outputs",
@@ -299,6 +379,13 @@ export const WizardSpec = [
         }
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
   {
     path: "showcase",
@@ -330,6 +417,13 @@ export const WizardSpec = [
         }
       />
     ),
+    examples: [
+      {
+        titleText: "Facial Orientation",
+        text:
+          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+      },
+    ],
   },
   { path: "finish", text: "Finish", component: <Finish /> },
 ];

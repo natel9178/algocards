@@ -128,7 +128,7 @@ export default function AbstractCard({
             {spec.antiGoals && (
               <>
                 <Typography className={classes.subHeader} variant={"body1"}>
-                  Anti-Goals
+                  Out of Scope
                 </Typography>
                 <div style={{ marginBottom: 5 }} className={classes.text}>
                   <ListOrParagraph

@@ -21,7 +21,12 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Element, scroller } from "react-scroll";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Card from "../presenter/Card";
-import { motion, useTransform, useViewportScroll } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useTransform,
+  useViewportScroll,
+} from "framer-motion";
 import { useWindowDimensions } from "../utils/useWindowDimensions";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -29,7 +34,7 @@ import { Spec } from "../spec/spec";
 import { card } from "../utils/useCardState";
 import { WizardSpec } from "./WizardSpec";
 import AbstractCard from "../browse/AbstractCard";
-import Example from "./Example";
+import Examples from "./Examples";
 
 const drawerWidth = 240;
 
@@ -145,10 +150,11 @@ export default function CardWizard() {
 
   const previewOpacity = useTransform(scrollY, [0, height * 0.7], [0, 1]);
   const previewScale = useTransform(scrollY, [0, height * 0.7], [0.9, 1]);
-  const [progress, setProgress] = useState(0);
+  const [stepIndex, setStepIndex] = useState(0);
   const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
   const [recoilCard] = useRecoilState<Spec>(card);
   const [sidebarHovered, setSidebarHovered] = useState(false);
+  const progress = Math.round(((stepIndex + 1) / WizardSpec.length) * 100);
 
   return (
     <div className={classes.root}>
@@ -228,11 +234,7 @@ export default function CardWizard() {
                 <Wizard
                   history={history}
                   render={({ step, next, previous, steps }) => {
-                    const stepIndex = steps.indexOf(step);
-
-                    setProgress(
-                      Math.round(((stepIndex + 1) / steps.length) * 100)
-                    );
+                    setStepIndex(steps.indexOf(step));
                     return (
                       <div
                         style={{
@@ -342,22 +344,23 @@ export default function CardWizard() {
             style={{
               opacity: sidebarHovered ? 1 : 0.8,
               transition: "all ease-in-out 0.1s",
+              display: "flex",
+              flexDirection: "column",
             }}
             onMouseEnter={() => setSidebarHovered(true)}
             onMouseLeave={() => setSidebarHovered(false)}
           >
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Typography variant={"h6"}>Summary Preview</Typography>
-                <Box m={2} />
-                <AbstractCard spec={recoilCard} />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant={"h6"}>Examples</Typography>
-                <Box m={2} />
-                <Example />
-              </Grid>
-            </Grid>
+            <Typography variant={"h6"}>Summary Preview</Typography>
+            <Box m={0.5} />
+            <AbstractCard spec={recoilCard} />
+            {WizardSpec[stepIndex] && WizardSpec[stepIndex].examples && (
+              <Box mt={2} flexGrow={1}>
+                <Examples
+                  examples={WizardSpec[stepIndex].examples!}
+                  textStyle={WizardSpec[stepIndex].textStyle}
+                />
+              </Box>
+            )}
           </motion.div>
         </Box>
         <Box m={10} />

@@ -64,15 +64,6 @@ export default function Finish(props: FinishProps) {
         >
           Download Algo-Card File
         </Button>
-        <Box m={2} />
-        <Button
-          variant="outlined"
-          size="large"
-          color="primary"
-          startIcon={<GitHubIcon />}
-        >
-          Submit Pull Request to Github Repo
-        </Button>
       </Box>
     </div>
   );

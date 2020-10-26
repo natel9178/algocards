@@ -63,7 +63,7 @@ export default function IntendedUse(props: IntendedUseProps) {
         {antiGoals && (
           <>
             <Typography variant={"h6"} style={{ marginTop: 10 }}>
-              Anti-Goals
+              Out of Scope
             </Typography>
             <div>
               <ListOrParagraph

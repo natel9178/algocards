@@ -1,5 +1,12 @@
 import React from "react";
-import { makeStyles, Grid, Typography, Box, Divider } from "@material-ui/core";
+import {
+  makeStyles,
+  Grid,
+  Typography,
+  Box,
+  Divider,
+  Chip,
+} from "@material-ui/core";
 import ListOrParagraph from "../ListOrParagraph";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import LinkIcon from "@material-ui/icons/Link";
@@ -20,6 +27,7 @@ const useStyles = makeStyles(() => ({
     // fontFamily: "Lato",
     fontFamily: "Roboto Mono",
     fontWeight: "bold",
+    lineHeight: 1.2,
   },
 
   metaBarRow: {
@@ -52,28 +60,26 @@ export default function InfoBar(props: InfoBarProps) {
   } = props;
   return (
     <div style={{ flexDirection: "column" }}>
-      <Grid container>
+      <Box display="flex">
         {inputs && (
-          <Grid
-            item
-            xs={inputs && outputs ? 5 : 12}
-            className={classes.metaBarRow}
+          <Box
+            flexGrow={1}
+            display="flex"
+            flexDirection="column"
+            flexWrap="wrap"
           >
             <Typography variant={"h6"} className={classes.metaBarTypography}>
               Inputs
             </Typography>
-            <Typography
-              variant={"body2"}
-              className={classes.metaBarTypographyBody}
-            >
-              {inputs.map((i) => i.name).join("\n")}
-            </Typography>
-          </Grid>
+            {inputs.map((i, idx) => (
+              <Box key={idx} m={0.25}>
+                <Chip size="small" variant="outlined" label={i.name} />
+              </Box>
+            ))}
+          </Box>
         )}
         {inputs && outputs && (
-          <Grid
-            item
-            xs={2}
+          <Box
             style={{
               alignItems: "center",
               justifyContent: "center",
@@ -81,26 +87,27 @@ export default function InfoBar(props: InfoBarProps) {
             }}
           >
             <ArrowForwardIosIcon style={{ opacity: 0.5 }} />
-          </Grid>
+          </Box>
         )}
         {outputs && (
-          <Grid
-            item
-            xs={inputs && outputs ? 5 : 12}
-            className={classes.metaBarRow}
+          <Box
+            flexGrow={1}
+            display="flex"
+            flexDirection="column"
+            flexWrap="wrap"
+            alignItems="flex-end"
           >
             <Typography variant={"h6"} className={classes.metaBarTypography}>
               Outputs
             </Typography>
-            <Typography
-              variant={"body2"}
-              className={classes.metaBarTypographyBody}
-            >
-              {outputs.map((i) => i.name).join("\n")}
-            </Typography>
-          </Grid>
+            {outputs.map((i, idx) => (
+              <Box key={idx} m={0.25}>
+                <Chip size="small" variant="outlined" label={i.name} />
+              </Box>
+            ))}
+          </Box>
         )}
-      </Grid>
+      </Box>
 
       <Box m={1} />
       {showcase && !!showcase.length && (
