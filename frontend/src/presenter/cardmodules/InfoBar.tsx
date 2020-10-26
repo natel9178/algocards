@@ -73,7 +73,20 @@ export default function InfoBar(props: InfoBarProps) {
             </Typography>
             {inputs.map((i, idx) => (
               <Box key={idx} m={0.25}>
-                <Chip size="small" variant="outlined" label={i.name} />
+                <Chip
+                  variant="outlined"
+                  label={
+                    <Typography
+                      style={{
+                        whiteSpace: "normal",
+                        lineHeight: 1,
+                        fontSize: 13,
+                      }}
+                    >
+                      {i.name}
+                    </Typography>
+                  }
+                />
               </Box>
             ))}
           </Box>
@@ -102,7 +115,20 @@ export default function InfoBar(props: InfoBarProps) {
             </Typography>
             {outputs.map((i, idx) => (
               <Box key={idx} m={0.25}>
-                <Chip size="small" variant="outlined" label={i.name} />
+                <Chip
+                  variant="outlined"
+                  label={
+                    <Typography
+                      style={{
+                        whiteSpace: "normal",
+                        lineHeight: 1,
+                        fontSize: 13,
+                      }}
+                    >
+                      {i.name}
+                    </Typography>
+                  }
+                />
               </Box>
             ))}
           </Box>

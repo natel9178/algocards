@@ -60,7 +60,7 @@ export default function IntendedUse(props: IntendedUseProps) {
           </>
         )}
 
-        {antiGoals && (
+        {antiGoals && !!antiGoals.length && (
           <>
             <Typography variant={"h6"} style={{ marginTop: 10 }}>
               Out of Scope

@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Textfit } from "react-textfit";
 import { Spec } from "../spec/spec";
+import { hasLimitations } from "../presenter/Card";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -119,13 +120,13 @@ export default function AbstractCard({
               </Typography>
             </Box>
 
-            {spec.primaryUsecase && (
+            {spec.primaryUsecase && !!spec.primaryUsecase.length && (
               <div style={{ marginBottom: 5 }} className={classes.text}>
                 <ListOrParagraph content={spec.primaryUsecase} />
               </div>
             )}
 
-            {spec.antiGoals && (
+            {spec.antiGoals && !!spec.antiGoals.length && (
               <>
                 <Typography className={classes.subHeader} variant={"body1"}>
                   Out of Scope
@@ -141,7 +142,7 @@ export default function AbstractCard({
               </>
             )}
 
-            {spec.limitations && (
+            {hasLimitations(spec) && (
               <>
                 <Typography className={classes.subHeader} variant={"body1"}>
                   Limitations
@@ -152,7 +153,7 @@ export default function AbstractCard({
                   justifyContent="flex-start"
                   flexWrap="wrap"
                 >
-                  {spec.limitations
+                  {spec.limitations!
                     .map(({ type }) => type || "")
                     .filter((desc) => desc !== "")
                     .filter((_, idx) => idx < 6)
