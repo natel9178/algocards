@@ -10,6 +10,7 @@ import Performance from "./cardmodules/Performance";
 import GroupImpacts from "./cardmodules/GroupImpacts";
 import EthicalConsiderations from "./cardmodules/EthicalConsiderations";
 import { Element } from "react-scroll";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -66,8 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const PAGE_BOOKMARK_HEADER = "PAGE_BOOKMARK_HEADER";
 export const PAGE_BOOKMARK_INTENDED_USE = "PAGE_BOOKMARK_INTENDED_USE";
-export const PAGE_BOOKMARK_GROUP_IMPACTS =
-  "PAGE_BOOKMARK_GROUP_IMPACTS";
+export const PAGE_BOOKMARK_GROUP_IMPACTS = "PAGE_BOOKMARK_GROUP_IMPACTS";
 export const PAGE_BOOKMARK_LIMITATIONS = "PAGE_BOOKMARK_LIMITATIONS";
 export const PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS =
   "PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS";
@@ -114,6 +114,7 @@ export default function Card({
 }) {
   const theme = useTheme();
   const classes = useStyles();
+  const matches = useMediaQuery("(max-width:1100px)");
 
   return (
     <div className={classes.root}>
@@ -143,99 +144,93 @@ export default function Card({
       <Element name={PAGE_BOOKMARK_HEADER}>
         <Header {...spec} title={spec.title} />
       </Element>
-      <div style={{ width: "100%" }}>
-        <Grid container spacing={10}>
-          <Grid item xs={8}>
-            <Grid container spacing={3}>
-              {hasIntendedUse(spec) && (
-                <Grid item xs={12} className={classes.subBox}>
-                  <Element
-                    className={classes.fill}
-                    name={PAGE_BOOKMARK_INTENDED_USE}
-                  >
-                    <IntendedUse
-                      primaryGoal={spec.primaryGoal}
-                      antiGoals={spec.antiGoals}
-                    />
-                  </Element>
-                </Grid>
-              )}
+      <Box
+        display="flex"
+        flexDirection="row"
+        flexWrap="wrap-reverse"
+        width="100%"
+        // gridColumnGap={40}
+        // gridTemplateColumns="1fr minmax(300px, 20%)"
+      >
+        <Box mt={2} flex={1}>
+          <Grid container spacing={3} style={{ width: "100%", height: "100%" }}>
+            {hasIntendedUse(spec) && (
+              <Grid item xs={12} className={classes.subBox}>
+                <Element
+                  className={classes.fill}
+                  name={PAGE_BOOKMARK_INTENDED_USE}
+                >
+                  <IntendedUse
+                    primaryGoal={spec.primaryGoal}
+                    antiGoals={spec.antiGoals}
+                  />
+                </Element>
+              </Grid>
+            )}
 
-              {hasGroupImpacts(spec) && (
-                <Grid item xs={12} className={classes.subBox}>
-                  <Element
-                    className={classes.fill}
-                    name={PAGE_BOOKMARK_GROUP_IMPACTS}
-                  >
-                    <GroupImpacts
-                      groupImpacts={spec.groupImpacts}
-                    />
-                  </Element>
-                </Grid>
-              )}
+            {hasGroupImpacts(spec) && (
+              <Grid item xs={12} className={classes.subBox}>
+                <Element
+                  className={classes.fill}
+                  name={PAGE_BOOKMARK_GROUP_IMPACTS}
+                >
+                  <GroupImpacts groupImpacts={spec.groupImpacts} />
+                </Element>
+              </Grid>
+            )}
 
-              {hasLimitations(spec) && (
-                <Grid item xs={12} className={classes.subBox}>
-                  <Element
-                    className={classes.fill}
-                    name={PAGE_BOOKMARK_LIMITATIONS}
-                  >
-                    <Limitations limitations={spec.limitations} />
-                  </Element>
-                </Grid>
-              )}
+            {hasLimitations(spec) && (
+              <Grid item xs={12} className={classes.subBox}>
+                <Element
+                  className={classes.fill}
+                  name={PAGE_BOOKMARK_LIMITATIONS}
+                >
+                  <Limitations limitations={spec.limitations} />
+                </Element>
+              </Grid>
+            )}
 
-              {hasEthicalConsiderations(spec) && (
-                <Grid item xs={12} className={classes.subBox}>
-                  <Element
-                    className={classes.fill}
-                    name={PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS}
-                  >
-                    <EthicalConsiderations
-                      ethicalConsiderations={spec.ethicalConsiderations}
-                    />
-                  </Element>
-                </Grid>
-              )}
+            {hasEthicalConsiderations(spec) && (
+              <Grid item xs={12} className={classes.subBox}>
+                <Element
+                  className={classes.fill}
+                  name={PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS}
+                >
+                  <EthicalConsiderations
+                    ethicalConsiderations={spec.ethicalConsiderations}
+                  />
+                </Element>
+              </Grid>
+            )}
 
-              {hasPerformance(spec) && (
-                <Grid item xs={12} className={classes.subBox}>
-                  <Element
-                    className={classes.fill}
-                    name={PAGE_BOOKMARK_PERFORMANCE}
-                  >
-                    <Performance
-                      figures={spec.figures}
-                      datasets={spec.datasets}
-                      performanceMetrics={spec.performanceMetrics}
-                      performanceOverview={spec.performanceOverview}
-                    />
-                  </Element>
-                </Grid>
-              )}
-              {hasAuthors(spec) && (
-                <Grid item xs={12} className={classes.subBox}>
-                  <Element
-                    className={classes.fill}
-                    name={PAGE_BOOKMARK_AUTHORS}
-                  >
-                    <Authors authors={spec.authors || []} />
-                  </Element>
-                </Grid>
-              )}
-            </Grid>
+            {hasPerformance(spec) && (
+              <Grid item xs={12} className={classes.subBox}>
+                <Element
+                  className={classes.fill}
+                  name={PAGE_BOOKMARK_PERFORMANCE}
+                >
+                  <Performance
+                    figures={spec.figures}
+                    datasets={spec.datasets}
+                    performanceMetrics={spec.performanceMetrics}
+                    performanceOverview={spec.performanceOverview}
+                  />
+                </Element>
+              </Grid>
+            )}
+            {hasAuthors(spec) && (
+              <Grid item xs={12} className={classes.subBox}>
+                <Element className={classes.fill} name={PAGE_BOOKMARK_AUTHORS}>
+                  <Authors authors={spec.authors || []} />
+                </Element>
+              </Grid>
+            )}
           </Grid>
-          <Grid
-            item
-            xs={4}
-            style={{
-              flexDirection: "column",
-            }}
-          >
-            <InfoBar {...spec} />
-          </Grid>
-        </Grid>
-      </div>
+        </Box>
+        <Box mt={1} width={matches ? "100%" : 300}>
+          <InfoBar {...spec} />
+        </Box>
+      </Box>
     </div>
   );
 }

@@ -60,7 +60,7 @@ export default function InfoBar(props: InfoBarProps) {
     showcase,
   } = props;
   return (
-    <div style={{ flexDirection: "column" }}>
+    <div style={{ flexDirection: "column", width: "100%", height: "100%" }}>
       <Box display="flex">
         {inputs && (
           <Box

@@ -70,7 +70,7 @@ export default function Limitations(props: LimitationsProps) {
         <Typography style={{ lineHeight: 1 }} variant={"h4"}>
           Limitations & Tradeoffs
         </Typography>
-        <Grid container>
+        <Grid container spacing={1}>
           {limitations &&
             limitations.map(({ type, description, workarounds }, idx) => (
               <Grid item xs={6} key={idx}>
