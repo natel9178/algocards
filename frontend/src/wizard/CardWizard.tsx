@@ -11,6 +11,7 @@ import {
   Typography,
   Container,
   Divider,
+  useMediaQuery,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { Route } from "react-router-dom";
@@ -61,8 +62,8 @@ const useStyles = makeStyles((theme) => ({
     height: "80vh",
     boxShadow: "3px 3px 30px rgba(0, 0, 0, 0.1)",
     padding: "50px 0px",
-    width: "100%",
     display: "flex",
+    flexGrow: 1,
     alignItems: "stretch",
     justifyContent: "stretch",
   },
@@ -155,6 +156,7 @@ export default function CardWizard() {
   const [recoilCard] = useRecoilState<Spec>(card);
   const [sidebarHovered, setSidebarHovered] = useState(false);
   const progress = Math.round(((stepIndex + 1) / WizardSpec.length) * 100);
+  const matches = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <div className={classes.root}>
@@ -223,12 +225,8 @@ export default function CardWizard() {
         </motion.div>
       </Container>
       <Container maxWidth={"xl"} className={classes.container}>
-        <Box
-          display="grid"
-          gridColumnGap={40}
-          gridTemplateColumns="1fr minmax(400px, 25%)"
-        >
-          <Paper className={classes.paper}>
+        <Box display="flex" flexDirection={"row"} flexWrap="wrap">
+          <Paper className={classes.paper} style={{ minWidth: 450 }}>
             <Route
               render={({ history }) => (
                 <Wizard
@@ -339,9 +337,11 @@ export default function CardWizard() {
               )}
             />
           </Paper>
+          {matches && <Box m={2} />}
 
           <motion.div
             style={{
+              width: matches ? 400 : "100%",
               opacity: sidebarHovered ? 1 : 0.8,
               transition: "all ease-in-out 0.1s",
               display: "flex",
@@ -350,9 +350,10 @@ export default function CardWizard() {
             onMouseEnter={() => setSidebarHovered(true)}
             onMouseLeave={() => setSidebarHovered(false)}
           >
+            <Box m={0.5} />
             <Typography variant={"h6"}>Summary Preview</Typography>
             <Box m={0.5} />
-            <AbstractCard spec={recoilCard} />
+            <AbstractCard paperStyle={{ cursor: "auto" }} spec={recoilCard} />
             {WizardSpec[stepIndex] && WizardSpec[stepIndex].examples && (
               <Box mt={2} flexGrow={1}>
                 <Examples

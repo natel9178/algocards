@@ -61,6 +61,7 @@ interface AbstractCardProps {
   fullCardLocation?: string;
   layoutId?: string;
   spec?: Spec;
+  paperStyle?: React.CSSProperties;
 }
 
 export default function AbstractCard({
@@ -68,6 +69,7 @@ export default function AbstractCard({
   fullCardLocation,
   layoutId,
   spec: providedSpec,
+  paperStyle,
 }: AbstractCardProps) {
   const classes = useStyles();
   const history = useHistory();
@@ -92,6 +94,7 @@ export default function AbstractCard({
       <Paper
         className={classes.paper}
         onClick={() => fullCardLocation && history.push(fullCardLocation)}
+        style={paperStyle}
       >
         {!spec ? (
           <Box
@@ -153,8 +156,8 @@ export default function AbstractCard({
                   justifyContent="flex-start"
                   flexWrap="wrap"
                 >
-                  {spec.limitations!
-                    .map(({ type }) => type || "")
+                  {spec
+                    .limitations!.map(({ type }) => type || "")
                     .filter((desc) => desc !== "")
                     .filter((_, idx) => idx < 6)
                     .map((desc, idx) => (

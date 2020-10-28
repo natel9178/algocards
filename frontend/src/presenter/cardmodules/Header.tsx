@@ -1,4 +1,11 @@
-import { Chip, Grid, makeStyles, Typography } from "@material-ui/core";
+import {
+  Chip,
+  Grid,
+  makeStyles,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@material-ui/core";
 import React from "react";
 import LinkIcon from "@material-ui/icons/Link";
 import BuildIcon from "@material-ui/icons/Build";
@@ -71,9 +78,11 @@ interface HeaderProps {
 export default function Header(props: HeaderProps) {
   const { title, description, type, version, license, supportingLinks } = props;
   const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("xs"));
   return (
-    <Grid container spacing={10}>
-      <Grid item xs={7} className={classes.leftTitle}>
+    <Grid container spacing={1}>
+      <Grid item sm={7} xs={12} className={classes.leftTitle}>
         <Typography style={{ fontWeight: "bold" }} variant={"h3"}>
           <a
             style={{ color: "black", textDecoration: "none" }}
@@ -84,7 +93,13 @@ export default function Header(props: HeaderProps) {
         </Typography>
         <Typography variant={"body1"}>{description}</Typography>
       </Grid>
-      <Grid item xs={5} className={classes.rightTitle}>
+      <Grid
+        item
+        sm={5}
+        xs={12}
+        className={classes.rightTitle}
+        style={{ justifyContent: matches ? "flex-start" : "flex-end" }}
+      >
         {type && (
           <Chip className={classes.chip} icon={<CategoryIcon />} label={type} />
         )}
