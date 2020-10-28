@@ -99,33 +99,35 @@ export default function Examples({ examples, textStyle }: ExamplesProps) {
         onClick={() => setCurrentIndex((currentIndex + 1) % examples.length)}
       >
         <AnimatePresence>
-          {examples[currentIndex].titleText ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.7 }}
-            >
-              <Typography variant={"h5"} style={{ fontWeight: "bold" }}>
-                <i>{examples[currentIndex].titleText}</i>
-              </Typography>
-              <Box m={1} />
-              <Typography variant={"body2"} style={textStyle}>
-                <i>{examples[currentIndex].text}</i>
-              </Typography>
-            </motion.div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Typography style={textStyle}>
-                <i>{examples[currentIndex].text}</i>
-              </Typography>
-            </motion.div>
-          )}
+          {examples[currentIndex] ? (
+            examples[currentIndex].titleText ? (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.7 }}
+              >
+                <Typography variant={"h5"} style={{ fontWeight: "bold" }}>
+                  <i>{examples[currentIndex].titleText}</i>
+                </Typography>
+                <Box m={1} />
+                <Typography variant={"body2"} style={textStyle}>
+                  <i>{examples[currentIndex].text}</i>
+                </Typography>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Typography style={textStyle}>
+                  <i>{examples[currentIndex].text}</i>
+                </Typography>
+              </motion.div>
+            )
+          ) : undefined}
         </AnimatePresence>
       </Paper>
     </motion.div>
