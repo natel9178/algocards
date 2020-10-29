@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     width: "100%",
     alignItems: "flex-start",
-    marginLeft: theme.spacing(2),
+    marginLeft: theme.spacing(1),
     marginTop: 3,
   },
   subBox: {
@@ -48,6 +48,19 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "flex-start",
     marginTop: theme.spacing(2),
+  },
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
+  },
+  icon: {
+    margin: theme.spacing(1),
+    [theme.breakpoints.up("sm")]: {
+      margin: theme.spacing(0, 0, 0, 1),
+    },
   },
 }));
 
@@ -61,8 +74,8 @@ interface AuthorsProps {
 export default function Authors({ authors }: AuthorsProps) {
   const classes = useStyles();
   return (
-    <div style={{ display: "flex", flexDirection: "row", flexGrow: 1 }}>
-      <AccountCircleIcon fontSize={"large"} />
+    <div className={classes.container}>
+      <AccountCircleIcon className={classes.icon} fontSize={"large"} />
       <div className={classes.subContainer}>
         <Typography style={{ lineHeight: 1 }} variant={"h4"}>
           Authors

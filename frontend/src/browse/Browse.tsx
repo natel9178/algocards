@@ -7,6 +7,8 @@ import {
   Modal,
   Container,
   CircularProgress,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
@@ -75,6 +77,8 @@ export default function Browse() {
   const [repo] = useQueryParam("repo", StringParam);
   const githubLinkToUse = repo || "github.com/natel9178/algo-cards";
   const { githubFiles, loading, error } = useGithubCardFetch(githubLinkToUse);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: "application/json",
@@ -126,27 +130,31 @@ export default function Browse() {
           <Typography className={classes.toolbarTitle} variant={"h4"}>
             Algo-Card
           </Typography>
-          <Button
-            style={{ borderRadius: 100 }}
-            variant="outlined"
-            size="medium"
-            color="primary"
-            startIcon={<InfoIcon />}
-            onClick={() => setOpenAboutModal(true)}
-          >
-            About Algo-Cards
-          </Button>
-          <Box m={1} />
-          <Button
-            style={{ borderRadius: 100 }}
-            variant="contained"
-            size="medium"
-            color="primary"
-            startIcon={<AddIcon />}
-            onClick={() => history.push("/wizard")}
-          >
-            Create New Card
-          </Button>
+          {matches && (
+            <>
+              <Button
+                style={{ borderRadius: 100 }}
+                variant="outlined"
+                size="medium"
+                color="primary"
+                startIcon={<InfoIcon />}
+                onClick={() => setOpenAboutModal(true)}
+              >
+                About Algo-Cards
+              </Button>
+              <Box m={1} />
+              <Button
+                style={{ borderRadius: 100 }}
+                variant="contained"
+                size="medium"
+                color="primary"
+                startIcon={<AddIcon />}
+                onClick={() => history.push("/wizard")}
+              >
+                Create New Card
+              </Button>
+            </>
+          )}
         </Container>
       </motion.div>
       <Box m={5} />
@@ -155,7 +163,7 @@ export default function Browse() {
           style={{ position: "absolute", width: "100%", height: "100%" }}
           {...getInputProps()}
         />
-        <Grid container className={classes.hero}>
+        <Grid container className={classes.hero} spacing={2}>
           <Grid
             item
             xs={12}

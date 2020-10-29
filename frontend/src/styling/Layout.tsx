@@ -10,10 +10,10 @@ const useStyles = makeStyles<Theme, { showHeader: boolean }>((theme) => ({
     },
   },
   title: {
-    marginLeft: 40,
-    marginBottom: 6,
+    textAlign: "center",
   },
   root: {
+    position: "absolute",
     display: "flex",
     flexDirection: "column",
     backgroundColor: "#FAFAFA",

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     width: "100%",
     alignItems: "flex-start",
-    marginLeft: theme.spacing(2),
+    marginLeft: theme.spacing(1),
     marginTop: 3,
   },
   subBox: {
@@ -49,6 +49,19 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "flex-start",
     marginTop: theme.spacing(2),
+  },
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
+  },
+  icon: {
+    margin: theme.spacing(1),
+    [theme.breakpoints.up("sm")]: {
+      margin: theme.spacing(0, 0, 0, 1),
+    },
   },
 }));
 
@@ -64,8 +77,8 @@ export default function Limitations(props: LimitationsProps) {
   const { limitations } = props;
   const classes = useStyles();
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <WarningIcon fontSize={"large"} />
+    <div className={classes.container}>
+      <WarningIcon className={classes.icon} fontSize={"large"} />
       <div className={classes.subContainer}>
         <Typography style={{ lineHeight: 1 }} variant={"h4"}>
           Limitations & Tradeoffs
@@ -73,7 +86,7 @@ export default function Limitations(props: LimitationsProps) {
         <Grid container spacing={1}>
           {limitations &&
             limitations.map(({ type, description, workarounds }, idx) => (
-              <Grid item xs={6} key={idx}>
+              <Grid item xs={12} md={6} key={idx}>
                 <div style={{ flexDirection: "column" }}>
                   <Typography variant={"h6"} style={{ marginTop: 10 }}>
                     {type}

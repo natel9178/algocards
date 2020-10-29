@@ -186,16 +186,18 @@ export default function CardWizard() {
             alignItems: "center",
           }}
         >
-          <Typography className={classes.title} variant={"h4"}>
-            Algo-Card
-          </Typography>
+          {matches && (
+            <Typography className={classes.title} variant={"h4"}>
+              Algo-Card
+            </Typography>
+          )}
           <Box
             display="flex"
             alignItems="center"
             justifyContent={"flex-end"}
             ml={5}
             mr={2}
-            width={150}
+            width={"clamp(80px, 50%, 150px)"}
           >
             <Box mr={2} width={"100%"}>
               <LinearProgress variant="determinate" value={progress} />
@@ -220,13 +222,13 @@ export default function CardWizard() {
             }}
           >
             <VisibilityIcon className={classes.extendedIcon} />
-            Card Preview
+            {matches && <>Card</>} Preview
           </Fab>
         </motion.div>
       </Container>
       <Container maxWidth={"xl"} className={classes.container}>
         <Box display="flex" flexDirection={"row"} flexWrap="wrap">
-          <Paper className={classes.paper} style={{ minWidth: 450 }}>
+          <Paper className={classes.paper}>
             <Route
               render={({ history }) => (
                 <Wizard
@@ -350,18 +352,20 @@ export default function CardWizard() {
             onMouseEnter={() => setSidebarHovered(true)}
             onMouseLeave={() => setSidebarHovered(false)}
           >
-            <Box m={0.5} />
+            {!matches && <Box m={2} />}
             <Typography variant={"h6"}>Summary Preview</Typography>
             <Box m={0.5} />
             <AbstractCard paperStyle={{ cursor: "auto" }} spec={recoilCard} />
-            {WizardSpec[stepIndex] && WizardSpec[stepIndex].examples && (
-              <Box mt={2} flexGrow={1}>
-                <Examples
-                  examples={WizardSpec[stepIndex].examples!}
-                  textStyle={WizardSpec[stepIndex].textStyle}
-                />
-              </Box>
-            )}
+            <AnimatePresence>
+              {WizardSpec[stepIndex] && WizardSpec[stepIndex].examples && (
+                <Box mt={2} flexGrow={1}>
+                  <Examples
+                    examples={WizardSpec[stepIndex].examples!}
+                    textStyle={WizardSpec[stepIndex].textStyle}
+                  />
+                </Box>
+              )}
+            </AnimatePresence>
           </motion.div>
         </Box>
         <Box m={10} />

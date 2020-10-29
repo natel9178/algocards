@@ -6,6 +6,8 @@ import {
   CircularProgress,
   Button,
   Container,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import React from "react";
 import Card, {
@@ -60,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     width: "100%",
     flexGrow: 1,
-    margin: theme.spacing(0, 8, 0, 6),
     display: "flex",
     flexDirection: "column",
   },
@@ -68,9 +69,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 18,
     minHeight: 500,
     boxShadow: "3px 3px 30px rgba(0, 0, 0, 0.1)",
-    padding: "31px 50px",
+    padding: theme.spacing(3, 2),
     width: "100%",
     flexGrow: 1,
+    [theme.breakpoints.up("sm")]: {
+      padding: "31px 50px",
+    },
     // margin: theme.spacing(0, 8, 0, 6),
   },
   sidebar: {
@@ -148,6 +152,8 @@ export default function Presenter() {
   const location = useLocation();
   const { githubFiles, loading, error } = useGithubCardFetch(location.pathname);
   const history = useHistory();
+  const theme = useTheme();
+  const matchesSm = useMediaQuery(theme.breakpoints.up("sm"));
 
   const files = githubFiles;
   const cardData = useFetchCard(
@@ -165,216 +171,225 @@ export default function Presenter() {
   const finalCard = fromFileUpload ? loadCard : cardData;
 
   return (
-    <Container maxWidth={"lg"} className={classes.root}>
-      <div
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        // classes={{
-        //   paper: clsx({
-        //     [classes.drawerPaper]: true,
-        //     [classes.drawerOpen]: open,
-        //     [classes.drawerClose]: !open,
-        //   }),
-        // }}
-        onMouseEnter={handleDrawerOpen}
-        onMouseLeave={handleDrawerClose}
-      >
-        <Link to="/">
-          <img
-            style={{ objectFit: "contain", marginLeft: 7 }}
-            src={"/logo.svg"}
-            alt="Nice"
-            width="40"
-          />
-        </Link>
-        <Box mt={10} />
-        {finalCard && (
-          <List>
-            <ListItem
-              button
-              key={"Info"}
-              className={classes.drawerListItem}
-              onClick={() =>
-                scroller.scrollTo(PAGE_BOOKMARK_HEADER, {
-                  duration: 1500,
-                  smooth: "easeInOutQuint",
-                  offset: -140,
-                })
-              }
-            >
-              <ListItemIcon>
-                <InfoIcon />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  variant: "h6",
-                  style: { fontSize: 16 },
-                }}
-                primary={"Info"}
-              />
-            </ListItem>
+    <Container
+      maxWidth={"lg"}
+      className={classes.root}
+      style={!matchesSm ? { padding: 0 } : undefined}
+    >
+      {matchesSm && (
+        <div
+          className={clsx(classes.drawer, {
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
+          })}
+          // classes={{
+          //   paper: clsx({
+          //     [classes.drawerPaper]: true,
+          //     [classes.drawerOpen]: open,
+          //     [classes.drawerClose]: !open,
+          //   }),
+          // }}
+          onMouseEnter={handleDrawerOpen}
+          onMouseLeave={handleDrawerClose}
+        >
+          <Link to="/">
+            <img
+              style={{ objectFit: "contain", marginLeft: 7 }}
+              src={"/logo.svg"}
+              alt="Nice"
+              width="40"
+            />
+          </Link>
+          <Box mt={10} />
+          {finalCard && (
+            <List>
+              <ListItem
+                button
+                key={"Info"}
+                className={classes.drawerListItem}
+                onClick={() =>
+                  scroller.scrollTo(PAGE_BOOKMARK_HEADER, {
+                    duration: 1500,
+                    smooth: "easeInOutQuint",
+                    offset: -140,
+                  })
+                }
+              >
+                <ListItemIcon>
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    variant: "h6",
+                    style: { fontSize: 16 },
+                  }}
+                  primary={"Info"}
+                />
+              </ListItem>
 
-            {hasIntendedUse(finalCard) && (
-              <ListItem
-                button
-                key={"Intended Use"}
-                className={classes.drawerListItem}
-                onClick={() =>
-                  scroller.scrollTo(PAGE_BOOKMARK_INTENDED_USE, {
-                    duration: 1500,
-                    smooth: "easeInOutQuint",
-                    offset: -100,
-                  })
-                }
-              >
-                <ListItemIcon>
-                  <BuildIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{
-                    variant: "h6",
-                    style: { fontSize: 16 },
-                  }}
-                  primary={"Intended Use"}
-                />
-              </ListItem>
-            )}
-            {hasGroupImpacts(finalCard) && (
-              <ListItem
-                button
-                key={"Groups"}
-                className={classes.drawerListItem}
-                onClick={() =>
-                  scroller.scrollTo(PAGE_BOOKMARK_GROUP_IMPACTS, {
-                    duration: 1000,
-                    smooth: "easeInOutQuint",
-                    offset: -100,
-                  })
-                }
-              >
-                <ListItemIcon>
-                  <GroupIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{
-                    variant: "h6",
-                    style: { fontSize: 16 },
-                  }}
-                  primary={"Groups"}
-                />
-              </ListItem>
-            )}
-            {hasLimitations(finalCard) && (
-              <ListItem
-                button
-                key={"Limitations"}
-                className={classes.drawerListItem}
-                onClick={() =>
-                  scroller.scrollTo(PAGE_BOOKMARK_LIMITATIONS, {
-                    duration: 1000,
-                    smooth: "easeInOutQuint",
-                    offset: -100,
-                  })
-                }
-              >
-                <ListItemIcon>
-                  <WarningIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{
-                    variant: "h6",
-                    style: { fontSize: 16 },
-                  }}
-                  primary={"Limitations"}
-                />
-              </ListItem>
-            )}
-            {hasEthicalConsiderations(finalCard) && (
-              <ListItem
-                button
-                key={"Ethical Considerations"}
-                className={classes.drawerListItem}
-                onClick={() =>
-                  scroller.scrollTo(PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS, {
-                    duration: 1000,
-                    smooth: "easeInOutQuint",
-                    offset: -100,
-                  })
-                }
-              >
-                <ListItemIcon>
-                  <AccountBalanceIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{
-                    variant: "h6",
-                    style: { fontSize: 16 },
-                  }}
-                  primary={"Considerations"}
-                />
-              </ListItem>
-            )}
-            {hasPerformance(finalCard) && (
-              <ListItem
-                button
-                key={"Performance"}
-                className={classes.drawerListItem}
-                onClick={() =>
-                  scroller.scrollTo(PAGE_BOOKMARK_PERFORMANCE, {
-                    duration: 1500,
-                    smooth: "easeInOutQuint",
-                    offset: -100,
-                  })
-                }
-              >
-                <ListItemIcon>
-                  <BarChartIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{
-                    variant: "h6",
-                    style: { fontSize: 16 },
-                  }}
-                  primary={"Performance"}
-                />
-              </ListItem>
-            )}
+              {hasIntendedUse(finalCard) && (
+                <ListItem
+                  button
+                  key={"Intended Use"}
+                  className={classes.drawerListItem}
+                  onClick={() =>
+                    scroller.scrollTo(PAGE_BOOKMARK_INTENDED_USE, {
+                      duration: 1500,
+                      smooth: "easeInOutQuint",
+                      offset: -100,
+                    })
+                  }
+                >
+                  <ListItemIcon>
+                    <BuildIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primaryTypographyProps={{
+                      variant: "h6",
+                      style: { fontSize: 16 },
+                    }}
+                    primary={"Intended Use"}
+                  />
+                </ListItem>
+              )}
+              {hasGroupImpacts(finalCard) && (
+                <ListItem
+                  button
+                  key={"Groups"}
+                  className={classes.drawerListItem}
+                  onClick={() =>
+                    scroller.scrollTo(PAGE_BOOKMARK_GROUP_IMPACTS, {
+                      duration: 1000,
+                      smooth: "easeInOutQuint",
+                      offset: -100,
+                    })
+                  }
+                >
+                  <ListItemIcon>
+                    <GroupIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primaryTypographyProps={{
+                      variant: "h6",
+                      style: { fontSize: 16 },
+                    }}
+                    primary={"Groups"}
+                  />
+                </ListItem>
+              )}
+              {hasLimitations(finalCard) && (
+                <ListItem
+                  button
+                  key={"Limitations"}
+                  className={classes.drawerListItem}
+                  onClick={() =>
+                    scroller.scrollTo(PAGE_BOOKMARK_LIMITATIONS, {
+                      duration: 1000,
+                      smooth: "easeInOutQuint",
+                      offset: -100,
+                    })
+                  }
+                >
+                  <ListItemIcon>
+                    <WarningIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primaryTypographyProps={{
+                      variant: "h6",
+                      style: { fontSize: 16 },
+                    }}
+                    primary={"Limitations"}
+                  />
+                </ListItem>
+              )}
+              {hasEthicalConsiderations(finalCard) && (
+                <ListItem
+                  button
+                  key={"Ethical Considerations"}
+                  className={classes.drawerListItem}
+                  onClick={() =>
+                    scroller.scrollTo(PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS, {
+                      duration: 1000,
+                      smooth: "easeInOutQuint",
+                      offset: -100,
+                    })
+                  }
+                >
+                  <ListItemIcon>
+                    <AccountBalanceIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primaryTypographyProps={{
+                      variant: "h6",
+                      style: { fontSize: 16 },
+                    }}
+                    primary={"Considerations"}
+                  />
+                </ListItem>
+              )}
+              {hasPerformance(finalCard) && (
+                <ListItem
+                  button
+                  key={"Performance"}
+                  className={classes.drawerListItem}
+                  onClick={() =>
+                    scroller.scrollTo(PAGE_BOOKMARK_PERFORMANCE, {
+                      duration: 1500,
+                      smooth: "easeInOutQuint",
+                      offset: -100,
+                    })
+                  }
+                >
+                  <ListItemIcon>
+                    <BarChartIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primaryTypographyProps={{
+                      variant: "h6",
+                      style: { fontSize: 16 },
+                    }}
+                    primary={"Performance"}
+                  />
+                </ListItem>
+              )}
 
-            {hasAuthors(finalCard) && (
-              <ListItem
-                button
-                key={"Authors"}
-                className={classes.drawerListItem}
-                onClick={() =>
-                  scroller.scrollTo(PAGE_BOOKMARK_AUTHORS, {
-                    duration: 1500,
-                    smooth: "easeInOutQuint",
-                    offset: -100,
-                  })
-                }
-              >
-                <ListItemIcon>
-                  <AccountCircleIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{
-                    variant: "h6",
-                    style: { fontSize: 16 },
-                  }}
-                  primary={"Authors"}
-                />
-              </ListItem>
-            )}
-          </List>
-        )}
-      </div>
+              {hasAuthors(finalCard) && (
+                <ListItem
+                  button
+                  key={"Authors"}
+                  className={classes.drawerListItem}
+                  onClick={() =>
+                    scroller.scrollTo(PAGE_BOOKMARK_AUTHORS, {
+                      duration: 1500,
+                      smooth: "easeInOutQuint",
+                      offset: -100,
+                    })
+                  }
+                >
+                  <ListItemIcon>
+                    <AccountCircleIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primaryTypographyProps={{
+                      variant: "h6",
+                      style: { fontSize: 16 },
+                    }}
+                    primary={"Authors"}
+                  />
+                </ListItem>
+              )}
+            </List>
+          )}
+        </div>
+      )}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
         className={classes.wrapper}
+        style={{
+          margin: matchesSm ? theme.spacing(0, 8, 0, 6) : 0,
+        }}
       >
         <motion.div
           style={{
@@ -387,11 +402,25 @@ export default function Presenter() {
             alignItems: "center",
             position: "sticky",
             top: 0,
+            padding: matchesSm ? undefined : theme.spacing(0, 2),
           }}
         >
-          <Typography className={classes.title} variant={"h4"}>
-            Algo-Card
-          </Typography>
+          {matchesSm ? (
+            <Typography className={classes.title} variant={"h4"}>
+              Algo-Card
+            </Typography>
+          ) : (
+            <Box flexGrow={1}>
+              <Link to="/">
+                <img
+                  style={{ objectFit: "contain", marginLeft: 7 }}
+                  src={"/logo.svg"}
+                  alt="Nice"
+                  width="40"
+                />
+              </Link>
+            </Box>
+          )}
           <Button
             style={{ borderRadius: 100 }}
             variant="contained"

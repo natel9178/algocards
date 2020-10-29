@@ -76,7 +76,14 @@ export default function Examples({ examples, textStyle }: ExamplesProps) {
   }, [examples]);
 
   return (
-    <motion.div className={classes.wrapper}>
+    <motion.div
+      layout
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className={classes.wrapper}
+    >
       <Box mb={1} display={"flex"} flexDirection="row">
         <Typography variant={"h6"} style={{ flexGrow: 1 }}>
           Examples
