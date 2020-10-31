@@ -11,6 +11,7 @@ import ListOrParagraph from "../ListOrParagraph";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import LinkIcon from "@material-ui/icons/Link";
 import { Textfit } from "react-textfit";
+import { linkSync } from "fs";
 
 const useStyles = makeStyles(() => ({
   metaBarContainer: {
@@ -144,16 +145,35 @@ export default function InfoBar(props: InfoBarProps) {
 
       <Box m={1} />
       {showcase && !!showcase.length && (
-        <>
-          <Typography variant={"h6"} className={classes.metaBarTypography}>
-            Showcase
-          </Typography>
-          <img
-            style={{ width: "100%", borderRadius: 10, marginTop: 5 }}
-            alt={"showcase"}
-            src={showcase[0]}
-          />
-        </>
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="stretch"
+          justifyContent="center"
+          width="100%"
+        >
+          <Box
+            flex="0 1 500px"
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="center"
+            alignSelf="center"
+          >
+            <Typography variant={"h6"} className={classes.metaBarTypography}>
+              Showcase
+            </Typography>
+            <img
+              style={{
+                width: "100%",
+                borderRadius: 10,
+                marginTop: 5,
+              }}
+              alt={"showcase"}
+              src={showcase[0]}
+            />
+          </Box>
+        </Box>
       )}
       <Box m={1} />
 
@@ -259,7 +279,7 @@ export default function InfoBar(props: InfoBarProps) {
           <Divider />
           <Grid item xs={12} className={classes.metaBarRow}>
             <Typography variant={"h6"} className={classes.metaBarTypography}>
-              Supporting Resources
+              Links
             </Typography>
             <Box m={0.5} />
             {supportingLinks.map((link, idx) => (
@@ -268,8 +288,10 @@ export default function InfoBar(props: InfoBarProps) {
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "flex-starts",
+                  cursor: link.link ? "pointer" : undefined,
                 }}
                 key={idx}
+                onClick={() => window.open(link.link!)}
               >
                 <LinkIcon />
                 <Box mx={0.5} />
@@ -281,7 +303,7 @@ export default function InfoBar(props: InfoBarProps) {
                     textOverflow: "ellipsis",
                   }}
                 >
-                  <ListOrParagraph content={link.link || ""} />
+                  {link.link?.replace("https://", "") || ""}
                 </div>
               </div>
             ))}

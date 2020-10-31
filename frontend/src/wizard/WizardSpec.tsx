@@ -120,7 +120,7 @@ export const WizardSpec: WizardSpecInterface[] = [
           "To use novel NLP technologies for computational understanding of Shakespeare's plays",
       },
       {
-        text: "To push accuracy limits on the COCO dataset",
+        text: "To push accuracy benchmarks on the COCO dataset",
       },
     ],
   },
@@ -138,9 +138,32 @@ export const WizardSpec: WizardSpecInterface[] = [
     ),
     examples: [
       {
-        titleText: "Facial Orientation",
         text:
-          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+          "Identifying and resolving individual identities from faces in crowds.",
+      },
+      {
+        text: "Making perfectly sound financial decisions around stocks.",
+      },
+      {
+        text: "Inferring demographic traits from a particular face.",
+      },
+      {
+        text:
+          "Enhancing resolution of security camera footage for use in courts and legal settings.",
+      },
+      {
+        text:
+          "Generating text and papers for submission to academic journals or publications.",
+      },
+      {
+        text: "Generating reports for risk assessment of natural disasters.",
+      },
+      {
+        text:
+          "Counting biological cells other than white and red blood cells in blood.",
+      },
+      {
+        text: "Clinical use in predicting disease prognosis of the lungs.",
       },
     ],
   },
@@ -182,6 +205,16 @@ export const WizardSpec: WizardSpecInterface[] = [
         text:
           "Bystanders to security cameras may have their faces recognized without their consent.",
       },
+      {
+        titleText: "Defandants and Detainees",
+        text:
+          "This model may incorrectly give varying recidivism risk scores biased by demographic groups.",
+      },
+      {
+        titleText: "Employers",
+        text:
+          "This model may incorrectly give varying recidivism risk scores biased by demographic groups.",
+      },
     ],
   },
   {
@@ -204,6 +237,45 @@ export const WizardSpec: WizardSpecInterface[] = [
         text:
           "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
       },
+      {
+        titleText: "Object size",
+        text:
+          "Object size must be at least 1% of the image area to be detected.",
+      },
+      {
+        titleText: "“Things” vs “stuff”",
+        text:
+          "Model was designed to detect discrete objects with clearly discernible shapes (“things”), not a group of overlapping objects or background clutter (“stuff”).",
+      },
+      {
+        titleText: "Lighting",
+        text:
+          "Poor or harsh, high-contrast illumination (e.g. nighttime, back-lit, side-lit) may degrade model performance.",
+      },
+      {
+        titleText: "Occlusion or clutter",
+        text:
+          "Partially obstructed or truncated objects may not be detected. For example, a shirt underneath a jacket, or where less than 25% of an object is visible in the image.",
+      },
+      {
+        titleText: "Camera positioning and lens type",
+        text:
+          "Camera angle and positioning (e.g. oblique angles, long-distance), and lens type (e.g. fisheye) may impact model performance.",
+      },
+      {
+        titleText: "Blur or noise",
+        text:
+          "Blurry objects, rapid movement between frames, or encoding/decoding noise may degrade model performance. ",
+      },
+      {
+        titleText: "Image resolution",
+        text: "Minimum image resolution of 300K pixels recommended.",
+      },
+      {
+        titleText: "Object type",
+        text:
+          "Model accuracy varies across different object types (see Performance section).",
+      },
     ],
   },
   {
@@ -222,9 +294,32 @@ export const WizardSpec: WizardSpecInterface[] = [
     ),
     examples: [
       {
-        titleText: "Facial Orientation",
         text:
-          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+          "Because of the high computational requirements of this model, consider the impacts of delays due to surges in use during production.",
+      },
+      {
+        text:
+          "In production environments, although smaller images will lead to faster prediction results, accuracy may be reduced as a tradeoff.",
+      },
+      {
+        text:
+          "Because of high computational requirements to train this model, consider the environmental impact of retraining and consider finetuning this model instead.",
+      },
+      {
+        text:
+          "Users of the model must be cognizant of impacts towards marginalized groups because of biased training data in our dataset. ",
+      },
+      {
+        text:
+          "Users should be aware that results coming from this model is purely predictive and are not objective.",
+      },
+      {
+        text:
+          "When using this model, consider psychological harms that targets of the model may have that may have adverse effects on model performance.",
+      },
+      {
+        text:
+          "More future investigations are needed to reduce racial bias in this housing price estimation model.",
       },
     ],
   },
@@ -251,7 +346,43 @@ export const WizardSpec: WizardSpecInterface[] = [
       {
         titleText: "COCO",
         text:
-          "Coco is a ...",
+          "Open Images Validation dataset (V4) is comprised of ~41k images, annotated with image-level labels, object bounding boxes, object segmentation masks, and visual relationships. It contains a total of 204k bounding boxes and covers 600 object classes",
+      },
+      {
+        titleText: "Chest X-Ray Images (Kaggle)",
+        text:
+          "The dataset is organized into 3 folders (train, test, val) and contains subfolders for each image category (Pneumonia/Normal). There are 5,863 X-Ray images (JPEG) and 2 categories (Pneumonia/Normal). Chest X-ray images (anterior-posterior) were selected from retrospective cohorts of pediatric patients of one to five years old from Guangzhou Women and Children’s Medical Center, Guangzhou. All chest X-ray imaging was performed as part of patients’ routine clinical care. For the analysis of chest x-ray images, all chest radiographs were initially screened for quality control by removing all low quality or unreadable scans. The diagnoses for the images were then graded by two expert physicians before being cleared for training the AI system. In order to account for any grading errors, the evaluation set was also checked by a third expert.",
+      },
+      {
+        titleText: "Google Dataset",
+        text:
+          "This dataset is comprised of ~5k images of consumer products taken and donated by Google employees. It covers 210 different object classes. The images are of variable resolution and quality. Most were taken using a mobile phone and feature one or a small number of primary objects that are recognizable as specific consumer products. This data was collected for the explicit purpose of evaluating object detection models for consumer product-related use-cases.",
+      },
+      {
+        titleText: "Imagenet",
+        text:
+          "Imagnet is an image database organized according to the WordNet hierarchy (currently only the nouns), in which each node of the hierarchy is depicted by hundreds and thousands of images. Currently there is an average of over five hundred images per node.",
+      },
+      {
+        titleText: "Students Performance in Exams (Kaggle)",
+        text:
+          "This data set consists of the marks secured by the students in various subjects.",
+      },
+      {
+        titleText: "Daily News for Stock Market Prediction (Kaggle)",
+        text:
+          "Using 8 years daily news headlines to predict stock market movement",
+      },
+      {
+        titleText:
+          "COVID-19 Open Research Dataset Challenge (CORD-19) (Kaggle)",
+        text:
+          "CORD-19 is a resource of over 200,000 scholarly articles, including over 100,000 with full text, about COVID-19, SARS-CoV-2, and related coronaviruses. This freely available dataset is provided to the global research community to apply recent advances in natural language processing and other AI techniques to generate new insights in support of the ongoing fight against this infectious disease. There is a growing urgency for these approaches because of the rapid acceleration in new coronavirus literature, making it difficult for the medical research community to keep up.",
+      },
+      {
+        titleText: "Credit Card Fraud Detection (Kaggle)",
+        text:
+          "The datasets contains transactions made by credit cards in September 2013 by european cardholders. This dataset presents transactions that occurred in two days, where we have 492 frauds out of 284,807 transactions. The dataset is highly unbalanced, the positive class (frauds) account for 0.172% of all transactions. It contains only numerical input variables which are the result of a PCA transformation. Unfortunately, due to confidentiality issues, we cannot provide the original features and more background information about the data. ",
       },
     ],
   },
@@ -275,9 +406,20 @@ export const WizardSpec: WizardSpecInterface[] = [
     ),
     examples: [
       {
-        titleText: "Facial Orientation",
         text:
-          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+          "This model was trained with the standard darknet training procedures. Aggregate performance varies accross the two evaluation datasets we've used, (mAP of 0.43 and Recall@60% Precision of 0.42 on Open Images Validation set; vs. mAP of 0.34 and Recall@60% Precision of 0.36 on the Google Internal test set). Performance also heavily varied across object classes...",
+      },
+      {
+        text:
+          "This model was trained by using transformers in place of convolutional neural nets for image classification. As a result, we were able to get a Top-1 Imagenet score of 95%, which is currently the state of the art.",
+      },
+      {
+        text:
+          "...Most of the accuracy from this model comes from objects that were extremely prevalent in the dataset. For example, Top-1 performance for humans and cars greatly exceeded performance less prevalent classes like 'paper' (mAP 0.30) and 'toad' (mAP 0.20)",
+      },
+      {
+        text:
+          "...This facial recognition model has a low recall but high precision for faces of people with darker skin. That means that fewer faces were accurately detected, but of the detected faces they were correctly identified most of the time. ",
       },
     ],
   },
@@ -330,8 +472,13 @@ export const WizardSpec: WizardSpecInterface[] = [
         autocompleteOptions={[
           "Computer Vision",
           "Natural Language Processing",
-          "XGBoost",
+          "Machine Learning",
           "Reinforcement Learning",
+          "Robotics",
+          "Automated Reasoning",
+          "Knowledge Representation",
+          "Search and Problem Solving",
+          "Generation",
         ]}
       />
     ),
@@ -420,11 +567,40 @@ export const WizardSpec: WizardSpecInterface[] = [
     ),
     examples: [
       {
-        titleText: "Facial Orientation",
-        text:
-          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+        text: "Photos",
+      },
+      {
+        text: "Videos",
+      },
+      {
+        text: "Generic Text",
+      },
+      {
+        text: "Census Data",
+      },
+      {
+        text: "Survey Choices",
+      },
+      {
+        text: "Satelite data",
+      },
+      {
+        text: "ECG Time Series",
+      },
+      {
+        text: "News Headlines",
+      },
+      {
+        text: "Scientific Journal Articles",
+      },
+      {
+        text: "Human Genetic Code",
+      },
+      {
+        text: "Flight data",
       },
     ],
+    textStyle: { textAlign: "center" },
   },
   {
     path: "outputs",
@@ -441,11 +617,38 @@ export const WizardSpec: WizardSpecInterface[] = [
         }
       />
     ),
+    textStyle: { textAlign: "center" },
+
     examples: [
       {
-        titleText: "Facial Orientation",
-        text:
-          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+        text: "Bounding Boxes",
+      },
+      {
+        text: "Confidence Scores",
+      },
+      {
+        text: "Landmark Points",
+      },
+      {
+        text: "Housing Prices",
+      },
+      {
+        text: "Stock rise/fall prediction",
+      },
+      {
+        text: "Face Embedding",
+      },
+      {
+        text: "Lung Disease Type",
+      },
+      {
+        text: "Disease Risk Score",
+      },
+      {
+        text: "Predicted Age",
+      },
+      {
+        text: "Word Embedding",
       },
     ],
   },
@@ -481,9 +684,13 @@ export const WizardSpec: WizardSpecInterface[] = [
     ),
     examples: [
       {
-        titleText: "Facial Orientation",
-        text:
-          "Needs visible facial landmarks such as eyes, noses, and mouths to work correctly. Faces that are looking away from the camera (pan > 90°, roll > 45°, or tilt > 45°) might not be detected.",
+        text: "A Mobilenet backbone with Mask-RCNN architecture.",
+      },
+      {
+        text: "Transformer backend, trained against perplexity",
+      },
+      {
+        text: "Multimodal logistic regression trained with cross entropy.",
       },
     ],
   },

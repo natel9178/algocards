@@ -11,6 +11,7 @@ import LinkIcon from "@material-ui/icons/Link";
 import BuildIcon from "@material-ui/icons/Build";
 import GavelIcon from "@material-ui/icons/Gavel";
 import CategoryIcon from "@material-ui/icons/Category";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -80,6 +81,7 @@ export default function Header(props: HeaderProps) {
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("xs"));
+  const history = useHistory();
   return (
     <Grid container spacing={1}>
       <Grid item sm={7} xs={12} className={classes.leftTitle}>
@@ -109,17 +111,19 @@ export default function Header(props: HeaderProps) {
         {license && (
           <Chip className={classes.chip} icon={<GavelIcon />} label={license} />
         )}
-        {supportingLinks && !!supportingLinks.length && (
-          <Chip
-            className={classes.chip}
-            clickable
-            icon={<LinkIcon />}
-            label={"Homepage"}
-            onClick={() => {
-              console.log(supportingLinks[0]);
-            }}
-          />
-        )}
+        {supportingLinks &&
+          !!supportingLinks.length &&
+          supportingLinks[0].link && (
+            <Chip
+              className={classes.chip}
+              clickable
+              icon={<LinkIcon />}
+              label={"Link"}
+              onClick={() => {
+                window.open(supportingLinks[0].link!);
+              }}
+            />
+          )}
       </Grid>
     </Grid>
   );

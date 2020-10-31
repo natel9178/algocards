@@ -209,7 +209,7 @@ export default function Presenter() {
                 className={classes.drawerListItem}
                 onClick={() =>
                   scroller.scrollTo(PAGE_BOOKMARK_HEADER, {
-                    duration: 1500,
+                    duration: 800,
                     smooth: "easeInOutQuint",
                     offset: -140,
                   })
@@ -234,7 +234,7 @@ export default function Presenter() {
                   className={classes.drawerListItem}
                   onClick={() =>
                     scroller.scrollTo(PAGE_BOOKMARK_INTENDED_USE, {
-                      duration: 1500,
+                      duration: 800,
                       smooth: "easeInOutQuint",
                       offset: -100,
                     })
@@ -259,7 +259,7 @@ export default function Presenter() {
                   className={classes.drawerListItem}
                   onClick={() =>
                     scroller.scrollTo(PAGE_BOOKMARK_GROUP_IMPACTS, {
-                      duration: 1000,
+                      duration: 800,
                       smooth: "easeInOutQuint",
                       offset: -100,
                     })
@@ -284,7 +284,7 @@ export default function Presenter() {
                   className={classes.drawerListItem}
                   onClick={() =>
                     scroller.scrollTo(PAGE_BOOKMARK_LIMITATIONS, {
-                      duration: 1000,
+                      duration: 800,
                       smooth: "easeInOutQuint",
                       offset: -100,
                     })
@@ -309,7 +309,7 @@ export default function Presenter() {
                   className={classes.drawerListItem}
                   onClick={() =>
                     scroller.scrollTo(PAGE_BOOKMARK_ETHICAL_CONSIDERATIONS, {
-                      duration: 1000,
+                      duration: 800,
                       smooth: "easeInOutQuint",
                       offset: -100,
                     })
@@ -334,7 +334,7 @@ export default function Presenter() {
                   className={classes.drawerListItem}
                   onClick={() =>
                     scroller.scrollTo(PAGE_BOOKMARK_PERFORMANCE, {
-                      duration: 1500,
+                      duration: 800,
                       smooth: "easeInOutQuint",
                       offset: -100,
                     })
@@ -360,7 +360,7 @@ export default function Presenter() {
                   className={classes.drawerListItem}
                   onClick={() =>
                     scroller.scrollTo(PAGE_BOOKMARK_AUTHORS, {
-                      duration: 1500,
+                      duration: 800,
                       smooth: "easeInOutQuint",
                       offset: -100,
                     })
