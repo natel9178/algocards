@@ -128,7 +128,7 @@ export default function Browse() {
           </Link>
 
           <Typography className={classes.toolbarTitle} variant={"h4"}>
-            Algo-Card
+            AI Cards
           </Typography>
           {matches && (
             <>
@@ -140,7 +140,7 @@ export default function Browse() {
                 startIcon={<InfoIcon />}
                 onClick={() => setOpenAboutModal(true)}
               >
-                About Algo-Cards
+                About AI Cards
               </Button>
               <Box m={1} />
               <Button
@@ -182,7 +182,7 @@ export default function Browse() {
               variant={"body1"}
               style={{ fontFamily: "Roboto Mono", fontSize: 19 }}
             >
-              AlgoCards is a conversation starter between Machine Learning devs
+              AICards is a conversation starter between Machine Learning devs
               and general users for a more hopeful AI future.
             </Typography>
 
@@ -194,7 +194,7 @@ export default function Browse() {
                 startIcon={<InfoIcon />}
                 onClick={() => setOpenAboutModal(true)}
               >
-                About Algo-Cards
+                About AI Cards
               </Button>
               <Box m={1} />
               <Button

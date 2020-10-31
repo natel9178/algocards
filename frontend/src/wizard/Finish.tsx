@@ -62,7 +62,7 @@ export default function Finish(props: FinishProps) {
             );
           }}
         >
-          Download Algo-Card File
+          Download AI Card File
         </Button>
       </Box>
     </div>

@@ -119,7 +119,7 @@ export default function AbstractCard({
                 {spec.title || "Model"}
               </Textfit>
               <Typography className={classes.captionText} variant={"body1"}>
-                Algo-Card
+                AI Card
               </Typography>
             </Box>
 

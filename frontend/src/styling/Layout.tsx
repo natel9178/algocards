@@ -76,7 +76,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           variant={"h6"}
           style={{ fontSize: 15 }}
         >
-          Made by the Algo-Cards Team. Send us feedback{" "}
+          Made by the AI Cards Team. Send us feedback{" "}
           <a href={"mailto:natelee@stanford.edu"}>here</a>.
         </Typography>
       </footer>

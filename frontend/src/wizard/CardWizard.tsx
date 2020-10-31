@@ -188,7 +188,7 @@ export default function CardWizard() {
         >
           {matches && (
             <Typography className={classes.title} variant={"h4"}>
-              Algo-Card
+              AI Card
             </Typography>
           )}
           <Box
