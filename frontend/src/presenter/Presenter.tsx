@@ -407,7 +407,7 @@ export default function Presenter() {
         >
           {matchesSm ? (
             <Typography className={classes.title} variant={"h4"}>
-              AI Card
+              AI Cards
             </Typography>
           ) : (
             <Box flexGrow={1}>
