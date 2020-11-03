@@ -18,6 +18,7 @@ app.get("/badge/*?", async (req, res) => {
       width: 500,
       height: 1000,
     },
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
 
