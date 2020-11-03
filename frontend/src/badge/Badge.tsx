@@ -20,7 +20,7 @@ export default function Badge() {
   }
 
   return (
-    <Box m={1} minWidth={400}>
+    <Box m={1} minWidth={400} id={"card"}>
       <AbstractCard fullCardLocation={``} link={cardFile} />
     </Box>
   );
