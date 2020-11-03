@@ -11,6 +11,7 @@ import { QueryParamProvider } from "use-query-params";
 import { AnimatedSwitch } from "react-router-transition";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import Home from "./home/Home";
+import Badge from "./badge/Badge";
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -35,6 +36,9 @@ function App() {
                   <Layout>
                     <CardWizard />
                   </Layout>
+                </Route>
+                <Route path="/internalBadgeHtml*" exact>
+                  <Badge />
                 </Route>
                 <Route path="/">
                   <Layout>
