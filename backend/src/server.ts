@@ -9,8 +9,8 @@ app.get("/", (_, res) => {
   res.send("ok");
 });
 
-app.get("/badge", async (req, res) => {
-  if (req.query["cardfile"]) {
+app.get("/badge/*?", async (req, res) => {
+  if (!req.params[0]) {
     return res.sendStatus(400);
   }
   const browser = await puppeteer.launch({
@@ -20,8 +20,11 @@ app.get("/badge", async (req, res) => {
     },
   });
   const page = await browser.newPage();
+
   await page.goto(
-    `http://algocards.netlify.app/internalBadgeHtml?cardFile=${req.query["cardfile"]}`,
+    `http://algocards.netlify.app/internalBadgeHtml?cardFile=${decodeURI(
+      req.params[0]
+    )}`,
     { waitUntil: "networkidle0" }
   );
   const card = await page.$("#card");
