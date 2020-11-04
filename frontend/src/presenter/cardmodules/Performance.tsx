@@ -79,7 +79,7 @@ export default function Performance({
         {performanceOverview && (
           <>
             <Typography variant={"h6"} style={{ marginTop: 10 }}>
-            Overview
+              Overview
             </Typography>
             <ListOrParagraph content={performanceOverview} />
           </>
@@ -110,7 +110,7 @@ export default function Performance({
           </Typography>
         )}
 
-        {performanceMetrics && (
+        {performanceMetrics && !!performanceMetrics.length && (
           <TableContainer
             component={MuiCard}
             style={{
@@ -137,7 +137,7 @@ export default function Performance({
             </Table>
           </TableContainer>
         )}
-        {figures && (
+        {figures && !!figures.length && (
           <Accordion
             style={{
               flexDirection: "column",
