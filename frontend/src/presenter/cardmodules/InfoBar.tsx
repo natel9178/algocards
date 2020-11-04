@@ -234,22 +234,24 @@ export default function InfoBar(props: InfoBarProps) {
       )}
       <Box m={1} />
 
-      <Divider />
-      <Grid container>
-        {license && (
-          <Grid item xs={6} className={classes.metaBarRow}>
-            <Typography variant={"h6"} className={classes.metaBarTypography}>
-              License
-            </Typography>
-            <Typography
-              variant={"body2"}
-              className={classes.metaBarTypographyBody}
-            >
-              {license}
-            </Typography>
+      {license && (
+        <>
+          <Divider />{" "}
+          <Grid container>
+            <Grid item xs={6} className={classes.metaBarRow}>
+              <Typography variant={"h6"} className={classes.metaBarTypography}>
+                License
+              </Typography>
+              <Typography
+                variant={"body2"}
+                className={classes.metaBarTypographyBody}
+              >
+                {license}
+              </Typography>
+            </Grid>
           </Grid>
-        )}
-      </Grid>
+        </>
+      )}
       <Box m={1} />
 
       {/* {githubLink && (

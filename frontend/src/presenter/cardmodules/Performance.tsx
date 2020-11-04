@@ -76,6 +76,14 @@ export default function Performance({
         <Typography style={{ lineHeight: 1 }} variant={"h4"}>
           Dataset Performance
         </Typography>
+        {performanceOverview && (
+          <>
+            <Typography variant={"h6"} style={{ marginTop: 10 }}>
+            Overview
+            </Typography>
+            <ListOrParagraph content={performanceOverview} />
+          </>
+        )}
         {datasets && (
           <>
             <Typography variant={"h6"} style={{ marginTop: 10 }}>
