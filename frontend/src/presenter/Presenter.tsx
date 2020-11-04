@@ -8,8 +8,13 @@ import {
   Container,
   useMediaQuery,
   useTheme,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import Card, {
   hasAuthors,
   hasIntendedUse,
@@ -148,12 +153,13 @@ export default function Presenter() {
   const { scrollY } = useViewportScroll();
   const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
   const [fromFileUpload] = useQueryParam("fromFileUpload", BooleanParam);
-  const [loadCard] = useRecoilState(loadedCard);
+  const [loadCard, setLoadCard] = useRecoilState(loadedCard);
   const location = useLocation();
   const { githubFiles, loading, error } = useGithubCardFetch(location.pathname);
   const history = useHistory();
   const theme = useTheme();
   const matchesSm = useMediaQuery(theme.breakpoints.up("sm"));
+  const [confirmEditDialogOpen, setConfirmedEditDialogOpen] = useState(false);
 
   const files = githubFiles;
   const cardData = useFetchCard(
@@ -421,15 +427,30 @@ export default function Presenter() {
               </Link>
             </Box>
           )}
+          <Box flexGrow={1} />
+          {finalCard && (
+            <Button
+              style={{ borderRadius: 100 }}
+              variant="contained"
+              size="large"
+              color="primary"
+              startIcon={<AddIcon />}
+              onClick={() => {
+                setConfirmedEditDialogOpen(true);
+              }}
+            >
+              Edit Card
+            </Button>
+          )}
+          <Box m={1} />
           <Button
             style={{ borderRadius: 100 }}
             variant="contained"
             size="large"
-            color="primary"
             startIcon={<AddIcon />}
             onClick={() => history.push("/wizard")}
           >
-            Add Card
+            Create New Card
           </Button>
         </motion.div>
         <Paper className={classes.paper}>
@@ -475,6 +496,44 @@ export default function Presenter() {
           )}
         </Paper>
       </motion.div>
+      {finalCard && (
+        <Dialog
+          open={confirmEditDialogOpen}
+          onClose={() => setConfirmedEditDialogOpen(false)}
+        >
+          <DialogTitle disableTypography>
+            <Typography variant={"h5"} style={{ fontWeight: "bold" }}>
+              Confirm Edit
+            </Typography>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Editing this card will overwrite any AI Card you are currently
+              editing. Do you wish to continue?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              autoFocus
+              onClick={() => setConfirmedEditDialogOpen(false)}
+              color="primary"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                setConfirmedEditDialogOpen(false);
+                localStorage.setItem("card", JSON.stringify(finalCard));
+                setLoadCard(finalCard);
+                history.push("/wizard");
+              }}
+              color="primary"
+            >
+              Continue Editing
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </Container>
   );
 }
