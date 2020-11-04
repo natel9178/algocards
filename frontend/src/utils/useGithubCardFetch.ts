@@ -43,14 +43,18 @@ export default function useGithubCardFetch(link: string) {
           remainder === "" ? undefined : "/" + remainder
         )
           .then((files) => {
+            setLoading(false);
             setGithubFiles(files);
             setError(null);
           })
           .catch((reason) => {
-            setError(reason);
+            setLoading(false);
+            setGithubFiles([]);
+            setError(JSON.stringify(reason));
           });
         break;
       default:
+        setLoading(false);
         setGithubFiles([]);
         setError("Link not readable");
     }

@@ -2,6 +2,7 @@ import express from "express";
 import { ApolloServer, gql } from "apollo-server-express";
 import { RootModule } from "./modules/root.module";
 import puppeteer from "puppeteer";
+import memoize from "memoizee";
 
 const app = express();
 
@@ -13,6 +14,21 @@ app.get("/badge/*?", async (req, res) => {
   if (!req.params[0]) {
     return res.sendStatus(400);
   }
+
+  try {
+    const imageBuffer = await memoizedGetImage(req.params[0]);
+    res.setHeader("Content-Type", "image/jpeg");
+    res.send(imageBuffer);
+  } catch (e) {
+    res.sendStatus(500);
+  }
+});
+
+const memoizedGetImage = memoize(getImage, {
+  promise: true,
+  maxAge: 3600000 * 2, // two hours
+});
+async function getImage(cardFileUri: string) {
   const browser = await puppeteer.launch({
     defaultViewport: {
       width: 500,
@@ -24,24 +40,18 @@ app.get("/badge/*?", async (req, res) => {
 
   await page.goto(
     `http://algocards.netlify.app/internalBadgeHtml?cardFile=${decodeURI(
-      req.params[0]
+      cardFileUri
     )}`,
     { waitUntil: "networkidle0" }
   );
   const card = await page.$("#card");
   if (!card) {
-    res.sendStatus(500);
-    browser.close();
-
-    return;
+    throw "no card on page";
   }
 
   const bounding_box = await card.boundingBox();
   if (!bounding_box) {
-    res.sendStatus(500);
-    browser.close();
-
-    return;
+    throw "could not get bounding box";
   }
 
   const imageBuffer = await page.screenshot({
@@ -54,10 +64,10 @@ app.get("/badge/*?", async (req, res) => {
       height: Math.min(bounding_box.height + 20, page.viewport().height),
     },
   });
-  res.setHeader("Content-Type", "image/jpeg");
-  res.send(imageBuffer);
+
   browser.close();
-});
+  return imageBuffer;
+}
 
 const { schema } = RootModule;
 
