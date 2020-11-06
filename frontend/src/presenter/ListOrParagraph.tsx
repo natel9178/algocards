@@ -1,5 +1,6 @@
 import { Box, makeStyles } from "@material-ui/core";
 import React from "react";
+import Definer from "./definer/Definer";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -23,7 +24,9 @@ export default function ListOrParagraph({
       <>
         {splitContent.map((c, idx) => (
           <Box mt={0.5} width="100%" key={idx}>
-            <p className={classes.text}>{c}</p>
+            <p className={classes.text}>
+              <Definer text={c} />
+            </p>
           </Box>
         ))}
       </>
