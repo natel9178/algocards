@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   blueColor: {
     color: theme.palette.primary.main,
   },
+  term: {
+    cursor: "pointer",
+  },
 }));
 
 export default function Definer({
@@ -75,7 +78,10 @@ export default function Definer({
             }
             onMouseLeave={handlePopoverClose}
             key={match + i}
-            className={clsx({ [classes.blueColor]: !noHighlight })}
+            className={clsx({
+              [classes.blueColor]: !noHighlight,
+              [classes.term]: true,
+            })}
           >
             {match}
           </span>

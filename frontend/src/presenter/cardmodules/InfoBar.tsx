@@ -12,6 +12,7 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import LinkIcon from "@material-ui/icons/Link";
 import { Textfit } from "react-textfit";
 import { linkSync } from "fs";
+import Definer from "../definer/Definer";
 
 const useStyles = makeStyles(() => ({
   metaBarContainer: {
@@ -88,7 +89,7 @@ export default function InfoBar(props: InfoBarProps) {
                       }}
                       mode="single"
                     >
-                      {i.name}
+                      <Definer text={i.name || ""} noHighlight />
                     </Textfit>
                   }
                 />
@@ -133,7 +134,7 @@ export default function InfoBar(props: InfoBarProps) {
                       }}
                       mode="single"
                     >
-                      {i.name}
+                      <Definer text={i.name || ""} noHighlight />
                     </Textfit>
                   }
                 />
