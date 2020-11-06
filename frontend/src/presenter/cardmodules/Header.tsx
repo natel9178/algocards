@@ -12,6 +12,7 @@ import BuildIcon from "@material-ui/icons/Build";
 import GavelIcon from "@material-ui/icons/Gavel";
 import CategoryIcon from "@material-ui/icons/Category";
 import { useHistory } from "react-router-dom";
+import Definer from "../definer/Definer";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -93,7 +94,9 @@ export default function Header(props: HeaderProps) {
             {title}
           </a>
         </Typography>
-        <Typography variant={"body1"}>{description}</Typography>
+        <Typography variant={"body1"}>
+          <Definer text={description || ""} />
+        </Typography>
       </Grid>
       <Grid
         item

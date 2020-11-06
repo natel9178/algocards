@@ -39,7 +39,7 @@ export default function ListOrParagraph({
       <ul style={ulStyle}>
         {content.map((sentence, idx) => (
           <li style={liStyle} key={idx}>
-            {sentence}
+            <Definer text={sentence} />
           </li>
         ))}
       </ul>

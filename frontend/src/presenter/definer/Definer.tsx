@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import math from "remark-math";
 import { InlineMath, BlockMath } from "react-katex";
 import "katex/dist/katex.min.css";
+import clsx from "clsx";
 
 const renderers = {
   inlineMath: ({ value }: { value: any }) => <InlineMath math={value} />,
@@ -30,7 +31,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Definer({ text }: { text: string }) {
+export default function Definer({
+  text,
+  noHighlight,
+}: {
+  text: string;
+  noHighlight?: boolean;
+}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const [term, setTerm] = React.useState("");
@@ -59,7 +66,7 @@ export default function Definer({ text }: { text: string }) {
   useEffect(() => {
     let runningText: string | React.ReactNodeArray = text;
     dictionary.forEach((text, term, _) => {
-      const re = new RegExp(`(${term}\\S*)`, "gi");
+      const re = new RegExp(`( ${term}\\S*)`, "gi");
       runningText = reactStringReplace(runningText, re, (match, i) => {
         return (
           <span
@@ -68,7 +75,7 @@ export default function Definer({ text }: { text: string }) {
             }
             onMouseLeave={handlePopoverClose}
             key={match + i}
-            className={classes.blueColor}
+            className={clsx({ [classes.blueColor]: !noHighlight })}
           >
             {match}
           </span>
