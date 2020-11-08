@@ -104,7 +104,8 @@ export default function Performance({
           </>
         )}
 
-        {(performanceMetrics || figures) && (
+        {((performanceMetrics && !!performanceMetrics.length) ||
+          (figures && !!figures.length)) && (
           <Typography variant={"h6"} style={{ marginTop: 10 }}>
             Performance Metrics
           </Typography>

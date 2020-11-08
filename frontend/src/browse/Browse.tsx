@@ -209,10 +209,15 @@ export default function Browse() {
                   variant={"body1"}
                   style={{ fontFamily: "Roboto Mono", fontSize: 19 }}
                 >
-                  AICards is a conversation starter between Machine Learning
-                  devs and general users for a more hopeful AI future. <br />
+                  AICards is a conversation starter on AI ethics for a more
+                  hopeful AI future. <br />
                   <br />
-                  Drop a cardfile or search a Github repo to get started.
+                  <strong>Drag and Drop</strong> an{" "}
+                  <a href="/Example-File-Smiling-Detection-card.json" download>
+                    AICard JSON file
+                  </a>{" "}
+                  on this website, or <strong>search a Github repo</strong> to
+                  get started.
                 </Typography>
 
                 <Box display="flex" mt={5}>

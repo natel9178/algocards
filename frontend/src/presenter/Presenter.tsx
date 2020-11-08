@@ -13,8 +13,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Snackbar,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import { useClipboard } from "use-clipboard-copy";
+import React, { useEffect, useState } from "react";
 import Card, {
   hasAuthors,
   hasIntendedUse,
@@ -53,7 +55,10 @@ import { scroller } from "react-scroll";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import GroupIcon from "@material-ui/icons/Group";
 import WarningIcon from "@material-ui/icons/Warning";
+import GithubIcon from "@material-ui/icons/GitHub";
+import CheckIcon from "@material-ui/icons/Check";
 import useGithubCardFetch from "../utils/useGithubCardFetch";
+import { Alert } from "@material-ui/lab";
 
 const drawerWidth = 240;
 export const CARD_LAYOUT_ID = "CARD_LAYOUT_ID";
@@ -150,6 +155,19 @@ const useStyles = makeStyles((theme) => ({
 export default function Presenter() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [openSnacks, setOpenSnacks] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
+
+  useEffect(() => {
+    if (copied) {
+      const timeout = setTimeout(() => {
+        setCopied(false);
+      }, 3000);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [copied]);
   const { scrollY } = useViewportScroll();
   const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
   const [fromFileUpload] = useQueryParam("fromFileUpload", BooleanParam);
@@ -162,9 +180,9 @@ export default function Presenter() {
   const [confirmEditDialogOpen, setConfirmedEditDialogOpen] = useState(false);
 
   const files = githubFiles;
-  const cardData = useFetchCard(
-    files && !!files.length ? files[0].download_url : ""
-  );
+  const cardLink = files && !!files.length ? files[0].download_url : "";
+  const cardData = useFetchCard(cardLink);
+  const clipboard = useClipboard();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -428,6 +446,37 @@ export default function Presenter() {
             </Box>
           )}
           <Box flexGrow={1} />
+          {finalCard && !fromFileUpload && cardLink !== "" && (
+            <Button
+              style={{ borderRadius: 100 }}
+              variant="contained"
+              size="large"
+              color="primary"
+              startIcon={copied ? <CheckIcon /> : <GithubIcon />}
+              onClick={() => {
+                const badgeLink = `https://algocards.netlify.app/badge/${cardLink.replace(
+                  "https://",
+                  ""
+                )}`;
+                const markdown = `<p align="left"><a href="http://algocards.netlify.app${location.pathname}" alt="Contributors"><img src="${badgeLink}" /></a></p>`;
+                clipboard.copy(markdown);
+                setOpenSnacks(true);
+                setCopied(true);
+              }}
+            >
+              {copied ? "Badge Copied!" : "Copy Badge"}
+              <Snackbar
+                open={openSnacks}
+                autoHideDuration={5000}
+                onClose={() => setOpenSnacks(false)}
+              >
+                <Alert onClose={() => setOpenSnacks(false)} severity="success">
+                  Badge Copied! Paste this into your Github README!
+                </Alert>
+              </Snackbar>
+            </Button>
+          )}
+          <Box m={1} />
           {finalCard && (
             <Button
               style={{ borderRadius: 100 }}

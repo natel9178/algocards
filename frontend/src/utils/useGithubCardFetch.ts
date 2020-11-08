@@ -6,6 +6,7 @@ export default function useGithubCardFetch(link: string) {
   const [githubFiles, setGithubFiles] = useState<File[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [fileBadgeLink, setFileBadgeLink] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(false);

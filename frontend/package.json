@@ -42,6 +42,7 @@
     "remark-math": "^4.0.0",
     "spdx-license-list": "^6.3.0",
     "typescript": "3.9.7",
+    "use-clipboard-copy": "^0.1.2",
     "use-query-params": "^1.1.8"
   },
   "scripts": {

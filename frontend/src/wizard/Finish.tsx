@@ -41,7 +41,14 @@ export default function Finish(props: FinishProps) {
       </Typography>
       <Box m={1} />
       <Typography variant={"body1"} style={{ fontFamily: "Roboto Mono" }}>
-        Choose your saving method.
+        Add this AICard file to your Github Repo, or send it to someone!
+      </Typography>
+      <Typography
+        variant={"body2"}
+        style={{ fontFamily: "Roboto Mono", fontSize: 12 }}
+      >
+        The file can be renamed, but needs to have "-card.json" at the end
+        inside your Github Repo so we can find it!
       </Typography>
       <Box m={2} />
       <Box
@@ -62,7 +69,7 @@ export default function Finish(props: FinishProps) {
             );
           }}
         >
-          Download AI Card File
+          Download "{`${recoilSpec.title || "export"}-card.json`}"
         </Button>
       </Box>
     </div>
