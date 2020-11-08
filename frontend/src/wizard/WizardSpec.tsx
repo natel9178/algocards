@@ -24,7 +24,7 @@ export const WizardSpec: WizardSpecInterface[] = [
       <TextEntry
         field={"title"}
         title={"Name?"}
-        description={"This will eventually be the title of your card."}
+        description={"How do you want others to refer to your model?"}
         isMultiline={true}
         placeholder={"Yolov4 Faces"}
         textLimit={50}
@@ -62,7 +62,7 @@ export const WizardSpec: WizardSpecInterface[] = [
       <TextEntry
         field={"description"}
         title={"Description?"}
-        description={"Write something fast to understand and read."}
+        description={"Write a short single sentence that is easy to understand."}
         isMultiline={true}
         placeholder={
           "State of the art facial detection with the Yolo architecture."
@@ -98,7 +98,7 @@ export const WizardSpec: WizardSpecInterface[] = [
         field={"primaryGoal"}
         title={"What is the primary goal of your model?"}
         description={
-          "When creating and training this algorithm, what goal did you have in mind?"
+          "Consider the core problem your model is trying to solve, or specific applications you had in mind while creating this model."
         }
         placeholder={
           "To help social media users engage with their friends more easily by automatically identifying taggable faces in images."
@@ -133,7 +133,7 @@ export const WizardSpec: WizardSpecInterface[] = [
         mainField="antiGoals"
         subtextField="description"
         title={"Out of Scope Goals?"}
-        description={"What goals was this model not designed for?"}
+        description={"What goals was this model not designed for? Think of related areas where your model may fail."}
       />
     ),
     examples: [
@@ -228,7 +228,7 @@ export const WizardSpec: WizardSpecInterface[] = [
         textField="type"
         subtextField="description"
         title={"Limitations?"}
-        description={"What are the core limitations of the model?"}
+        description={"Under what inputs, conditions, or characteristics will your model fail? Consider the groups of people impacted by your model."}
       />
     ),
     examples: [
@@ -288,7 +288,7 @@ export const WizardSpec: WizardSpecInterface[] = [
         subtextField="description"
         title={"Ethical Considerations?"}
         description={
-          "Are there ethical considerations that model users should be aware of? What improvements and future investigations are needed to address these?"
+          "What remaining open questions or decisions need to be made before using this model? What improvements and future investigations are needed to address these questions?"
         }
       />
     ),
@@ -396,7 +396,7 @@ export const WizardSpec: WizardSpecInterface[] = [
         field={"performanceOverview"}
         title={"Performance Summary?"}
         description={
-          "Describe how the model was trained and any qualatative insights from your performance evaluation."
+          "How was your model trained? What are qualitative insights from your metrics? How do they affect various groups or reveal model limitations?"
         }
         isMultiline={true}
         placeholder={
@@ -439,7 +439,7 @@ export const WizardSpec: WizardSpecInterface[] = [
         subtextField="value"
         title={"Metrics?"}
         description={
-          "Give all quantative metrics necessary to give people the big picture."
+          "Give all quantitative metrics necessary to give people the big picture."
         }
       />
     ),
@@ -452,7 +452,7 @@ export const WizardSpec: WizardSpecInterface[] = [
       <UploadEntry
         title={"Figures?"}
         description={
-          "Add the most important figures that show your performance and limitations."
+          "Add the most important figures that demonstrate your performance and limitations."
         }
         field={"figures"}
       />
