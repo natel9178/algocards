@@ -12,6 +12,7 @@ import { AnimatedSwitch } from "react-router-transition";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import Home from "./home/Home";
 import Badge from "./badge/Badge";
+import ScrollToTop from "./ScrollToTop";
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -24,6 +25,7 @@ function App() {
       <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
+            <ScrollToTop />
             <QueryParamProvider ReactRouterRoute={Route}>
               <CssBaseline />
               <AnimatedSwitch
