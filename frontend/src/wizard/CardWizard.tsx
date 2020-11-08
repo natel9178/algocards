@@ -12,9 +12,15 @@ import {
   Container,
   Divider,
   useMediaQuery,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { Route } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Wizard, Steps, Step } from "react-albus";
@@ -148,12 +154,15 @@ export default function CardWizard() {
   const classes = useStyles();
   const { scrollY } = useViewportScroll();
   const { height } = useWindowDimensions();
-
+  const history = useHistory();
   const previewOpacity = useTransform(scrollY, [0, height * 0.7], [0, 1]);
   const previewScale = useTransform(scrollY, [0, height * 0.7], [0.9, 1]);
   const [stepIndex, setStepIndex] = useState(0);
+  const [confirmDeleteAllDialogOpen, setConfirmDeleteAllDialogOpen] = useState(
+    false
+  );
   const opacityAnim = useTransform(scrollY, [0, 40], [1, 0]);
-  const [recoilCard] = useRecoilState<Spec>(card);
+  const [recoilCard, setLoadCard] = useRecoilState<Spec>(card);
   const [sidebarHovered, setSidebarHovered] = useState(false);
   const progress = Math.round(((stepIndex + 1) / WizardSpec.length) * 100);
   const matches = useMediaQuery(theme.breakpoints.up("md"));
@@ -224,6 +233,53 @@ export default function CardWizard() {
             <VisibilityIcon className={classes.extendedIcon} />
             {matches && <>Card</>} Preview
           </Fab>
+          <Box m={1} />
+          <Fab
+            variant="extended"
+            size="medium"
+            onClick={() => {
+              setConfirmDeleteAllDialogOpen(true);
+            }}
+          >
+            Start Over
+          </Fab>
+          <Dialog
+            open={confirmDeleteAllDialogOpen}
+            onClose={() => setConfirmDeleteAllDialogOpen(false)}
+          >
+            <DialogTitle disableTypography>
+              <Typography variant={"h5"} style={{ fontWeight: "bold" }}>
+                Confirm Start Over
+              </Typography>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Starting over will overwrite any AI Card you are currently
+                editing. Do you wish to continue?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                autoFocus
+                onClick={() => setConfirmDeleteAllDialogOpen(false)}
+                color="primary"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  setConfirmDeleteAllDialogOpen(false);
+                  localStorage.setItem("card", "{}");
+                  setLoadCard({});
+                  history.push("/wizard");
+                  history.go(0);
+                }}
+                color="primary"
+              >
+                Delete All
+              </Button>
+            </DialogActions>
+          </Dialog>
         </motion.div>
       </Container>
       <Container maxWidth={"xl"} className={classes.container}>
