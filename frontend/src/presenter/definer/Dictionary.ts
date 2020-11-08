@@ -314,5 +314,39 @@ const terms = {
     "Tree-LSTMs are a variant of Long Short Term Memory (LSTM) neural networks.\n\nA traditional LSTM is structured as a linear chain, and displays\nstrong performance on sequence modeling tasks--such as machine translation.\n\nHowever, some types of data (such as text) are better represented as\ntree structures instead of sequences. Thus, Tree-LSTMs were\n[introduced by Tai, et al][1] in 2015.\n\n[1]: https://arxiv.org/abs/1503.00075",
   word2vec:
     "`word2vec` refers to a pair of models, open-source software, and pre-trained word embeddings\nfrom Google.\n\nThe models are:\n\n - [skip-gram](https://machinelearning.wtf/terms/skip-gram/), using a word to predict the surrounding $n$ words\n - [continuous-bag-of-words (CBOW)](https://machinelearning.wtf/terms/continuous-bag-of-words-cbow), using the context of the surrounding\n $n$ words to predict the center word.\n\nThe original paper is titled [Efficient Estimation of Word Representations in\nVector Space](https://arxiv.org/abs/1301.3781) by Mikolov et al.\n\nThe source code was originally hosted on\n[Google Code](https://code.google.com/p/word2vec) but is now\nlocated [on Github](https://github.com/tmikolov/word2vec).",
+  adversarial:
+    "Typically referring to attacks or cherry picking inputs to fool neural networks",
+  model:
+    "In AI/ML, a model replicates a decision process to enable automation and understanding. AI/ML models are mathematical algorithms that are “trained” using data and human expert input to replicate a decision an expert would make when provided that same information.",
+  resolution: "Resolution refers to the number of pixels in an image.",
+  "single shot detector":
+    "A deep learning architecture containing a backbone model and a single shot head, refers to models which require one passthrough of an image to create detections.",
+  backbone: "A base model template used for machine learning.",
+  pyramid:
+    "A representation of data where sub-representations of multiple parts of an ML model are used to run predictions",
+  "ap ":
+    "Average precision is a measure that combines recall and precision for ranked retrieval results. For one information need, the average precision is the mean of the precision scores after each relevant document is retrieved.",
+  precision:
+    "The number of relevant documents retrieved by a search divided by the total number of documents retrieved by that search",
+  recall:
+    "Recall is the number of relevant documents retrieved by a search divided by the total number of existing relevant documents",
+  segmentation:
+    "Segmentation is typically used to locate objects and boundaries (lines, curves, etc.) in images.",
+  "P-R curves": "Precision-Recall curves.",
+  training:
+    "The goal of training a model is to find a set of weights and biases that have low loss, on average, across all examples. ",
+  pretrain:
+    "A process where training on a larger more general dataset is performed prior to training on a new usecase.",
+  autoregressive:
+    "An autoregressive (AR) model predicts future behavior based on past behavior.",
+  parameter:
+    "A model parameter is a configuration variable that is internal to the model and whose value can be estimated from data. They are required by the model when making predictions. ",
+  mobilenet: "A type of neural network optimized for small size and speed.",
+  cnn:
+    "In deep learning, a convolutional neural network is a class of deep neural networks, most commonly applied to analyzing visual imagery.",
+  "Convolutional":
+    "In deep learning, a convolutional neural network is a class of deep neural networks, most commonly applied to analyzing visual imagery.",
+  latency:
+    "The delay before a transfer of data begins following an instruction for its transfer.",
 };
 export const dictionary = new Map(Object.entries(terms));
